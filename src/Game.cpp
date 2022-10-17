@@ -35,12 +35,14 @@ void Game::HandleEvent()
 	default:
 		break;
 	}
+
+	texture.m_PlayerShip.HandleEvent(event);
 }
 
 void Game::Render()
 {
 	window.clear();
-
+	texture.m_PlayerShip.Render(window);
 	texture.Render(window);
 	window.display();
 }

@@ -3,12 +3,16 @@
 
 #include "RenderWindow.h"
 #include "Entity.h"
+#include "Player.h"
+#include "Projectile.h"
 
 class Texture
 {
 public:
 
-	Entity m_PlayerShip;
+	Player m_PlayerShip;
+
+	SDL_Texture* playerProjectile01;
 
 	Texture();
 

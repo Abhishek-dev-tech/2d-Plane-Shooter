@@ -58,7 +58,7 @@ void RenderWindow::render(Entity& p_entity)
 
 void RenderWindow::display()
 {
-	SDL_SetRenderDrawColor(renderer, 37, 37, 37, 225);
+	SDL_SetRenderDrawColor(renderer, 223, 245, 245, 255);
 	SDL_RenderPresent(renderer);
 }
 
