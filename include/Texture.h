@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 
 #include "RenderWindow.h"
 #include "Entity.h"
@@ -13,6 +14,7 @@ public:
 	Player m_PlayerShip;
 
 	SDL_Texture* playerProjectile01;
+	SDL_Texture* smallEnemyShip;
 
 	Texture();
 
@@ -23,4 +25,5 @@ public:
 
 private:
 	SDL_Texture* playerShip;
+
 };

@@ -21,6 +21,8 @@ private:
 	float maxTime;
 	float previousTime;
 
+	int counter;
+
 	bool shootCoolDown;
 
 	SDL_Texture* m_EnemyProjectile01;

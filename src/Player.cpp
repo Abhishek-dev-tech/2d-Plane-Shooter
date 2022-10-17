@@ -51,7 +51,7 @@ void Player::Shoot()
 
 	shootCoolDown = true;
 
-	Projectile temp = Projectile(Vector2f(110, 110), m_PlayerProjectile01, Vector2f(0.9, 0.9));
+	Projectile temp = Projectile(Vector2f(110, 110), m_PlayerProjectile01, Vector2f(1, 1));
 	temp.SetPos(Vector2f(GetPos().x, GetPos().y));
 
 	projectiles.push_back(temp);
@@ -65,5 +65,5 @@ void Player::GetTextures(SDL_Texture* p_PlayerProjectile01)
 void Player::Render(RenderWindow window) {
 
 	for (int i = 0; i < projectiles.size(); i++)
-		window.render(projectiles[i]);
+		window.render(projectiles[i], 0);
 }

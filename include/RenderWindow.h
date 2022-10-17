@@ -11,11 +11,10 @@ public:
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void cleanUp();
 	void clear();
-	void render(Entity& p_entity);
+	void render(Entity& p_entity, float angle);
 	void display();
 	SDL_Renderer* GetRenderer();
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
 };
-#pragma once

@@ -15,11 +15,14 @@ void Game::Init()
 		isRunning = false;
 
 	texture.LoadTextures(window);
+
+	objectSpawner.GetTextures(texture.smallEnemyShip, texture.playerProjectile01);
 }
 
 void Game::Update()
 {
 	texture.Update();
+	objectSpawner.Update();
 }
 
 void Game::HandleEvent()
@@ -44,6 +47,7 @@ void Game::Render()
 	window.clear();
 	texture.m_PlayerShip.Render(window);
 	texture.Render(window);
+	objectSpawner.Render(window);
 	window.display();
 }
 

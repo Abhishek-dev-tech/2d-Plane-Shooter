@@ -5,6 +5,7 @@
 
 #include "Texture.h"
 #include "RenderWindow.h"
+#include "ObjectSpawner.h"
 
 
 class Game
@@ -26,4 +27,5 @@ private:
 
 	RenderWindow window;
 	Texture texture;
+	ObjectSpawner objectSpawner;
 };

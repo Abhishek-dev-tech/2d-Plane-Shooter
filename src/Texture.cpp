@@ -8,6 +8,7 @@ void Texture::LoadTextures(RenderWindow window)
 {
 	playerShip = window.loadTexture("res/PlayerShip.png");
 	playerProjectile01 = window.loadTexture("res/PlayeProjectile01.png");
+	smallEnemyShip = window.loadTexture("res/SmallEnemyShip.png");
 
 	SetEntity();
 }
@@ -26,5 +27,5 @@ void Texture::Update()
 
 void Texture::Render(RenderWindow window)
 {
-	window.render(m_PlayerShip);
+	window.render(m_PlayerShip, 0);
 }
