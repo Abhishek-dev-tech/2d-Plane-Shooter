@@ -25,7 +25,7 @@ void SmallEnemy::Update()
 
 		if (counter == 3)
 		{
-			maxTime = 2.5;
+			maxTime = 2;
 			counter = 0;
 		}
 		else if (counter < 3)
@@ -44,10 +44,7 @@ void SmallEnemy::Shoot()
 	if (shootCoolDown)
 		return;
 
-	shootCoolDown = true;
-
-	std::cout << "Working\n";
-	
+	shootCoolDown = true;	
 	counter++;
 
 	Projectile temp = Projectile(Vector2f(110, 110), m_EnemyProjectile01, Vector2f(0.9, 0.9));
