@@ -10,6 +10,7 @@ void Texture::LoadTextures(RenderWindow window)
 	playerProjectile01 = window.loadTexture("res/PlayeProjectile01.png");
 	smallEnemyShip = window.loadTexture("res/SmallEnemyShip.png");
 	mediumEnemyShip = window.loadTexture("res/MediumEnemyShip.png");
+	bigEnemyShip = window.loadTexture("res/BigEnemyShip.png");
 
 	SetEntity();
 }

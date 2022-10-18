@@ -16,6 +16,7 @@ public:
 	SDL_Texture* playerProjectile01;
 	SDL_Texture* smallEnemyShip;
 	SDL_Texture* mediumEnemyShip;
+	SDL_Texture* bigEnemyShip;
 
 	Texture();
 

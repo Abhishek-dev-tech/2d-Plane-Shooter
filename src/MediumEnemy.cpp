@@ -24,13 +24,13 @@ void MediumEnemy::Update()
 		previousTime = SDL_GetTicks() * 0.001;
 		shootCoolDown = false;
 
-		if (counter == 5)
+		if (counter == 4)
 		{
 			maxTime = 2.5;
 			counter = 0;
 		}
-		else if (counter < 5)
-			maxTime = 0.2;
+		else if (counter < 4)
+			maxTime = 0.15;
 	}
 
 	Shoot();
