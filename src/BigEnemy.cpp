@@ -1,14 +1,10 @@
 #include "BigEnemy.h"
 
 BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType)
-	:Entity(p_pos, p_tex, p_scale)
+	:Enemy(p_pos, p_tex, p_scale)
 {
-	previousTime = 0;
 	missileAngle = 180;
 
-	counter = 0;
-
-	shootCoolDown = false;
 	missileCoolDown = false;
 
 	DefineShipType(p_shipType);
@@ -39,15 +35,13 @@ void BigEnemy::Update()
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
-
-
-	ShootBullets(m_BulletOffset, m_bulletPair);
+	Shoot(m_BulletOffset, m_bulletPair);
 
 	SetPos(Vector2f(GetPos().x, GetPos().y + m_Speed));
 
 }
 
-void BigEnemy::ShootBullets(float p_bulletOffset, int p_bulletPair)
+void BigEnemy::Shoot(float p_bulletOffset, int p_bulletPair)
 {
 	if (shootCoolDown)
 		return;
@@ -120,7 +114,7 @@ void BigEnemy::DefineShipType(int type)
 
 void BigEnemy::GetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile)
 {
-	m_EnemyProjectile = p_EnemyProjectile;
+	Enemy::GetTextures(p_EnemyProjectile);
 	m_Missile = p_Missile;
 }
 
@@ -131,13 +125,11 @@ void BigEnemy::GetEntity(Entity* p_Player)
 
 void BigEnemy::Render(RenderWindow window) {
 
-	for (int i = 0; i < projectiles.size(); i++)
-		window.render(projectiles[i], 0);
+	Enemy::Render(window);
 	
 	for (int i = 0; i < missiles.size(); i++)
 	{
 		missileAngle = (float)std::atan2(m_Player->GetPos().y - missiles[i].GetPos().y, m_Player->GetPos().x - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
-
 		window.render(missiles[i], missileAngle);
 	}
 }

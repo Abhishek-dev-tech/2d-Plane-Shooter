@@ -62,6 +62,7 @@ void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
 	mediumEnemies.push_back(temp);
 
 	m_MediumEnemyCounter++;
+
 		
 	if (m_MediumEnemyCounter >= 4)
 		m_MediumEnemyCounter = 1;
