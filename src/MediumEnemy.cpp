@@ -47,17 +47,17 @@ void MediumEnemy::Shoot()
 	shootCoolDown = true;
 	counter++;
 
-	Projectile temp1 = Projectile(Vector2f(GetPos().x + bulletOffset, GetPos().y), m_EnemyProjectile01, Vector2f(0.9, 0.9));
+	Projectile temp1 = Projectile(Vector2f(GetPos().x + bulletOffset, GetPos().y), m_EnemyProjectile, Vector2f(0.9, 0.9));
 
-	Projectile temp2 = Projectile(Vector2f(GetPos().x - bulletOffset, GetPos().y), m_EnemyProjectile01, Vector2f(0.9, 0.9));
+	Projectile temp2 = Projectile(Vector2f(GetPos().x - bulletOffset, GetPos().y), m_EnemyProjectile, Vector2f(0.9, 0.9));
 
 	projectiles.push_back(temp1);
 	projectiles.push_back(temp2);
 }
 
-void MediumEnemy::GetTextures(SDL_Texture* p_EnemyProjectile01)
+void MediumEnemy::GetTextures(SDL_Texture* p_EnemyProjectile)
 {
-	m_EnemyProjectile01 = p_EnemyProjectile01;
+	m_EnemyProjectile = p_EnemyProjectile;
 }
 
 void MediumEnemy::Render(RenderWindow window) {

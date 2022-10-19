@@ -53,7 +53,7 @@ void RenderWindow::render(Entity& p_entity, float angle)
 	dst.w = p_entity.getCurrentFrame().w * p_entity.GetScale().x;
 	dst.h = p_entity.getCurrentFrame().h * p_entity.GetScale().y;
 
-	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, angle,NULL,SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, angle, NULL, SDL_FLIP_NONE);
 }
 
 void RenderWindow::display()

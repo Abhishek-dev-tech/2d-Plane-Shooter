@@ -12,9 +12,9 @@ struct Vector2f
 		:x(p_x), y(p_y)
 	{}
 
-	void print()
+	void Print()
 	{
-		std::cout << x << ", " << y << std::endl;
+		std::cout << "(" << x << ", " << y << ")" << std::endl;
 	}
 
 	float x, y;

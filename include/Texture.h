@@ -13,10 +13,11 @@ public:
 
 	Player m_PlayerShip;
 
-	SDL_Texture* playerProjectile01;
+	SDL_Texture* projectile01;
 	SDL_Texture* smallEnemyShip;
 	SDL_Texture* mediumEnemyShip;
 	SDL_Texture* bigEnemyShip;
+	SDL_Texture* missile;
 
 	Texture();
 

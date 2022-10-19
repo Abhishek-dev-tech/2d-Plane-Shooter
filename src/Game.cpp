@@ -17,9 +17,12 @@ void Game::Init()
 	texture.LoadTextures(window);
 
 	objectSpawner.GetTextures(texture.smallEnemyShip, 
-		texture.playerProjectile01, 
+		texture.projectile01, 
 		texture.mediumEnemyShip, 
-		texture.bigEnemyShip);
+		texture.bigEnemyShip,
+		texture.missile);
+
+	objectSpawner.GetEntity(&texture.m_PlayerShip);
 }
 
 void Game::Update()

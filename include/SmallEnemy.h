@@ -12,7 +12,7 @@ public:
 	SmallEnemy() = default;
 	SmallEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale);
 	void Update();
-	void GetTextures(SDL_Texture* p_EnemyProjectile01);
+	void GetTextures(SDL_Texture* p_EnemyProjectile);
 	void Render(RenderWindow window);
 	void Shoot();
 
@@ -25,7 +25,7 @@ private:
 
 	bool shootCoolDown;
 
-	SDL_Texture* m_EnemyProjectile01;
+	SDL_Texture* m_EnemyProjectile;
 
 	std::vector<Projectile> projectiles;
 };

@@ -47,15 +47,15 @@ void SmallEnemy::Shoot()
 	shootCoolDown = true;	
 	counter++;
 
-	Projectile temp = Projectile(Vector2f(110, 110), m_EnemyProjectile01, Vector2f(0.9, 0.9));
+	Projectile temp = Projectile(Vector2f(110, 110), m_EnemyProjectile, Vector2f(0.9, 0.9));
 	temp.SetPos(Vector2f(GetPos().x, GetPos().y));
 
 	projectiles.push_back(temp);
 }
 
-void SmallEnemy::GetTextures(SDL_Texture* p_EnemyProjectile01)
+void SmallEnemy::GetTextures(SDL_Texture* p_EnemyProjectile)
 {
-	m_EnemyProjectile01 = p_EnemyProjectile01;
+	m_EnemyProjectile = p_EnemyProjectile;
 }
 
 void SmallEnemy::Render(RenderWindow window) {
