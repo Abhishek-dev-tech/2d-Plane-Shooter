@@ -23,7 +23,7 @@ public:
 
 	void GetTextures(SDL_Texture* p_SmallEnemyShips[],
 		SDL_Texture* p_EnemyProjectile01, 
-		SDL_Texture* p_MediumEnemyShip, 
+		SDL_Texture* p_MediumEnemyShips[],
 		SDL_Texture* p_BigEnemyShip,
 		SDL_Texture* p_Missile);
 
@@ -33,7 +33,9 @@ private:
 	float maxTime;
 	float previousTime;
 
+	int once;
 	int m_SmallEnemyCounter;
+	int m_MediumlEnemyCounter;
 
 	Vector2f StrightSpawnPositions[3] = {Vector2f(100, -20), Vector2f(600, -20) , Vector2f(350, -20)};
 
@@ -42,12 +44,11 @@ private:
 	std::vector<BigEnemy> bigEnemies;
 
 	SDL_Texture* m_SmallEnemyShips[3];
-	SDL_Texture* m_MediumEnemyShip;
+	SDL_Texture* m_MediumEnemyShips[3];
 	SDL_Texture* m_BigEnemyShip;
 	SDL_Texture* m_EnemyProjectile01;
 	SDL_Texture* m_Missile;
 
 	Entity* m_Player;
 
-	int once;
 };

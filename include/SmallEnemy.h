@@ -19,7 +19,9 @@ public:
 
 private:
 	float m_Speed;
-	float maxTime;
+	float m_OriginalFireRate;
+	float m_CurrentFireRate;
+	float m_shootDelay;
 	float previousTime;
 	float m_bulletOffset;
 
@@ -34,7 +36,7 @@ private:
 		Faster
 	};
 
-	ShipType shipType;
+	ShipType m_shipType;
 
 	bool shootCoolDown;
 

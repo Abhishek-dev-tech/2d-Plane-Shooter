@@ -10,6 +10,8 @@ SmallEnemy::SmallEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int
 	shootCoolDown = false;
 
 	DefineShipType(p_shipType);
+
+	m_CurrentFireRate = m_OriginalFireRate;
 }
 
 void SmallEnemy::Update()
@@ -17,18 +19,18 @@ void SmallEnemy::Update()
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(1);
 
-	if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && shootCoolDown)
+	if (SDL_GetTicks() * 0.001 - previousTime >= m_CurrentFireRate && shootCoolDown)
 	{
 		previousTime = SDL_GetTicks() * 0.001;
 		shootCoolDown = false;
 
 		if (counter == m_noOfBullets)
 		{
-			maxTime = 2;
+			m_CurrentFireRate = m_shootDelay;
 			counter = 0;
 		}
 		else if (counter < 3)
-			maxTime = 0.2;
+			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
 
@@ -43,30 +45,33 @@ void SmallEnemy::DefineShipType(int type)
 	switch (type)
 	{
 		case 1:
-			shipType = SingleShooter;
+			m_shipType = SingleShooter;
 			m_bulletOffset = 0;
 			m_bulletPair = 1;
 			m_Speed = 0.75;
-			maxTime = 0.2;
+			m_OriginalFireRate = 0.2;
 			m_noOfBullets = 3;
+			m_shootDelay = 2;
 			break;
 
 		case 2:
-			shipType = DoubleShooter;
+			m_shipType = DoubleShooter;
 			m_bulletOffset = 10;
 			m_bulletPair = 2;
 			m_Speed = 0.6;
-			maxTime = 0.2;
-			m_noOfBullets = 4;
+			m_OriginalFireRate = 0.15;
+			m_noOfBullets = 2;
+			m_shootDelay = 1.5;
 			break;
 
 		case 3:
-			shipType = Faster;
+			m_shipType = Faster;
 			m_bulletOffset = 10;
 			m_bulletPair = 2;
 			m_Speed = 1;
-			maxTime = 0.15;
-			m_noOfBullets = 2;
+			m_OriginalFireRate = 0.15;
+			m_noOfBullets = 1;
+			m_shootDelay = 2.5;
 			break;
 
 	default:
