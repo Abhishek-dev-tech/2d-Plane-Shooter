@@ -97,10 +97,7 @@ void BigEnemy::Render(RenderWindow window) {
 	
 	for (int i = 0; i < missiles.size(); i++)
 	{
-		if(missiles[i].followTarget)
-			missileAngle = (float)std::atan2(m_Player->GetPos().y - missiles[i].GetPos().y, m_Player->GetPos().x - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
-		else
-			missileAngle = (float)std::atan2(760 - missiles[i].GetPos().y, 320 - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
+		missileAngle = (float)std::atan2(m_Player->GetPos().y - missiles[i].GetPos().y, m_Player->GetPos().x - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
 
 		window.render(missiles[i], missileAngle);
 	}
