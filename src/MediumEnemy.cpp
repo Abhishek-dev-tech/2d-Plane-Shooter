@@ -29,7 +29,7 @@ void MediumEnemy::Update()
 			m_CurrentFireRate = m_ShootDelay;
 			counter = 0;
 		}
-		else if (counter < 4)
+		else if (counter < m_noOfBullets)
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
@@ -83,7 +83,7 @@ void MediumEnemy::DefineShipType(int type)
 	case 3:
 		m_shipType = Faster;
 		m_BulletOffset = 12;
-		m_bulletPair = 2;
+		m_bulletPair = 4;
 		m_Speed = 0.85;
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 2;

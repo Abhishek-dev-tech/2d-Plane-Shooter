@@ -24,7 +24,7 @@ public:
 	void GetTextures(SDL_Texture* p_SmallEnemyShips[],
 		SDL_Texture* p_EnemyProjectile01, 
 		SDL_Texture* p_MediumEnemyShips[],
-		SDL_Texture* p_BigEnemyShip,
+		SDL_Texture* p_BigEnemyShips[],
 		SDL_Texture* p_Missile);
 
 	void GetEntity(Entity* p_Player);
@@ -35,7 +35,8 @@ private:
 
 	int once;
 	int m_SmallEnemyCounter;
-	int m_MediumlEnemyCounter;
+	int m_MediumEnemyCounter;
+	int m_BigEnemyCounter;
 
 	Vector2f StrightSpawnPositions[3] = {Vector2f(100, -20), Vector2f(600, -20) , Vector2f(350, -20)};
 
@@ -45,7 +46,7 @@ private:
 
 	SDL_Texture* m_SmallEnemyShips[3];
 	SDL_Texture* m_MediumEnemyShips[3];
-	SDL_Texture* m_BigEnemyShip;
+	SDL_Texture* m_BigEnemyShips[3];
 	SDL_Texture* m_EnemyProjectile01;
 	SDL_Texture* m_Missile;
 

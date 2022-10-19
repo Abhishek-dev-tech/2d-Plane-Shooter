@@ -17,7 +17,9 @@ void Texture::LoadTextures(RenderWindow window)
 	mediumEnemyShips[1] = window.loadTexture("res/MediumEnemyShip_2.png");
 	mediumEnemyShips[2] = window.loadTexture("res/MediumEnemyShip_3.png");
 
-	bigEnemyShip = window.loadTexture("res/BigEnemyShip.png");
+	bigEnemyShips[0] = window.loadTexture("res/BigEnemyShip_1.png");
+	bigEnemyShips[1] = window.loadTexture("res/BigEnemyShip_2.png");
+	bigEnemyShips[2] = window.loadTexture("res/BigEnemyShip_3.png");
 	missile = window.loadTexture("res/Missile.png");
 
 	SetEntity();

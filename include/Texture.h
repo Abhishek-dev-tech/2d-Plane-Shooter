@@ -17,8 +17,8 @@ public:
 
 	SDL_Texture* smallEnemyShips[3];
 	SDL_Texture* mediumEnemyShips[3];
+	SDL_Texture* bigEnemyShips[3];
 
-	SDL_Texture* bigEnemyShip;
 	SDL_Texture* missile;
 
 	Texture();

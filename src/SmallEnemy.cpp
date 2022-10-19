@@ -29,7 +29,7 @@ void SmallEnemy::Update()
 			m_CurrentFireRate = m_shootDelay;
 			counter = 0;
 		}
-		else if (counter < 3)
+		else if (counter < m_noOfBullets)
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
