@@ -13,6 +13,8 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Player::Update()
 {
+	Entity::Update();
+
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(-1);
 
@@ -21,7 +23,7 @@ void Player::Update()
 		previousTime = SDL_GetTicks() * 0.001;
 		shootCoolDown = false;
 	}
-	
+
 }
 
 void Player::HandleEvent(SDL_Event event)
@@ -51,10 +53,14 @@ void Player::Shoot()
 
 	shootCoolDown = true;
 
-	Projectile temp = Projectile(Vector2f(110, 110), m_PlayerProjectile01, Vector2f(1, 1));
-	temp.SetPos(Vector2f(GetPos().x, GetPos().y));
+	Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), m_PlayerProjectile01, Vector2f(1, 1));
 
 	projectiles.push_back(temp);
+}
+
+std::vector<Projectile> Player::GetPlayerProjectiles()
+{
+	return projectiles;
 }
 
 void Player::GetTextures(SDL_Texture* p_PlayerProjectile01)

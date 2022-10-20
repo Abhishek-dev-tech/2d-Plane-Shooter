@@ -8,5 +8,7 @@ Projectile::Projectile(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Projectile::Update(int dir) 
 {
+	Entity::Update();
+
 	SetPos(Vector2f(GetPos().x, GetPos().y +  (dir * m_Speed)));
 }

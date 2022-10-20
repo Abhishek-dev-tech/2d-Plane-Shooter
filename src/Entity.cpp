@@ -14,8 +14,8 @@ Entity::Entity(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Entity::Update()
 {
-	dst.x = GetPos().x;
-	dst.y = GetPos().y;
+	dst.x = GetPos().x - currentFrame.w / 2 * GetScale().x;
+	dst.y = GetPos().y - currentFrame.h / 2 * GetScale().y;
 	dst.w = GetScale().x * currentFrame.w;
 	dst.h = GetScale().y * currentFrame.h;
 }

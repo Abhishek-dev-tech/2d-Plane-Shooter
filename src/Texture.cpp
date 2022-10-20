@@ -39,6 +39,7 @@ void Texture::SetEntity()
 void Texture::Update()
 {
 	m_PlayerShip.Update();
+	m_Cursor.Update();
 }
 
 void Texture::Render(RenderWindow window)

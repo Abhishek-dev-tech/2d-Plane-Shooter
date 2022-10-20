@@ -14,6 +14,8 @@ Enemy::Enemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Enemy::Update()
 {
+	Entity::Update();
+
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(1);
 

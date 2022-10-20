@@ -25,6 +25,7 @@ void ObjectSpawner::Update()
 
 	for (int i = 0; i < bigEnemies.size(); i++)
 		bigEnemies[i].Update();
+
 }
 
 void ObjectSpawner::SpawnEnemies()
@@ -53,6 +54,7 @@ void ObjectSpawner::SpawnSmallEnemies(Vector2f p_pos)
 	temp.GetTextures(m_EnemyProjectile01);
 
 	smallEnemies.push_back(temp);
+	allEnemies.push_back(temp);
 
 	m_SmallEnemyCounter++;
 
@@ -66,6 +68,7 @@ void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
 	temp.GetTextures(m_EnemyProjectile01);
 
 	mediumEnemies.push_back(temp);
+	allEnemies.push_back(temp);
 
 	m_MediumEnemyCounter++;
 
@@ -77,10 +80,11 @@ void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
 void ObjectSpawner::SpawnBigEnemies(Vector2f p_pos)
 {
 	BigEnemy temp = BigEnemy(p_pos, m_BigEnemyShips[m_BigEnemyCounter - 1], Vector2f(2.2, 2.2), m_BigEnemyCounter);
-	temp.GetTextures(m_EnemyProjectile01, m_Missile);
-	temp.GetEntity(m_Player);
+	temp.SetTextures(m_EnemyProjectile01, m_Missile);
+	temp.SetEntity(m_Player);
 
 	bigEnemies.push_back(temp);
+	allEnemies.push_back(temp);
 
 	m_BigEnemyCounter++;
 
@@ -95,7 +99,7 @@ void ObjectSpawner::SpawnPartten()
 	SpawnSmallEnemies(Vector2f(450, -5));
 }
 
-void ObjectSpawner::GetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p_EnemyProjectile01, SDL_Texture* p_MediumEnemyShips[], SDL_Texture* p_BigEnemyShips[], SDL_Texture* p_Missile)
+void ObjectSpawner::SetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p_EnemyProjectile01, SDL_Texture* p_MediumEnemyShips[], SDL_Texture* p_BigEnemyShips[], SDL_Texture* p_Missile)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -108,9 +112,14 @@ void ObjectSpawner::GetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p
 	m_Missile = p_Missile;
 }
 
-void ObjectSpawner::GetEntity(Player* p_Player)
+void ObjectSpawner::SetEntity(Entity* p_Player)
 {
 	m_Player = p_Player;
+}
+
+std::vector<Enemy> ObjectSpawner::GetAllEnemies()
+{
+	return allEnemies;
 }
 
 void ObjectSpawner::Render(RenderWindow window)

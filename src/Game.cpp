@@ -18,13 +18,13 @@ void Game::Init()
 
 	texture.LoadTextures(window);
 
-	objectSpawner.GetTextures(texture.smallEnemyShips,
+	objectSpawner.SetTextures(texture.smallEnemyShips,
 		texture.projectile01, 
 		texture.mediumEnemyShips, 
 		texture.bigEnemyShips,
 		texture.missile);
 
-	objectSpawner.GetEntity(&texture.m_PlayerShip);
+	objectSpawner.SetEntity(&texture.m_PlayerShip);
 }
 
 void Game::Update()
@@ -35,7 +35,33 @@ void Game::Update()
 	texture.Update();
 	objectSpawner.Update();
 
+	CheckCollision();
+
 	srand(SDL_GetTicks());
+}
+
+void Game::CheckCollision()
+{
+	/*for (int i = 0; i < texture.m_PlayerShip.GetPlayerProjectiles().size(); i++)
+	{
+		for (int j = 0; j < objectSpawner.GetAllEnemies().size(); j++)
+		{
+			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetAllEnemies()[j].GetDst()))
+			{
+				std::cout << "COLLISION\n";
+			}
+		}
+	}*/
+
+	for (int i = 0; i < objectSpawner.GetAllEnemies().size(); i++)
+	{
+			if (SDL_HasIntersection(&texture.m_PlayerShip.GetDst(), &objectSpawner.GetAllEnemies()[i].GetDst()))
+			{
+				std::cout << "COLLISION\n";
+			}
+		
+	}
+
 }
 
 void Game::HandleEvent()

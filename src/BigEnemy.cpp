@@ -14,6 +14,8 @@ BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_s
 
 void BigEnemy::Update()
 {
+	Entity::Update();
+
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(1);
 
@@ -112,13 +114,13 @@ void BigEnemy::DefineShipType(int type)
 	}
 }
 
-void BigEnemy::GetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile)
+void BigEnemy::SetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile)
 {
 	Enemy::GetTextures(p_EnemyProjectile);
 	m_Missile = p_Missile;
 }
 
-void BigEnemy::GetEntity(Entity* p_Player)
+void BigEnemy::SetEntity(Entity* p_Player)
 {
 	m_Player = p_Player;
 }

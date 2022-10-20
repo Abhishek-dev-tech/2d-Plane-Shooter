@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "Entity.h"
-#include "Player.h"
 #include "RenderWindow.h"
 #include "SmallEnemy.h"
 #include "MediumEnemy.h"
@@ -22,13 +21,15 @@ public:
 	void SpawnBigEnemies(Vector2f p_pos);
 	void SpawnPartten();
 
-	void GetTextures(SDL_Texture* p_SmallEnemyShips[],
+	void SetTextures(SDL_Texture* p_SmallEnemyShips[],
 		SDL_Texture* p_EnemyProjectile01, 
 		SDL_Texture* p_MediumEnemyShips[],
 		SDL_Texture* p_BigEnemyShips[],
 		SDL_Texture* p_Missile);
 
-	void GetEntity(Player* p_Player);
+	std::vector<Enemy> GetAllEnemies();
+
+	void SetEntity(Entity* p_Player);
 
 private:
 	float maxTime;
@@ -43,6 +44,8 @@ private:
 	std::vector<SmallEnemy> smallEnemies;
 	std::vector<MediumEnemy> mediumEnemies;
 	std::vector<BigEnemy> bigEnemies;
+
+	std::vector<Enemy> allEnemies;
 
 	SDL_Texture* m_SmallEnemyShips[3];
 	SDL_Texture* m_MediumEnemyShips[3];

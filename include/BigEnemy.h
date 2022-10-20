@@ -13,8 +13,8 @@ public:
 	BigEnemy() = default;
 	BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType);
 	void Update();
-	void GetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile);
-	void GetEntity(Entity* p_Player);
+	void SetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile);
+	void SetEntity(Entity* p_Player);
 	void Render(RenderWindow window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
 	void ShootMissiles();
