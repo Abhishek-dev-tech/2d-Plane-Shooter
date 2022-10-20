@@ -22,12 +22,16 @@ void Texture::LoadTextures(RenderWindow window)
 	bigEnemyShips[2] = window.loadTexture("res/BigEnemyShip_3.png");
 	missile = window.loadTexture("res/Missile.png");
 
+	cursor = window.loadTexture("res/Cursor.png");
+
 	SetEntity();
 }
 
 void Texture::SetEntity()
 {
 	m_PlayerShip = Player(Vector2f(360, 650), playerShip, Vector2f(2, 2));
+
+	m_Cursor = Entity(Vector2f(0, 0), cursor, Vector2f(2, 2));
 
 	m_PlayerShip.GetTextures(projectile01);
 }
@@ -40,4 +44,5 @@ void Texture::Update()
 void Texture::Render(RenderWindow window)
 {
 	window.render(m_PlayerShip, 0);
+	window.render(m_Cursor, 0);
 }

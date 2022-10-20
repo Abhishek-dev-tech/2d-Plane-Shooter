@@ -58,7 +58,7 @@ void RenderWindow::render(Entity& p_entity, float angle)
 
 void RenderWindow::display()
 {
-	SDL_SetRenderDrawColor(renderer, 223, 245, 245, 255);
+	SDL_SetRenderDrawColor(renderer, 150, 245, 245, 255);
 	SDL_RenderPresent(renderer);
 }
 

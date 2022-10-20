@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Entity.h"
+#include "Player.h"
 #include "RenderWindow.h"
 #include "SmallEnemy.h"
 #include "MediumEnemy.h"
@@ -27,18 +28,17 @@ public:
 		SDL_Texture* p_BigEnemyShips[],
 		SDL_Texture* p_Missile);
 
-	void GetEntity(Entity* p_Player);
+	void GetEntity(Player* p_Player);
 
 private:
 	float maxTime;
 	float previousTime;
 
-	int once;
 	int m_SmallEnemyCounter;
 	int m_MediumEnemyCounter;
 	int m_BigEnemyCounter;
 
-	Vector2f StrightSpawnPositions[3] = {Vector2f(100, -20), Vector2f(600, -20) , Vector2f(350, -20)};
+	Vector2f StrightSpawnPositions;
 
 	std::vector<SmallEnemy> smallEnemies;
 	std::vector<MediumEnemy> mediumEnemies;

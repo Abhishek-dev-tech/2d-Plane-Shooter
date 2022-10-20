@@ -13,6 +13,8 @@ public:
 
 	Player m_PlayerShip;
 
+	Entity m_Cursor;
+
 	SDL_Texture* projectile01;
 
 	SDL_Texture* smallEnemyShips[3];
@@ -30,5 +32,6 @@ public:
 
 private:
 	SDL_Texture* playerShip;
+	SDL_Texture* cursor;
 
 };

@@ -10,7 +10,7 @@ ObjectSpawner::ObjectSpawner()
 	m_MediumEnemyCounter = 1;
 	m_BigEnemyCounter = 1;
 
-	once = 1;
+	StrightSpawnPositions = Vector2f(50, -10);
 }
 
 void ObjectSpawner::Update()
@@ -29,15 +29,21 @@ void ObjectSpawner::Update()
 
 void ObjectSpawner::SpawnEnemies()
 {
-	if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && once <= 3)
+	if (SDL_GetTicks() * 0.001 - previousTime >= maxTime)
 	{
 		previousTime = SDL_GetTicks() * 0.001;
-		//SpawnSmallEnemies(Vector2f(200, -20));
-		//SpawnMediumEnemies(Vector2f(400, -20));
-		SpawnBigEnemies(Vector2f(600, 50));
-		//SpawnPartten();
 
-		once++;
+		int rand = Mathf::Random(1, 100);
+		
+		if(rand <= 50)
+			SpawnSmallEnemies(Vector2f(Mathf::Random(50, 650), -10));
+
+		else if(rand <= 90 && rand > 50)
+			SpawnMediumEnemies(Vector2f(Mathf::Random(50, 650), -10));
+		
+		else
+			SpawnBigEnemies(Vector2f(Mathf::Random(50, 650), -10));
+		//SpawnPartten();
 	}
 }
 
@@ -102,7 +108,7 @@ void ObjectSpawner::GetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p
 	m_Missile = p_Missile;
 }
 
-void ObjectSpawner::GetEntity(Entity* p_Player)
+void ObjectSpawner::GetEntity(Player* p_Player)
 {
 	m_Player = p_Player;
 }

@@ -2,6 +2,18 @@
 
 #include <iostream>
 
+class Mathf
+{
+public:
+	Mathf();
+
+	static int Random(int min, int max) {
+
+		return (rand() % (max - min + 1)) + min;
+	}
+
+};
+
 struct Vector2f
 {
 	Vector2f()

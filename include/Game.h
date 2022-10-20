@@ -25,6 +25,9 @@ public:
 private:
 	bool isRunning;
 
+	int mouseX;
+	int mouseY;
+
 	RenderWindow window;
 	Texture texture;
 	ObjectSpawner objectSpawner;

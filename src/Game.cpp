@@ -14,6 +14,8 @@ void Game::Init()
 	else
 		isRunning = false;
 
+	SDL_ShowCursor(SDL_DISABLE);
+
 	texture.LoadTextures(window);
 
 	objectSpawner.GetTextures(texture.smallEnemyShips,
@@ -27,8 +29,13 @@ void Game::Init()
 
 void Game::Update()
 {
+	SDL_GetMouseState(&mouseX, &mouseY);
+	texture.m_Cursor.SetPos(Vector2f(mouseX, mouseY));
+
 	texture.Update();
 	objectSpawner.Update();
+
+	srand(SDL_GetTicks());
 }
 
 void Game::HandleEvent()
@@ -52,8 +59,8 @@ void Game::Render()
 {
 	window.clear();
 	texture.m_PlayerShip.Render(window);
-	texture.Render(window);
 	objectSpawner.Render(window);
+	texture.Render(window);
 	window.display();
 }
 
