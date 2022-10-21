@@ -7,12 +7,16 @@
 #include "SmallEnemy.h"
 #include "MediumEnemy.h"
 #include "BigEnemy.h"
+#include "Texture.h"
 
 
 class ObjectSpawner
 {
 public:
 	ObjectSpawner();
+
+	static ObjectSpawner& GetInstance();
+
 	void Update();
 	void Render(RenderWindow window);
 	void SpawnEnemies();
@@ -22,14 +26,8 @@ public:
 	void SpawnPartten();
 	void RemoveEnemies();
 	void SpawnHitMarkers(Vector2f p_Pos);
-
-
-	void SetTextures(SDL_Texture* p_SmallEnemyShips[],
-		SDL_Texture* p_EnemyProjectile01, 
-		SDL_Texture* p_MediumEnemyShips[],
-		SDL_Texture* p_BigEnemyShips[],
-		SDL_Texture* p_Missile,
-		SDL_Texture* p_HitMarkers[]);
+	void SpawnBlastEffect(Vector2f p_Pos);
+	void SpawnSmokEffect(Vector2f p_Pos);
 
 	std::vector<SmallEnemy>& GetSmallEnemies();
 	std::vector<MediumEnemy>& GetMediumEnemies();
@@ -37,15 +35,9 @@ public:
 
 	std::vector<Entity>& GetHitMarkers();
 
-	void SetEntity(Entity* p_Player);
-
 private:
 	float maxTime;
 	float previousTime;
-
-	int m_SmallEnemyCounter;
-	int m_MediumEnemyCounter;
-	int m_BigEnemyCounter;
 
 	Vector2f StrightSpawnPositions;
 
@@ -54,14 +46,7 @@ private:
 	std::vector<BigEnemy> bigEnemies;
 
 	std::vector<Entity> hitMarkers;
-
-	SDL_Texture* m_SmallEnemyShips[3];
-	SDL_Texture* m_MediumEnemyShips[3];
-	SDL_Texture* m_BigEnemyShips[3];
-	SDL_Texture* m_EnemyProjectile01;
-	SDL_Texture* m_Missile;
-	SDL_Texture* m_HitMarkers[3];
-
-	Entity* m_Player;
+	std::vector<Entity> blastEffect;
+	std::vector<Entity> smokeEffect;
 
 };

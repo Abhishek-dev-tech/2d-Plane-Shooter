@@ -30,6 +30,4 @@ private:
 	int mouseY;
 
 	RenderWindow window;
-	Texture texture;
-	ObjectSpawner objectSpawner;
 };

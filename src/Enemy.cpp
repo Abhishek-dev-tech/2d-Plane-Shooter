@@ -1,5 +1,7 @@
 #include "Enemy.h"
 #include "Mathf.h"
+#include "ObjectSpawner.h"
+
 
 Enemy::Enemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	:Entity(p_pos, p_tex, p_scale)
@@ -91,7 +93,11 @@ void Enemy::Damage(int value)
 	hitPoints -= value;
 
 	if (hitPoints <= 0)
+	{
 		Destroy();
+		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos());
+		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos());
+	}
 }
 
 void Enemy::GetTextures(SDL_Texture* p_EnemyProjectile)

@@ -4,6 +4,13 @@ Texture::Texture()
 {
 }
 
+Texture& Texture::GetInstance()
+{
+	static Texture* instance = new Texture;
+
+	return *instance;
+}
+
 void Texture::LoadTextures(RenderWindow window)
 {
 	playerShip = window.loadTexture("res/PlayerShip.png");
@@ -26,6 +33,8 @@ void Texture::LoadTextures(RenderWindow window)
 	hitMark[2] = window.loadTexture("res/HitMark_3.png");
 
 	missile = window.loadTexture("res/Missile.png");
+	blastEffect = window.loadTexture("res/BlastEffect.png");
+	smokeEffect = window.loadTexture("res/SmokeEffect.png");
 
 	cursor = window.loadTexture("res/Cursor.png");
 

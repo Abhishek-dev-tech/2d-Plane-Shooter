@@ -16,25 +16,16 @@ void Game::Init()
 
 	SDL_ShowCursor(SDL_DISABLE);
 
-	texture.LoadTextures(window);
-
-	objectSpawner.SetTextures(texture.smallEnemyShips,
-		texture.projectile01, 
-		texture.mediumEnemyShips, 
-		texture.bigEnemyShips,
-		texture.missile,
-		texture.hitMark);
-
-	objectSpawner.SetEntity(&texture.m_PlayerShip);
+	Texture::GetInstance().LoadTextures(window);
 }
 
 void Game::Update()
 {
 	SDL_GetMouseState(&mouseX, &mouseY);
-	texture.m_Cursor.SetPos(Vector2f(mouseX, mouseY));
+	Texture::GetInstance().m_Cursor.SetPos(Vector2f(mouseX, mouseY));
 
-	texture.Update();
-	objectSpawner.Update();
+	Texture::GetInstance().Update();
+	ObjectSpawner::GetInstance().Update();
 
 	CheckCollision();
 
@@ -43,45 +34,45 @@ void Game::Update()
 
 void Game::CheckCollision()
 {
-	for (int i = 0; i < texture.m_PlayerShip.GetPlayerProjectiles().size(); i++)
+	for (int i = 0; i < Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles().size(); i++)
 	{
-		for (int j = 0; j < objectSpawner.GetSmallEnemies().size(); j++)
+		for (int j = 0; j < ObjectSpawner::GetInstance().GetSmallEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetSmallEnemies()[j].GetDst()) 
-				&& !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
-				&& !objectSpawner.GetSmallEnemies()[j].IsDestroy())
+			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetSmallEnemies()[j].GetDst())
+				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
+				&& !ObjectSpawner::GetInstance().GetSmallEnemies()[j].IsDestroy())
 			{
-				objectSpawner.SpawnHitMarkers(texture.m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
-				objectSpawner.GetSmallEnemies()[j].Damage(1);
-				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+				ObjectSpawner::GetInstance().SpawnHitMarkers(Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
+				ObjectSpawner::GetInstance().GetSmallEnemies()[j].Damage(1);
+				Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
 
 				break;
 
 			}
 		}
 
-		for (int j = 0; j < objectSpawner.GetMediumEnemies().size(); j++)
+		for (int j = 0; j < ObjectSpawner::GetInstance().GetMediumEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetMediumEnemies()[j].GetDst()) 
-				&& !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
-				&& !objectSpawner.GetMediumEnemies()[j].IsDestroy())
+			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetMediumEnemies()[j].GetDst())
+				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
+				&& !ObjectSpawner::GetInstance().GetMediumEnemies()[j].IsDestroy())
 			{
-				objectSpawner.SpawnHitMarkers(texture.m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
-				objectSpawner.GetMediumEnemies()[j].Damage(1);
-				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+				ObjectSpawner::GetInstance().SpawnHitMarkers(Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
+				ObjectSpawner::GetInstance().GetMediumEnemies()[j].Damage(1);
+				Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
 				break;
 			}
 		}
 
-		for (int j = 0; j < objectSpawner.GetBigEnemies().size(); j++)
+		for (int j = 0; j < ObjectSpawner::GetInstance().GetBigEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetBigEnemies()[j].GetDst()) 
-				&& !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
-				&& !objectSpawner.GetBigEnemies()[j].IsDestroy())
+			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[j].GetDst())
+				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
+				&& !ObjectSpawner::GetInstance().GetBigEnemies()[j].IsDestroy())
 			{
-				objectSpawner.SpawnHitMarkers(texture.m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
-				objectSpawner.GetBigEnemies()[j].Damage(1);
-				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+				ObjectSpawner::GetInstance().SpawnHitMarkers(Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
+				ObjectSpawner::GetInstance().GetBigEnemies()[j].Damage(1);
+				Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
 				break;
 			}
 		}
@@ -104,15 +95,15 @@ void Game::HandleEvent()
 		break;
 	}
 
-	texture.m_PlayerShip.HandleEvent(event);
+	Texture::GetInstance().m_PlayerShip.HandleEvent(event);
 }
 
 void Game::Render()
 {
 	window.clear();
-	texture.m_PlayerShip.Render(window);
-	objectSpawner.Render(window);
-	texture.Render(window);
+	Texture::GetInstance().m_PlayerShip.Render(window);
+	ObjectSpawner::GetInstance().Render(window);
+	Texture::GetInstance().Render(window);
 	window.display();
 }
 

@@ -30,6 +30,8 @@ public:
 
 	Texture();
 
+	static Texture& GetInstance();
+
 	void LoadTextures(RenderWindow window);
 	void Update();
 	void SetEntity();
