@@ -68,7 +68,7 @@ void Enemy::Shoot(float p_bulletOffset, int p_bulletPair)
 
 	for (int i = 0; i < p_bulletPair; i++)
 	{
-		Projectile temp = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), m_EnemyProjectile, Vector2f(0.9, 0.9));
+		Projectile temp = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 
 		projectiles.push_back(temp);
 	}
@@ -95,14 +95,9 @@ void Enemy::Damage(int value)
 	if (hitPoints <= 0)
 	{
 		Destroy();
-		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos());
-		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos());
+		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos(), Vector2f(8, 8));
+		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos(), Vector2f(8, 8));
 	}
-}
-
-void Enemy::GetTextures(SDL_Texture* p_EnemyProjectile)
-{
-	m_EnemyProjectile = p_EnemyProjectile;
 }
 
 std::vector<Projectile>& Enemy::GetProjectiles()

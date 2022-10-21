@@ -13,6 +13,9 @@ Missile::Missile(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Missile::Update(Vector2f target)
 {
+	if (IsDestroy())
+		return;
+
 	Entity::Update();
 
 	if (followTarget)

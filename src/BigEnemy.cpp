@@ -18,9 +18,10 @@ void BigEnemy::Update()
 		projectiles[i].Update(1);
 
 	for (int i = 0; i < missiles.size(); i++)
-		missiles[i].Update(m_Player->GetPos());
+		missiles[i].Update(Texture::GetInstance().m_PlayerShip.GetPos());
 
 	RemoveProjectiles();
+	RemoveMissiles();
 
 	for (int i = 0; i < projectiles.size(); i++)
 	{
@@ -66,8 +67,8 @@ void BigEnemy::Shoot(float p_bulletOffset, int p_bulletPair)
 
 	for (int i = 0; i < p_bulletPair; i++)
 	{
-		Projectile temp1 = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), m_EnemyProjectile, Vector2f(0.9, 0.9));
-		Projectile temp2 = Projectile(Vector2f(temp1.GetPos().x + 8 * (i % 2 == 0 ? 1 : -1), GetPos().y), m_EnemyProjectile, Vector2f(0.9, 0.9));
+		Projectile temp1 = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
+		Projectile temp2 = Projectile(Vector2f(temp1.GetPos().x + 8 * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 
 		projectiles.push_back(temp1);
 		projectiles.push_back(temp2);
@@ -83,7 +84,7 @@ void BigEnemy::ShootMissiles()
 
 	missileCoolDown = true;
 
-	Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), m_Missile, Vector2f(2, 2));
+	Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
 
 	missiles.push_back(temp);
 }
@@ -96,7 +97,7 @@ void BigEnemy::DefineShipType(int type)
 		m_shipType = QuardShooter_SingleMissile_Slower;
 		m_BulletOffset = 16;
 		m_bulletPair = 2;
-		m_Speed = 0.5;
+		m_Speed = 0.2;
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 7;
 		m_ShootDelay = 3;
@@ -107,7 +108,7 @@ void BigEnemy::DefineShipType(int type)
 		m_shipType = QuardShooter_DoubleMissile_Faster;
 		m_BulletOffset = 16;
 		m_bulletPair = 2;
-		m_Speed = 0.7;
+		m_Speed = 0.35;
 		m_OriginalFireRate = 0.15;
 		m_noOfBullets = 3;
 		m_ShootDelay = 2;
@@ -118,7 +119,7 @@ void BigEnemy::DefineShipType(int type)
 		m_shipType = Faster;
 		m_BulletOffset = 16;
 		m_bulletPair = 2;
-		m_Speed = 0.85;
+		m_Speed = 0.4;
 		m_OriginalFireRate = 0.2;
 		m_noOfBullets = 2;
 		m_ShootDelay = 1;
@@ -130,15 +131,20 @@ void BigEnemy::DefineShipType(int type)
 	}
 }
 
-void BigEnemy::SetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile)
+void BigEnemy::RemoveMissiles()
 {
-	Enemy::GetTextures(p_EnemyProjectile);
-	m_Missile = p_Missile;
+	for (int i = 0; i < missiles.size(); i++)
+	{
+		if (missiles[i].IsDestroy())
+		{
+			missiles.erase(missiles.begin() + i);
+		}
+	}
 }
 
-void BigEnemy::SetEntity(Entity* p_Player)
+std::vector<Missile>& BigEnemy::GetMissiles()
 {
-	m_Player = p_Player;
+	return missiles;
 }
 
 void BigEnemy::Render(RenderWindow window) {
@@ -147,7 +153,11 @@ void BigEnemy::Render(RenderWindow window) {
 	
 	for (int i = 0; i < missiles.size(); i++)
 	{
-		missileAngle = (float)std::atan2(m_Player->GetPos().y - missiles[i].GetPos().y, m_Player->GetPos().x - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
-		window.render(missiles[i], missileAngle);
+		if (!missiles[i].IsDestroy())
+		{
+			missileAngle = (float)std::atan2(Texture::GetInstance().m_PlayerShip.GetPos().y - missiles[i].GetPos().y, Texture::GetInstance().m_PlayerShip.GetPos().x - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
+			window.render(missiles[i], missileAngle);
+		}
+		
 	}
 }

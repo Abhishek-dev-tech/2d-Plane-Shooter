@@ -13,7 +13,6 @@ public:
 	Enemy() = default;
 	Enemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale);
 	void Update();
-	void GetTextures(SDL_Texture* p_EnemyProjectile);
 	void Render(RenderWindow window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
 	void Damage(int value);
@@ -38,8 +37,6 @@ protected:
 	bool shootCoolDown;
 
 	Vector2f originalScale;
-
-	SDL_Texture* m_EnemyProjectile;
 
 	std::vector<Projectile> projectiles;
 };

@@ -16,7 +16,7 @@ void SmallEnemy::DefineShipType(int type)
 			m_shipType = SingleShooter;
 			m_BulletOffset = 0;
 			m_bulletPair = 1;
-			m_Speed = 0.75;
+			m_Speed = 0.7;
 			m_OriginalFireRate = 0.2;
 			m_noOfBullets = 3;
 			m_ShootDelay = 2;
@@ -38,7 +38,7 @@ void SmallEnemy::DefineShipType(int type)
 			m_shipType = Faster;
 			m_BulletOffset = 10;
 			m_bulletPair = 2;
-			m_Speed = 1;
+			m_Speed = 0.8;
 			m_OriginalFireRate = 0.15;
 			m_noOfBullets = 1;
 			m_ShootDelay = 2.5;

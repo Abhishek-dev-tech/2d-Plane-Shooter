@@ -16,7 +16,7 @@ void MediumEnemy::DefineShipType(int type)
 		m_shipType = DoubleShooter_Slower;
 		m_BulletOffset = 12;
 		m_bulletPair = 2;
-		m_Speed = 0.5;
+		m_Speed = 0.4;
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 5;
 		m_ShootDelay = 3;
@@ -27,7 +27,7 @@ void MediumEnemy::DefineShipType(int type)
 		m_shipType = DoubleShooter_Faster;
 		m_BulletOffset = 0;
 		m_bulletPair = 1;
-		m_Speed = 0.7;
+		m_Speed = 0.5;
 		m_OriginalFireRate = 0.15;
 		m_noOfBullets = 3;
 		m_ShootDelay = 2;
@@ -38,7 +38,7 @@ void MediumEnemy::DefineShipType(int type)
 		m_shipType = Faster;
 		m_BulletOffset = 12;
 		m_bulletPair = 4;
-		m_Speed = 0.85;
+		m_Speed = 0.65;
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 2;
 		m_ShootDelay = 2;

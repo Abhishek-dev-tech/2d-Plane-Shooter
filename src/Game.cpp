@@ -34,6 +34,23 @@ void Game::Update()
 
 void Game::CheckCollision()
 {
+
+	//Collosion between enemy missile and player
+	for (int i = 0; i < ObjectSpawner::GetInstance().GetBigEnemies().size(); i++)
+	{
+		for (int j = 0; j < ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().size(); j++)
+		{
+			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].GetDst())
+				&& !ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].IsDestroy())
+			{
+				ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].Destroy();
+				ObjectSpawner::GetInstance().SpawnBlastEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].GetPos(), Vector2f(5, 5));
+				ObjectSpawner::GetInstance().SpawnSmokEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].GetPos(), Vector2f(5, 5));
+			}
+		}
+	}
+
+	//Collosion between enemy and player bullets
 	for (int i = 0; i < Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles().size(); i++)
 	{
 		for (int j = 0; j < ObjectSpawner::GetInstance().GetSmallEnemies().size(); j++)

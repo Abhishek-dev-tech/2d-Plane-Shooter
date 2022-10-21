@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "Missile.h"
 #include "Enemy.h"
+#include"Texture.h"
 
 class BigEnemy : public Enemy
 {
@@ -13,12 +14,12 @@ public:
 	BigEnemy() = default;
 	BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType);
 	void Update();
-	void SetTextures(SDL_Texture* p_EnemyProjectile, SDL_Texture* p_Missile);
-	void SetEntity(Entity* p_Player);
 	void Render(RenderWindow window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
 	void ShootMissiles();
+	std::vector<Missile>& GetMissiles();
 	void DefineShipType(int type);
+	void RemoveMissiles();
 
 private:
 
@@ -35,9 +36,5 @@ private:
 
 	bool missileCoolDown;
 
-	SDL_Texture* m_Missile;
-
 	std::vector<Missile> missiles;
-
-	Entity* m_Player;
 };

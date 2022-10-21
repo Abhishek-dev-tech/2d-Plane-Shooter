@@ -26,8 +26,8 @@ public:
 	void SpawnPartten();
 	void RemoveEnemies();
 	void SpawnHitMarkers(Vector2f p_Pos);
-	void SpawnBlastEffect(Vector2f p_Pos);
-	void SpawnSmokEffect(Vector2f p_Pos);
+	void SpawnBlastEffect(Vector2f p_Pos, Vector2f p_Scale);
+	void SpawnSmokEffect(Vector2f p_Pos, Vector2f p_Scale);
 
 	std::vector<SmallEnemy>& GetSmallEnemies();
 	std::vector<MediumEnemy>& GetMediumEnemies();
