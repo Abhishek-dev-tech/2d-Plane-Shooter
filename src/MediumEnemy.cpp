@@ -20,6 +20,7 @@ void MediumEnemy::DefineShipType(int type)
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 5;
 		m_ShootDelay = 3;
+		hitPoints = 14;
 		break;
 
 	case 2:
@@ -30,6 +31,7 @@ void MediumEnemy::DefineShipType(int type)
 		m_OriginalFireRate = 0.15;
 		m_noOfBullets = 3;
 		m_ShootDelay = 2;
+		hitPoints = 10;
 		break;
 
 	case 3:
@@ -40,6 +42,7 @@ void MediumEnemy::DefineShipType(int type)
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 2;
 		m_ShootDelay = 2;
+		hitPoints = 10;
 		break;
 
 	default:

@@ -16,7 +16,13 @@ public:
 	void GetTextures(SDL_Texture* p_EnemyProjectile);
 	void Render(RenderWindow window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
+	void Damage(int value);
+	void RemoveProjectiles();
 
+
+	std::vector<Projectile>& GetProjectiles();
+
+protected:
 	float m_Speed;
 	float m_OriginalFireRate;
 	float m_CurrentFireRate;
@@ -27,8 +33,11 @@ public:
 	int counter;
 	int m_bulletPair;
 	int m_noOfBullets;
+	int hitPoints;
 
 	bool shootCoolDown;
+
+	Vector2f originalScale;
 
 	SDL_Texture* m_EnemyProjectile;
 

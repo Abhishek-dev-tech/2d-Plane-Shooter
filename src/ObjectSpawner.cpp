@@ -26,6 +26,8 @@ void ObjectSpawner::Update()
 	for (int i = 0; i < bigEnemies.size(); i++)
 		bigEnemies[i].Update();
 
+	RemoveEnemies();
+
 }
 
 void ObjectSpawner::SpawnEnemies()
@@ -54,7 +56,6 @@ void ObjectSpawner::SpawnSmallEnemies(Vector2f p_pos)
 	temp.GetTextures(m_EnemyProjectile01);
 
 	smallEnemies.push_back(temp);
-	allEnemies.push_back(temp);
 
 	m_SmallEnemyCounter++;
 
@@ -68,7 +69,6 @@ void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
 	temp.GetTextures(m_EnemyProjectile01);
 
 	mediumEnemies.push_back(temp);
-	allEnemies.push_back(temp);
 
 	m_MediumEnemyCounter++;
 
@@ -84,7 +84,6 @@ void ObjectSpawner::SpawnBigEnemies(Vector2f p_pos)
 	temp.SetEntity(m_Player);
 
 	bigEnemies.push_back(temp);
-	allEnemies.push_back(temp);
 
 	m_BigEnemyCounter++;
 
@@ -112,14 +111,67 @@ void ObjectSpawner::SetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p
 	m_Missile = p_Missile;
 }
 
+void ObjectSpawner::RemoveEnemies()
+{
+
+	for (int i = 0; i < smallEnemies.size(); i++)
+	{
+		if (smallEnemies[i].IsDestroy() && smallEnemies[i].GetProjectiles().empty())
+			smallEnemies.erase(smallEnemies.begin() + i);
+
+		for (int j = 0; j < smallEnemies[i].GetProjectiles().size(); j++)
+		{
+			if (smallEnemies[i].GetProjectiles()[j].GetPos().y >= 730)
+				smallEnemies[i].GetProjectiles()[j].Destroy();
+		}
+	}
+		
+
+	for (int i = 0; i < mediumEnemies.size(); i++)
+	{
+		if (mediumEnemies[i].IsDestroy() && mediumEnemies[i].GetProjectiles().empty())
+			mediumEnemies.erase(mediumEnemies.begin() + i);
+
+		for (int j = 0; j < mediumEnemies[i].GetProjectiles().size(); j++)
+		{
+			if (mediumEnemies[i].GetProjectiles()[j].GetPos().y >= 730)
+				mediumEnemies[i].GetProjectiles()[j].Destroy();
+		}
+	}
+		
+
+	for (int i = 0; i < bigEnemies.size(); i++)
+	{
+		if (bigEnemies[i].IsDestroy() && bigEnemies[i].GetProjectiles().empty())
+			bigEnemies.erase(bigEnemies.begin() + i);
+
+		for (int j = 0; j < bigEnemies[i].GetProjectiles().size(); j++)
+		{
+			if (bigEnemies[i].GetProjectiles()[j].GetPos().y >= 730)
+				bigEnemies[i].GetProjectiles()[j].Destroy();
+		}
+	}	
+	
+}
+
 void ObjectSpawner::SetEntity(Entity* p_Player)
 {
 	m_Player = p_Player;
 }
 
-std::vector<Enemy> ObjectSpawner::GetAllEnemies()
+std::vector<SmallEnemy>& ObjectSpawner::GetSmallEnemies()
 {
-	return allEnemies;
+	return smallEnemies;
+}
+
+std::vector<MediumEnemy>& ObjectSpawner::GetMediumEnemies()
+{
+	return mediumEnemies;
+}
+
+std::vector<BigEnemy>& ObjectSpawner::GetBigEnemies()
+{
+	return bigEnemies;
 }
 
 void ObjectSpawner::Render(RenderWindow window)
@@ -128,18 +180,26 @@ void ObjectSpawner::Render(RenderWindow window)
 	{
 		smallEnemies[i].Render(window);
 
-		window.render(smallEnemies[i], 180);
+		//if (!smallEnemies[i].IsDestroy())
+			window.render(smallEnemies[i], 180);
+		
 	}
 
 	for (int i = 0; i < mediumEnemies.size(); i++)
 	{
 		mediumEnemies[i].Render(window);
-		window.render(mediumEnemies[i], 180);
+
+		//if (!mediumEnemies[i].IsDestroy())
+			window.render(mediumEnemies[i], 180);
+		
 	}	
 	
 	for (int i = 0; i < bigEnemies.size(); i++)
 	{
 		bigEnemies[i].Render(window);
-		window.render(bigEnemies[i], 180);
+
+		//if (!bigEnemies[i].IsDestroy())
+			window.render(bigEnemies[i], 180);
+		
 	}
 }

@@ -20,6 +20,7 @@ public:
 	void SpawnMediumEnemies(Vector2f p_pos);
 	void SpawnBigEnemies(Vector2f p_pos);
 	void SpawnPartten();
+	void RemoveEnemies();
 
 	void SetTextures(SDL_Texture* p_SmallEnemyShips[],
 		SDL_Texture* p_EnemyProjectile01, 
@@ -27,7 +28,9 @@ public:
 		SDL_Texture* p_BigEnemyShips[],
 		SDL_Texture* p_Missile);
 
-	std::vector<Enemy> GetAllEnemies();
+	std::vector<SmallEnemy>& GetSmallEnemies();
+	std::vector<MediumEnemy>& GetMediumEnemies();
+	std::vector<BigEnemy>& GetBigEnemies();
 
 	void SetEntity(Entity* p_Player);
 
@@ -44,8 +47,6 @@ private:
 	std::vector<SmallEnemy> smallEnemies;
 	std::vector<MediumEnemy> mediumEnemies;
 	std::vector<BigEnemy> bigEnemies;
-
-	std::vector<Enemy> allEnemies;
 
 	SDL_Texture* m_SmallEnemyShips[3];
 	SDL_Texture* m_MediumEnemyShips[3];

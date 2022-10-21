@@ -12,6 +12,10 @@ public:
 		return (rand() % (max - min + 1)) + min;
 	}
 
+	static float Lerp(float a, float b, float t) {
+		return (1.0 - t) * a + b * t;
+	}
+
 };
 
 struct Vector2f

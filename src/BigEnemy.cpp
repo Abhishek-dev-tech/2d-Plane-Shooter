@@ -14,13 +14,18 @@ BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_s
 
 void BigEnemy::Update()
 {
-	Entity::Update();
-
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(1);
 
 	for (int i = 0; i < missiles.size(); i++)
 		missiles[i].Update(m_Player->GetPos());
+
+	RemoveProjectiles();
+
+	if (IsDestroy())
+		return;
+
+	Entity::Update();
 
 	if (SDL_GetTicks() * 0.001 - previousTime >= m_CurrentFireRate && shootCoolDown)
 	{
@@ -36,6 +41,8 @@ void BigEnemy::Update()
 		else if (counter < m_noOfBullets)
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
+	SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.5)));
+
 
 	Shoot(m_BulletOffset, m_bulletPair);
 
@@ -87,6 +94,7 @@ void BigEnemy::DefineShipType(int type)
 		m_OriginalFireRate = 0.1;
 		m_noOfBullets = 7;
 		m_ShootDelay = 3;
+		hitPoints = 24;
 		break;
 
 	case 2:
@@ -97,6 +105,7 @@ void BigEnemy::DefineShipType(int type)
 		m_OriginalFireRate = 0.15;
 		m_noOfBullets = 3;
 		m_ShootDelay = 2;
+		hitPoints = 18;
 		break;
 
 	case 3:
@@ -107,6 +116,7 @@ void BigEnemy::DefineShipType(int type)
 		m_OriginalFireRate = 0.2;
 		m_noOfBullets = 2;
 		m_ShootDelay = 1;
+		hitPoints = 18;
 		break;
 
 	default:

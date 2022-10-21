@@ -23,10 +23,14 @@ public:
 	void SetPos(Vector2f pos);
 	void SetScale(Vector2f scale);
 	void Update();
+	void Destroy();
 
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();
 	SDL_Rect& GetDst();
+	
+	bool IsDestroy();
+
 private:
 	Vector2f pos;
 	Vector2f scale;
@@ -34,4 +38,6 @@ private:
 	SDL_Rect currentFrame;
 	SDL_Rect dst;
 	SDL_Texture* tex;
+
+	bool destroy;
 };

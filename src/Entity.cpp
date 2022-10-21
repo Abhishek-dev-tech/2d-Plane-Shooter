@@ -10,6 +10,8 @@ Entity::Entity(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 	currentFrame.x = 0;
 	currentFrame.y = 0;
+
+	destroy = false;
 }
 
 void Entity::Update()
@@ -30,6 +32,11 @@ void Entity::SetScale(Vector2f _scale)
 	scale = _scale;
 }
 
+void Entity::Destroy()
+{
+	destroy = true;
+}
+
 SDL_Texture* Entity::getTex()
 {
 	return tex;
@@ -43,4 +50,9 @@ SDL_Rect Entity::getCurrentFrame()
 SDL_Rect& Entity::GetDst()
 {
 	return dst;
+}
+
+bool Entity::IsDestroy()
+{
+	return  destroy;
 }

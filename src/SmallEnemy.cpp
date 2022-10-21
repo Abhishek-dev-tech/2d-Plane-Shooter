@@ -20,6 +20,7 @@ void SmallEnemy::DefineShipType(int type)
 			m_OriginalFireRate = 0.2;
 			m_noOfBullets = 3;
 			m_ShootDelay = 2;
+			hitPoints = 7;
 			break;
 
 		case 2:
@@ -30,6 +31,7 @@ void SmallEnemy::DefineShipType(int type)
 			m_OriginalFireRate = 0.15;
 			m_noOfBullets = 2;
 			m_ShootDelay = 1.5;
+			hitPoints = 5;
 			break;
 
 		case 3:
@@ -40,6 +42,7 @@ void SmallEnemy::DefineShipType(int type)
 			m_OriginalFireRate = 0.15;
 			m_noOfBullets = 1;
 			m_ShootDelay = 2.5;
+			hitPoints = 5;
 			break;
 
 	default:

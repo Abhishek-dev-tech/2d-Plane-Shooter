@@ -24,6 +24,14 @@ void Player::Update()
 		shootCoolDown = false;
 	}
 
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i].GetPos().y <= -10)
+			projectiles[i].Destroy();
+	}
+
+	RemoveProjectiles();
+
 }
 
 void Player::HandleEvent(SDL_Event event)
@@ -58,7 +66,18 @@ void Player::Shoot()
 	projectiles.push_back(temp);
 }
 
-std::vector<Projectile> Player::GetPlayerProjectiles()
+void Player::RemoveProjectiles()
+{
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i].IsDestroy())
+		{
+			projectiles.erase(projectiles.begin() + i);
+		}
+	}
+}
+
+std::vector<Projectile>& Player::GetPlayerProjectiles()
 {
 	return projectiles;
 }
@@ -71,5 +90,8 @@ void Player::GetTextures(SDL_Texture* p_PlayerProjectile01)
 void Player::Render(RenderWindow window) {
 
 	for (int i = 0; i < projectiles.size(); i++)
-		window.render(projectiles[i], 0);
+	{
+		if(!projectiles[i].IsDestroy())
+			window.render(projectiles[i], 0);
+	}
 }

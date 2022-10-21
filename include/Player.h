@@ -16,7 +16,8 @@ public:
 	void GetTextures(SDL_Texture* p_PlayerProjectile01);
 	void Render(RenderWindow window);
 	void Shoot();
-	std::vector<Projectile> GetPlayerProjectiles();
+	void RemoveProjectiles();
+	std::vector<Projectile>& GetPlayerProjectiles();
 
 private:
 	float m_Speed;
