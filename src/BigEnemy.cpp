@@ -22,6 +22,12 @@ void BigEnemy::Update()
 
 	RemoveProjectiles();
 
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i].GetPos().y >= 730)
+			projectiles[i].Destroy();
+	}
+
 	if (IsDestroy())
 		return;
 

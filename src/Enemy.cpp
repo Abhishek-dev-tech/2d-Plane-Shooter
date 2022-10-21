@@ -22,6 +22,12 @@ void Enemy::Update()
 
 	RemoveProjectiles();
 
+	for (int i = 0; i < projectiles.size(); i++)
+	{
+		if (projectiles[i].GetPos().y >= 730)
+			projectiles[i].Destroy();
+	}
+
 	if (IsDestroy())
 		return;
 
@@ -42,7 +48,7 @@ void Enemy::Update()
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
-	SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.5)));
+	SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.1)));
 
 	Shoot(m_BulletOffset, m_bulletPair);
 

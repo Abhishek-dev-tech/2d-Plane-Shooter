@@ -17,6 +17,9 @@ void ObjectSpawner::Update()
 {
 	SpawnEnemies();
 
+	RemoveEnemies();
+
+
 	for (int i = 0; i < smallEnemies.size(); i++)
 		smallEnemies[i].Update();
 
@@ -26,7 +29,16 @@ void ObjectSpawner::Update()
 	for (int i = 0; i < bigEnemies.size(); i++)
 		bigEnemies[i].Update();
 
-	RemoveEnemies();
+	for (int i = 0; i < hitMarkers.size(); i++)
+	{
+		hitMarkers[i].Update();
+		hitMarkers[i].SetScale(Vector2f(Mathf::Lerp(hitMarkers[i].GetScale().x, -0.05, 0.05), Mathf::Lerp(hitMarkers[i].GetScale().y, -0.05, 0.05)));
+		
+		if (hitMarkers[i].GetScale().x <= 0)
+			hitMarkers.erase(hitMarkers.begin() + i);
+		
+	}
+
 
 }
 
@@ -46,7 +58,7 @@ void ObjectSpawner::SpawnEnemies()
 		
 		else
 			SpawnBigEnemies(Vector2f(Mathf::Random(50, 650), -10));
-		//SpawnPartten();
+
 	}
 }
 
@@ -91,6 +103,13 @@ void ObjectSpawner::SpawnBigEnemies(Vector2f p_pos)
 		m_BigEnemyCounter = 1;
 }
 
+void ObjectSpawner::SpawnHitMarkers(Vector2f p_Pos)
+{
+	Entity temp = Entity(p_Pos, m_HitMarkers[Mathf::Random(0, 2)], Vector2f(2, 2));
+
+	hitMarkers.push_back(temp);
+}
+
 void ObjectSpawner::SpawnPartten()
 {
 	SpawnBigEnemies(Vector2f(400, -10));
@@ -98,13 +117,16 @@ void ObjectSpawner::SpawnPartten()
 	SpawnSmallEnemies(Vector2f(450, -5));
 }
 
-void ObjectSpawner::SetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p_EnemyProjectile01, SDL_Texture* p_MediumEnemyShips[], SDL_Texture* p_BigEnemyShips[], SDL_Texture* p_Missile)
+void ObjectSpawner::SetTextures(SDL_Texture* p_SmallEnemyShips[], SDL_Texture* p_EnemyProjectile01, 
+	SDL_Texture* p_MediumEnemyShips[], SDL_Texture* p_BigEnemyShips[], 
+	SDL_Texture* p_Missile, SDL_Texture* p_HitMarkers[])
 {
 	for (int i = 0; i < 3; i++)
 	{
 		m_SmallEnemyShips[i] = p_SmallEnemyShips[i];
 		m_MediumEnemyShips[i] = p_MediumEnemyShips[i];
 		m_BigEnemyShips[i] = p_BigEnemyShips[i];
+		m_HitMarkers[i] = p_HitMarkers[i];
 	}
 	
 	m_EnemyProjectile01 = p_EnemyProjectile01;
@@ -115,42 +137,21 @@ void ObjectSpawner::RemoveEnemies()
 {
 
 	for (int i = 0; i < smallEnemies.size(); i++)
-	{
 		if (smallEnemies[i].IsDestroy() && smallEnemies[i].GetProjectiles().empty())
 			smallEnemies.erase(smallEnemies.begin() + i);
 
-		for (int j = 0; j < smallEnemies[i].GetProjectiles().size(); j++)
-		{
-			if (smallEnemies[i].GetProjectiles()[j].GetPos().y >= 730)
-				smallEnemies[i].GetProjectiles()[j].Destroy();
-		}
-	}
 		
 
 	for (int i = 0; i < mediumEnemies.size(); i++)
-	{
 		if (mediumEnemies[i].IsDestroy() && mediumEnemies[i].GetProjectiles().empty())
 			mediumEnemies.erase(mediumEnemies.begin() + i);
-
-		for (int j = 0; j < mediumEnemies[i].GetProjectiles().size(); j++)
-		{
-			if (mediumEnemies[i].GetProjectiles()[j].GetPos().y >= 730)
-				mediumEnemies[i].GetProjectiles()[j].Destroy();
-		}
-	}
+	
 		
 
 	for (int i = 0; i < bigEnemies.size(); i++)
-	{
 		if (bigEnemies[i].IsDestroy() && bigEnemies[i].GetProjectiles().empty())
 			bigEnemies.erase(bigEnemies.begin() + i);
-
-		for (int j = 0; j < bigEnemies[i].GetProjectiles().size(); j++)
-		{
-			if (bigEnemies[i].GetProjectiles()[j].GetPos().y >= 730)
-				bigEnemies[i].GetProjectiles()[j].Destroy();
-		}
-	}	
+		
 	
 }
 
@@ -174,13 +175,19 @@ std::vector<BigEnemy>& ObjectSpawner::GetBigEnemies()
 	return bigEnemies;
 }
 
+std::vector<Entity>& ObjectSpawner::GetHitMarkers()
+{
+	return hitMarkers;
+}
+
 void ObjectSpawner::Render(RenderWindow window)
 {
+
 	for (int i = 0; i < smallEnemies.size(); i++)
 	{
 		smallEnemies[i].Render(window);
 
-		//if (!smallEnemies[i].IsDestroy())
+		if (!smallEnemies[i].IsDestroy())
 			window.render(smallEnemies[i], 180);
 		
 	}
@@ -189,7 +196,7 @@ void ObjectSpawner::Render(RenderWindow window)
 	{
 		mediumEnemies[i].Render(window);
 
-		//if (!mediumEnemies[i].IsDestroy())
+		if (!mediumEnemies[i].IsDestroy())
 			window.render(mediumEnemies[i], 180);
 		
 	}	
@@ -198,8 +205,12 @@ void ObjectSpawner::Render(RenderWindow window)
 	{
 		bigEnemies[i].Render(window);
 
-		//if (!bigEnemies[i].IsDestroy())
+		if (!bigEnemies[i].IsDestroy())
 			window.render(bigEnemies[i], 180);
 		
 	}
+
+	for (int i = 0; i < hitMarkers.size(); i++)
+		window.render(hitMarkers[i], 0);
+	
 }

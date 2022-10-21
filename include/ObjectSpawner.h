@@ -21,16 +21,21 @@ public:
 	void SpawnBigEnemies(Vector2f p_pos);
 	void SpawnPartten();
 	void RemoveEnemies();
+	void SpawnHitMarkers(Vector2f p_Pos);
+
 
 	void SetTextures(SDL_Texture* p_SmallEnemyShips[],
 		SDL_Texture* p_EnemyProjectile01, 
 		SDL_Texture* p_MediumEnemyShips[],
 		SDL_Texture* p_BigEnemyShips[],
-		SDL_Texture* p_Missile);
+		SDL_Texture* p_Missile,
+		SDL_Texture* p_HitMarkers[]);
 
 	std::vector<SmallEnemy>& GetSmallEnemies();
 	std::vector<MediumEnemy>& GetMediumEnemies();
 	std::vector<BigEnemy>& GetBigEnemies();
+
+	std::vector<Entity>& GetHitMarkers();
 
 	void SetEntity(Entity* p_Player);
 
@@ -48,11 +53,14 @@ private:
 	std::vector<MediumEnemy> mediumEnemies;
 	std::vector<BigEnemy> bigEnemies;
 
+	std::vector<Entity> hitMarkers;
+
 	SDL_Texture* m_SmallEnemyShips[3];
 	SDL_Texture* m_MediumEnemyShips[3];
 	SDL_Texture* m_BigEnemyShips[3];
 	SDL_Texture* m_EnemyProjectile01;
 	SDL_Texture* m_Missile;
+	SDL_Texture* m_HitMarkers[3];
 
 	Entity* m_Player;
 

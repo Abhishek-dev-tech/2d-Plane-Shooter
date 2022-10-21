@@ -21,7 +21,12 @@ public:
 	SDL_Texture* mediumEnemyShips[3];
 	SDL_Texture* bigEnemyShips[3];
 
+	SDL_Texture* hitMark[3];
+
 	SDL_Texture* missile;
+	SDL_Texture* blastEffect;
+	SDL_Texture* smokeEffect;
+
 
 	Texture();
 

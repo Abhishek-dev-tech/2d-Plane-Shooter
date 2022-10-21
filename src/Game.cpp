@@ -22,7 +22,8 @@ void Game::Init()
 		texture.projectile01, 
 		texture.mediumEnemyShips, 
 		texture.bigEnemyShips,
-		texture.missile);
+		texture.missile,
+		texture.hitMark);
 
 	objectSpawner.SetEntity(&texture.m_PlayerShip);
 }
@@ -46,10 +47,14 @@ void Game::CheckCollision()
 	{
 		for (int j = 0; j < objectSpawner.GetSmallEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetSmallEnemies()[j].GetDst()) && !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy())
+			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetSmallEnemies()[j].GetDst()) 
+				&& !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
+				&& !objectSpawner.GetSmallEnemies()[j].IsDestroy())
 			{
-				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+				objectSpawner.SpawnHitMarkers(texture.m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
 				objectSpawner.GetSmallEnemies()[j].Damage(1);
+				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+
 				break;
 
 			}
@@ -57,22 +62,26 @@ void Game::CheckCollision()
 
 		for (int j = 0; j < objectSpawner.GetMediumEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetMediumEnemies()[j].GetDst()) && !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy())
+			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetMediumEnemies()[j].GetDst()) 
+				&& !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
+				&& !objectSpawner.GetMediumEnemies()[j].IsDestroy())
 			{
-				std::cout << "COLLISION\n";
-				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+				objectSpawner.SpawnHitMarkers(texture.m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
 				objectSpawner.GetMediumEnemies()[j].Damage(1);
+				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
 				break;
 			}
 		}
 
 		for (int j = 0; j < objectSpawner.GetBigEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetBigEnemies()[j].GetDst()) && !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy())
+			if (SDL_HasIntersection(&texture.m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &objectSpawner.GetBigEnemies()[j].GetDst()) 
+				&& !texture.m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
+				&& !objectSpawner.GetBigEnemies()[j].IsDestroy())
 			{
-				std::cout << "COLLISION\n";
-				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
+				objectSpawner.SpawnHitMarkers(texture.m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
 				objectSpawner.GetBigEnemies()[j].Damage(1);
+				texture.m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
 				break;
 			}
 		}
