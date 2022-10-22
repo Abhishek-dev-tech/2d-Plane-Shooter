@@ -11,9 +11,19 @@ class Texture
 {
 public:
 
+	Texture();
+
+	static Texture& GetInstance();
+
+	void LoadTextures(RenderWindow window);
+	void Update();
+	void SetEntity();
+	void Render(RenderWindow window);
+
 	Player m_PlayerShip;
 
-	Entity m_Cursor;
+	Entity m_CursorWhite;
+	Entity m_CursorRed;
 
 	SDL_Texture* projectile01;
 
@@ -27,18 +37,11 @@ public:
 	SDL_Texture* blastEffect;
 	SDL_Texture* smokeEffect;
 
-
-	Texture();
-
-	static Texture& GetInstance();
-
-	void LoadTextures(RenderWindow window);
-	void Update();
-	void SetEntity();
-	void Render(RenderWindow window);
+	bool isCursorCollideWithEnemy;
 
 private:
 	SDL_Texture* playerShip;
-	SDL_Texture* cursor;
+	SDL_Texture* cursorWhite;
+	SDL_Texture* cursorRed;
 
 };

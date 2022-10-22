@@ -24,6 +24,8 @@ public:
 private:
 
 	float missileAngle;
+	float missileCoolDownMaxTime;
+	float missileCoolDownPreviousTime;
 
 	enum ShipType
 	{

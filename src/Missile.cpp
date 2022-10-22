@@ -5,7 +5,6 @@ Missile::Missile(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 {
 	m_Speed = 0.005;
 
-	counter = 1;
 	maxTime = 5;
 
 	followTarget = true;
@@ -24,7 +23,4 @@ void Missile::Update(Vector2f target)
 
 		SetPos(Vector2f(GetPos().x + direction.x * m_Speed, GetPos().y + direction.y * m_Speed));
 	}
-
-	
-	counter++;
 }

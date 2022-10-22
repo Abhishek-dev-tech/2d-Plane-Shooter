@@ -5,7 +5,10 @@ BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_s
 {
 	missileAngle = 180;
 
-	missileCoolDown = false;
+	missileCoolDownMaxTime = 8;
+	missileCoolDownPreviousTime = 0;
+
+	missileCoolDown = true;
 
 	DefineShipType(p_shipType);
 
@@ -42,16 +45,25 @@ void BigEnemy::Update()
 		if (counter == m_noOfBullets)
 		{
 			m_CurrentFireRate = m_ShootDelay;
-			ShootMissiles();
 			counter = 0;
 		}
 		else if (counter < m_noOfBullets)
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
+
+	if (SDL_GetTicks() * 0.001 - missileCoolDownPreviousTime >= missileCoolDownMaxTime && missileCoolDown)
+	{
+		missileCoolDownPreviousTime = SDL_GetTicks() * 0.001;
+		missileCoolDown = false;
+	}
 	SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.5)));
 
+	if (GetPos().y >= 740)
+		Destroy();
 
 	Shoot(m_BulletOffset, m_bulletPair);
+	ShootMissiles();
+
 
 	SetPos(Vector2f(GetPos().x, GetPos().y + m_Speed));
 

@@ -50,6 +50,9 @@ void Enemy::Update()
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
+	if (GetPos().y >= 740)
+		Destroy();
+
 	SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.1)));
 
 	Shoot(m_BulletOffset, m_bulletPair);

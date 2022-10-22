@@ -1,4 +1,6 @@
 #include "Player.h"
+#include "Texture.h"
+
 
 Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	:Entity(p_pos, p_tex, p_scale)
@@ -61,9 +63,16 @@ void Player::Shoot()
 
 	shootCoolDown = true;
 
-	Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), m_PlayerProjectile01, Vector2f(1, 1));
+	Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().projectile01, Vector2f(1, 1));
 
 	projectiles.push_back(temp);
+}
+
+void Player::ShootMissile()
+{
+	Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
+
+	missiles.push_back(temp);
 }
 
 void Player::RemoveProjectiles()
@@ -82,16 +91,15 @@ std::vector<Projectile>& Player::GetPlayerProjectiles()
 	return projectiles;
 }
 
-void Player::GetTextures(SDL_Texture* p_PlayerProjectile01)
-{
-	m_PlayerProjectile01 = p_PlayerProjectile01;
-}
-
 void Player::Render(RenderWindow window) {
 
 	for (int i = 0; i < projectiles.size(); i++)
-	{
 		if(!projectiles[i].IsDestroy())
 			window.render(projectiles[i], 0);
-	}
+
+	for (int i = 0; i < missiles.size(); i++)
+		if (!missiles[i].IsDestroy())
+			window.render(missiles[i], 0);
+	
+	
 }

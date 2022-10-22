@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "RenderWindow.h"
+#include "Collision.h"
 
 Game::Game()
 	:window("GAME v1.0", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 720, 720)
@@ -22,7 +23,8 @@ void Game::Init()
 void Game::Update()
 {
 	SDL_GetMouseState(&mouseX, &mouseY);
-	Texture::GetInstance().m_Cursor.SetPos(Vector2f(mouseX, mouseY));
+	Texture::GetInstance().m_CursorWhite.SetPos(Vector2f(mouseX, mouseY));
+	Texture::GetInstance().m_CursorRed.SetPos(Vector2f(mouseX, mouseY));
 
 	Texture::GetInstance().Update();
 	ObjectSpawner::GetInstance().Update();
@@ -35,12 +37,49 @@ void Game::Update()
 void Game::CheckCollision()
 {
 
+
+	//Collosion between enemy and cursor 
+	for (int j = 0; j < ObjectSpawner::GetInstance().GetSmallEnemies().size(); j++)
+	{
+		if (Collision::IsCollide(&Texture::GetInstance().m_CursorWhite.GetDst(), &ObjectSpawner::GetInstance().GetSmallEnemies()[j].GetDst()))
+		{
+			Texture::GetInstance().isCursorCollideWithEnemy = true;
+			break;
+	    }
+		else
+			Texture::GetInstance().isCursorCollideWithEnemy = false;
+	}
+
+	for (int j = 0; j < ObjectSpawner::GetInstance().GetMediumEnemies().size(); j++)
+	{
+		if (Collision::IsCollide(&Texture::GetInstance().m_CursorWhite.GetDst(), &ObjectSpawner::GetInstance().GetMediumEnemies()[j].GetDst()))
+		{
+			Texture::GetInstance().isCursorCollideWithEnemy = true;
+			break;
+		}
+		else
+			Texture::GetInstance().isCursorCollideWithEnemy = false;
+	}
+
+	for (int j = 0; j < ObjectSpawner::GetInstance().GetBigEnemies().size(); j++)
+	{
+		if (Collision::IsCollide(&Texture::GetInstance().m_CursorWhite.GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[j].GetDst()))
+			{
+			Texture::GetInstance().isCursorCollideWithEnemy = true;
+			break;
+	    }
+
+		else
+			Texture::GetInstance().isCursorCollideWithEnemy = false;
+	}
+	
+
 	//Collosion between enemy missile and player
 	for (int i = 0; i < ObjectSpawner::GetInstance().GetBigEnemies().size(); i++)
 	{
 		for (int j = 0; j < ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().size(); j++)
 		{
-			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].GetDst())
+			if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].GetDst())
 				&& !ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].IsDestroy())
 			{
 				ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles()[j].Destroy();
@@ -55,7 +94,7 @@ void Game::CheckCollision()
 	{
 		for (int j = 0; j < ObjectSpawner::GetInstance().GetSmallEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetSmallEnemies()[j].GetDst())
+			if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetSmallEnemies()[j].GetDst())
 				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
 				&& !ObjectSpawner::GetInstance().GetSmallEnemies()[j].IsDestroy())
 			{
@@ -70,7 +109,7 @@ void Game::CheckCollision()
 
 		for (int j = 0; j < ObjectSpawner::GetInstance().GetMediumEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetMediumEnemies()[j].GetDst())
+			if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetMediumEnemies()[j].GetDst())
 				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
 				&& !ObjectSpawner::GetInstance().GetMediumEnemies()[j].IsDestroy())
 			{
@@ -83,7 +122,7 @@ void Game::CheckCollision()
 
 		for (int j = 0; j < ObjectSpawner::GetInstance().GetBigEnemies().size(); j++)
 		{
-			if (SDL_HasIntersection(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[j].GetDst())
+			if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[j].GetDst())
 				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
 				&& !ObjectSpawner::GetInstance().GetBigEnemies()[j].IsDestroy())
 			{

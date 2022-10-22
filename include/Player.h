@@ -4,6 +4,7 @@
 #include "RenderWindow.h"
 #include "Entity.h"
 #include "Projectile.h"
+#include "Missile.h"
 
 
 class Player : public Entity
@@ -13,10 +14,11 @@ public:
 	Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale);
 	void Update();
 	void HandleEvent(SDL_Event event);
-	void GetTextures(SDL_Texture* p_PlayerProjectile01);
 	void Render(RenderWindow window);
 	void Shoot();
+	void ShootMissile();
 	void RemoveProjectiles();
+
 	std::vector<Projectile>& GetPlayerProjectiles();
 
 private:
@@ -24,10 +26,8 @@ private:
 	float maxTime; 
 	float previousTime;
 
-
 	bool shootCoolDown;
 
-	SDL_Texture* m_PlayerProjectile01;
-
 	std::vector<Projectile> projectiles;
+	std::vector<Missile> missiles;
 };

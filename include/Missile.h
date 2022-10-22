@@ -15,8 +15,6 @@ private:
 	float maxTime;
 	float currentTime;
 	
-	int counter;
-
 	Vector2f direction;
 
 };

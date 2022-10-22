@@ -2,6 +2,7 @@
 
 Texture::Texture()
 {
+	isCursorCollideWithEnemy = false;
 }
 
 Texture& Texture::GetInstance()
@@ -36,7 +37,8 @@ void Texture::LoadTextures(RenderWindow window)
 	blastEffect = window.loadTexture("res/BlastEffect.png");
 	smokeEffect = window.loadTexture("res/SmokeEffect.png");
 
-	cursor = window.loadTexture("res/Cursor.png");
+	cursorWhite = window.loadTexture("res/Cursor_White.png");
+	cursorRed = window.loadTexture("res/Cursor_Red.png");
 
 	SetEntity();
 }
@@ -45,20 +47,23 @@ void Texture::SetEntity()
 {
 	m_PlayerShip = Player(Vector2f(360, 650), playerShip, Vector2f(2, 2));
 
-	m_Cursor = Entity(Vector2f(0, 0), cursor, Vector2f(2, 2));
-
-	m_PlayerShip.GetTextures(projectile01);
-	
+	m_CursorWhite = Entity(Vector2f(0, 0), cursorWhite, Vector2f(2, 2));	
+	m_CursorRed = Entity(Vector2f(0, 0), cursorRed, Vector2f(2, 2));	
 }
 
 void Texture::Update()
 {
 	m_PlayerShip.Update();
-	m_Cursor.Update();
+	m_CursorWhite.Update();
+	m_CursorRed.Update();
 }
 
 void Texture::Render(RenderWindow window)
 {
 	window.render(m_PlayerShip, 0);
-	window.render(m_Cursor, 0);
+
+	if(isCursorCollideWithEnemy)
+		window.render(m_CursorRed, 0);
+	else
+		window.render(m_CursorWhite, 0);
 }
