@@ -5,6 +5,7 @@
 #include "Entity.h"
 #include "Projectile.h"
 #include "Missile.h"
+#include "Timer.h"
 
 
 class Player : public Entity
@@ -21,20 +22,26 @@ public:
 	void SetPlayerMissileTarget(Vector2f* p_Target);
 
 	std::vector<Projectile>& GetPlayerProjectiles();
+	Missile& GetMissile();
+
+	bool once;
+	bool missileCoolDown;
+
 
 private:
 	float m_Speed;
 	float maxTime; 
 	float previousTime;	
-	float missileCoolDownMaxTime;
-	float missileCoolDownPreviousTime;
+	float m_MissileMaxTime;
 	float missileAngle;
 
 	bool shootCoolDown;
-	bool missileCoolDown;
 
 	Vector2f* m_Target;
 
 	std::vector<Projectile> projectiles;
+
 	Missile missile;
+
+	Timer m_MissileTimer;
 };

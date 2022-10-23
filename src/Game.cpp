@@ -49,6 +49,19 @@ void Game::CheckCollision()
 	
 
 
+	//Collosion between enemy and player missile
+	for (int i = 0; i < allEnemies.size(); i++)
+	{
+		if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetMissile().GetDst(), &allEnemies[i]->GetDst())
+			&& !Texture::GetInstance().m_PlayerShip.GetMissile().IsDestroy())
+		{
+			Texture::GetInstance().m_PlayerShip.GetMissile().Destroy();
+			allEnemies[i]->Damage(15);
+			ObjectSpawner::GetInstance().SpawnBlastEffect(Texture::GetInstance().m_PlayerShip.GetMissile().GetPos(), Vector2f(5, 5));
+			ObjectSpawner::GetInstance().SpawnSmokEffect(Texture::GetInstance().m_PlayerShip.GetMissile().GetPos(), Vector2f(5, 5));
+		}
+	}
+
 	//Collosion between enemy and cursor 
 	for (int j = 0; j < allEnemies.size(); j++)
 	{
@@ -56,8 +69,13 @@ void Game::CheckCollision()
 		{
 			Texture::GetInstance().isCursorCollideWithEnemy = true;
 
-			if(mouseButtonDown)
+			if (mouseButtonDown && Texture::GetInstance().m_PlayerShip.missileCoolDown && Texture::GetInstance().m_PlayerShip.once)
+			{
+				Texture::GetInstance().m_PlayerShip.once = false;
+
 				Texture::GetInstance().m_PlayerShip.SetPlayerMissileTarget(&allEnemies[j]->GetPos());
+
+			}
 
 			break;
 	    }

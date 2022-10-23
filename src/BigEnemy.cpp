@@ -4,6 +4,7 @@ BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_s
 	:Enemy(p_pos, p_tex, p_scale)
 {
 	missileAngle = 180;
+	m_MissileMaxTime = 8;
 
 	missileCoolDown = false;
 
@@ -19,10 +20,16 @@ void BigEnemy::Update()
 
 	missile.Update(Texture::GetInstance().m_PlayerShip.GetPos());
 
-	if (missile.IsDestroy())
+
+	if (!m_MissileTimer.IsStarted())
+		m_MissileTimer.Start();
+
+	if (m_MissileTimer.GetTicks() >= m_MissileMaxTime)
 	{
 		missileCoolDown = false;
+		m_MissileTimer.Stop();
 	}
+
 
 	RemoveProjectiles();
 
@@ -149,7 +156,7 @@ void BigEnemy::Render(RenderWindow window) {
 
 	if (!missile.IsDestroy())
 	{
-		missileAngle = (float)std::atan2(Texture::GetInstance().m_PlayerShip.GetPos().y - missile.GetPos().y, Texture::GetInstance().m_PlayerShip.GetPos().x - missile.GetPos().x) * 180.0f / 3.14f + 90;
+		missileAngle = atan2(Texture::GetInstance().m_PlayerShip.GetPos().y - missile.GetPos().y, Texture::GetInstance().m_PlayerShip.GetPos().x - missile.GetPos().x) * 180.0f / 3.14f + 90;
 		window.render(missile, missileAngle);
 	}
 		

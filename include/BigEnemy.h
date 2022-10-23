@@ -7,6 +7,7 @@
 #include "Missile.h"
 #include "Enemy.h"
 #include"Texture.h"
+#include "Timer.h"
 
 class BigEnemy : public Enemy
 {
@@ -23,6 +24,7 @@ public:
 private:
 
 	float missileAngle;
+	float m_MissileMaxTime;
 
 	enum ShipType
 	{
@@ -36,4 +38,6 @@ private:
 	bool missileCoolDown;
 
 	Missile missile;
+
+	Timer m_MissileTimer;
 };

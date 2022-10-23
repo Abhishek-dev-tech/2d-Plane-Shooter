@@ -2,22 +2,6 @@
 
 #include <iostream>
 
-class Mathf
-{
-public:
-	Mathf();
-
-	static int Random(int min, int max) {
-
-		return (rand() % (max - min + 1)) + min;
-	}
-
-	static float Lerp(float a, float b, float t) {
-		return (1.0 - t) * a + b * t;
-	}
-
-};
-
 struct Vector2f
 {
 	Vector2f()
@@ -34,4 +18,32 @@ struct Vector2f
 	}
 
 	float x, y;
+};
+
+class Mathf
+{
+public:
+	Mathf();
+
+	static int Random(int min, int max) {
+
+		return (rand() % (max - min + 1)) + min;
+	}
+
+	static float Lerp(float a, float b, float t) {
+		return (1.0 - t) * a + b * t;
+	}
+
+	static Vector2f Normalize(Vector2f vec)
+	{
+		float magnitude = sqrt(vec.x * vec.x + vec.y * vec.y);
+
+		if (magnitude != 0)
+		{
+			vec.x /= magnitude;
+			vec.y /= magnitude;
+		}
+		return vec;
+	}
+
 };
