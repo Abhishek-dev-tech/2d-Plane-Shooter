@@ -5,10 +5,7 @@ BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_s
 {
 	missileAngle = 180;
 
-	missileCoolDownMaxTime = 8;
-	missileCoolDownPreviousTime = 0;
-
-	missileCoolDown = true;
+	missileCoolDown = false;
 
 	DefineShipType(p_shipType);
 
@@ -20,11 +17,14 @@ void BigEnemy::Update()
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(1);
 
-	for (int i = 0; i < missiles.size(); i++)
-		missiles[i].Update(Texture::GetInstance().m_PlayerShip.GetPos());
+	missile.Update(Texture::GetInstance().m_PlayerShip.GetPos());
+
+	if (missile.IsDestroy())
+	{
+		missileCoolDown = false;
+	}
 
 	RemoveProjectiles();
-	RemoveMissiles();
 
 	for (int i = 0; i < projectiles.size(); i++)
 	{
@@ -51,11 +51,6 @@ void BigEnemy::Update()
 			m_CurrentFireRate = m_OriginalFireRate;
 	}
 
-	if (SDL_GetTicks() * 0.001 - missileCoolDownPreviousTime >= missileCoolDownMaxTime && missileCoolDown)
-	{
-		missileCoolDownPreviousTime = SDL_GetTicks() * 0.001;
-		missileCoolDown = false;
-	}
 	SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.5)));
 
 	if (GetPos().y >= 740)
@@ -91,14 +86,14 @@ void BigEnemy::Shoot(float p_bulletOffset, int p_bulletPair)
 
 void BigEnemy::ShootMissiles()
 {
-	if (missileCoolDown)
-		return;
+	if (!missileCoolDown)
+	{
+		missileCoolDown = true;
 
-	missileCoolDown = true;
+		Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
 
-	Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
-
-	missiles.push_back(temp);
+		missile = temp;
+	}
 }
 
 void BigEnemy::DefineShipType(int type)
@@ -143,33 +138,20 @@ void BigEnemy::DefineShipType(int type)
 	}
 }
 
-void BigEnemy::RemoveMissiles()
+Missile& BigEnemy::GetMissiles()
 {
-	for (int i = 0; i < missiles.size(); i++)
-	{
-		if (missiles[i].IsDestroy())
-		{
-			missiles.erase(missiles.begin() + i);
-		}
-	}
-}
-
-std::vector<Missile>& BigEnemy::GetMissiles()
-{
-	return missiles;
+	return missile;
 }
 
 void BigEnemy::Render(RenderWindow window) {
 
 	Enemy::Render(window);
-	
-	for (int i = 0; i < missiles.size(); i++)
+
+	if (!missile.IsDestroy())
 	{
-		if (!missiles[i].IsDestroy())
-		{
-			missileAngle = (float)std::atan2(Texture::GetInstance().m_PlayerShip.GetPos().y - missiles[i].GetPos().y, Texture::GetInstance().m_PlayerShip.GetPos().x - missiles[i].GetPos().x) * 180.0f / 3.14f + 90;
-			window.render(missiles[i], missileAngle);
-		}
-		
+		missileAngle = (float)std::atan2(Texture::GetInstance().m_PlayerShip.GetPos().y - missile.GetPos().y, Texture::GetInstance().m_PlayerShip.GetPos().x - missile.GetPos().x) * 180.0f / 3.14f + 90;
+		window.render(missile, missileAngle);
 	}
+		
+	
 }

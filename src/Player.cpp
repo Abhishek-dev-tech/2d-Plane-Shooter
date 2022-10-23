@@ -11,6 +11,7 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	maxTime = 0.2;
 
 	shootCoolDown = false;
+	missileCoolDown = false;
 }
 
 void Player::Update()
@@ -19,6 +20,8 @@ void Player::Update()
 
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(-1);
+
+	missile.Update(*m_Target);
 
 	if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && shootCoolDown)
 	{
@@ -54,25 +57,33 @@ void Player::HandleEvent(SDL_Event event)
 
 	if (currentKeyStates[SDL_SCANCODE_SPACE])
 		Shoot();
+
+	if (event.type == SDL_MOUSEBUTTONDOWN)
+		ShootMissile();
 }
 
 void Player::Shoot()
 {
-	if (shootCoolDown)
-		return;
+	if (!shootCoolDown)
+	{
+		shootCoolDown = true;
 
-	shootCoolDown = true;
+		Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().projectile01, Vector2f(1, 1));
 
-	Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().projectile01, Vector2f(1, 1));
-
-	projectiles.push_back(temp);
+		projectiles.push_back(temp);
+	}
 }
 
 void Player::ShootMissile()
 {
-	Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
+	if (!missileCoolDown && Texture::GetInstance().isCursorCollideWithEnemy)
+	{
+		missileCoolDown = true;
 
-	missiles.push_back(temp);
+		Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
+
+		missile = temp;
+	}
 }
 
 void Player::RemoveProjectiles()
@@ -91,15 +102,25 @@ std::vector<Projectile>& Player::GetPlayerProjectiles()
 	return projectiles;
 }
 
+void Player::SetPlayerMissileTarget(Vector2f* p_Target)
+{
+	m_Target = p_Target;
+}
+
 void Player::Render(RenderWindow window) {
 
 	for (int i = 0; i < projectiles.size(); i++)
 		if(!projectiles[i].IsDestroy())
 			window.render(projectiles[i], 0);
 
-	for (int i = 0; i < missiles.size(); i++)
-		if (!missiles[i].IsDestroy())
-			window.render(missiles[i], 0);
+	if (!missile.IsDestroy())
+	{
+		missileAngle = (float)std::atan2(m_Target->y - missile.GetPos().y, m_Target->x - missile.GetPos().x) * 180.0f / 3.14f + 90;
+		window.render(missile, missileAngle);
+	}
+		
+		
+			
 	
 	
 }

@@ -25,6 +25,7 @@ public:
 
 private:
 	bool isRunning;
+	bool mouseButtonDown;
 
 	int mouseX;
 	int mouseY;

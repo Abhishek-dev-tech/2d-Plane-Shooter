@@ -17,15 +17,12 @@ public:
 	void Render(RenderWindow window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
 	void ShootMissiles();
-	std::vector<Missile>& GetMissiles();
+	Missile& GetMissiles();
 	void DefineShipType(int type);
-	void RemoveMissiles();
 
 private:
 
 	float missileAngle;
-	float missileCoolDownMaxTime;
-	float missileCoolDownPreviousTime;
 
 	enum ShipType
 	{
@@ -38,5 +35,5 @@ private:
 
 	bool missileCoolDown;
 
-	std::vector<Missile> missiles;
+	Missile missile;
 };

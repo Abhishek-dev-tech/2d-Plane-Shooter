@@ -18,16 +18,23 @@ public:
 	void Shoot();
 	void ShootMissile();
 	void RemoveProjectiles();
+	void SetPlayerMissileTarget(Vector2f* p_Target);
 
 	std::vector<Projectile>& GetPlayerProjectiles();
 
 private:
 	float m_Speed;
 	float maxTime; 
-	float previousTime;
+	float previousTime;	
+	float missileCoolDownMaxTime;
+	float missileCoolDownPreviousTime;
+	float missileAngle;
 
 	bool shootCoolDown;
+	bool missileCoolDown;
+
+	Vector2f* m_Target;
 
 	std::vector<Projectile> projectiles;
-	std::vector<Missile> missiles;
+	Missile missile;
 };

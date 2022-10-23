@@ -87,7 +87,6 @@ void ObjectSpawner::SpawnSmallEnemies(Vector2f p_pos)
 	SmallEnemy temp = SmallEnemy(p_pos, Texture::GetInstance().smallEnemyShips[rand - 1], Vector2f(1.75, 1.75), rand);
 
 	smallEnemies.push_back(temp);
-
 }
 
 void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
@@ -149,7 +148,7 @@ void ObjectSpawner::RemoveEnemies()
 			mediumEnemies.erase(mediumEnemies.begin() + i);
 	
 	for (int i = 0; i < bigEnemies.size(); i++)
-		if (bigEnemies[i].IsDestroy() && bigEnemies[i].GetProjectiles().empty() && bigEnemies[i].GetMissiles().empty())
+		if (bigEnemies[i].IsDestroy() && bigEnemies[i].GetProjectiles().empty() && bigEnemies[i].GetMissiles().IsDestroy())
 			bigEnemies.erase(bigEnemies.begin() + i);
 		
 	
