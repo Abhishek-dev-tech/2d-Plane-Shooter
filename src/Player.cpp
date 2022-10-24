@@ -1,6 +1,6 @@
 #include "Player.h"
 #include "Texture.h"
-
+#include "ObjectSpawner.h"
 
 Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	:Entity(p_pos, p_tex, p_scale)
@@ -12,9 +12,12 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 	shootCoolDown = false;
 	missileCoolDown = false;
+	flareCoolDown = true;
+
 	once = true;
 
 	m_MissileMaxTime = 7;
+	m_FlaresMaxTime = 0.1;
 
 }
 
@@ -25,7 +28,10 @@ void Player::Update()
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(-1);
 
-	if(!missile.IsDestroy())
+	for (int i = 0; i < flares.size(); i++)
+		flares[i].Update();
+
+	if(!missile.IsDestroy() && !once)
 		missile.Update(*m_Target);
 
 
@@ -38,7 +44,7 @@ void Player::Update()
 	if (!m_MissileTimer.IsStarted())
 		m_MissileTimer.Start();
 
-	if (m_MissileTimer.GetTicks() >= m_MissileMaxTime)
+	if (m_MissileTimer.GetTicks() * 0.001 >= m_MissileMaxTime)
 	{
 		missileCoolDown = false;
 		m_MissileTimer.Stop();
@@ -49,7 +55,9 @@ void Player::Update()
 		once = true;
 	}
 
-	RemoveProjectiles();
+	ShootFlares();
+
+	RemoveUnwantedStuff();
 
 }
 
@@ -68,6 +76,9 @@ void Player::HandleEvent(SDL_Event event)
 
 	else if (currentKeyStates[SDL_SCANCODE_S])
 		SetPos(Vector2f(GetPos().x, GetPos().y + m_Speed));
+
+	if (currentKeyStates[SDL_SCANCODE_E])
+		flareCoolDown = false;
 
 	if (currentKeyStates[SDL_SCANCODE_SPACE])
 		Shoot();
@@ -99,7 +110,27 @@ void Player::ShootMissile()
 	}
 }
 
-void Player::RemoveProjectiles()
+void Player::ShootFlares()
+{
+	if (!m_FlareTimer.IsStarted())
+		m_FlareTimer.Start();
+
+	if (!flareCoolDown && m_FlareTimer.GetTicks() * 0.001 >= m_FlaresMaxTime)
+	{
+		flareCounter++;
+		
+		Flare temp = Flare(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().flare, Vector2f(1.75, 1.75), flareCounter % 2 == 0 ? 1 : -1, flareCounter % 2 == 0 ? 100 : -100);
+		ObjectSpawner::GetInstance().SpawnSmokEffect(Vector2f(GetPos().x, GetPos().y), Vector2f(5, 5));
+
+		flares.push_back(temp);
+		m_FlareTimer.Stop();
+
+		if (flareCounter >= 8)
+			flareCoolDown = true;
+	}
+}
+
+void Player::RemoveUnwantedStuff()
 {
 	for (int i = 0; i < projectiles.size(); i++)
 	{
@@ -107,9 +138,18 @@ void Player::RemoveProjectiles()
 			projectiles[i].Destroy();
 
 		if (projectiles[i].IsDestroy())
-		{
 			projectiles.erase(projectiles.begin() + i);
-		}
+		
+	}
+
+	for (int i = 0; i < flares.size(); i++)
+	{
+		if (flares[i].GetPos().y >= 730 || flares[i].GetPos().x >= 730 || flares[i].GetPos().x <= -10)
+			flares[i].Destroy();
+
+		if (flares[i].IsDestroy())
+			flares.erase(flares.begin() + i);
+		
 	}
 }
 
@@ -123,20 +163,30 @@ Missile& Player::GetMissile()
 	return missile;
 }
 
+std::vector<Flare>& Player::GetFlares()
+{
+	return flares;
+}
+
 void Player::SetPlayerMissileTarget(Vector2f* p_Target)
 {
 	m_Target = p_Target;
 }
 
-void Player::Render(RenderWindow window) {
+void Player::Render(RenderWindow& window) {
 
 	for (int i = 0; i < projectiles.size(); i++)
 		if(!projectiles[i].IsDestroy())
-			window.render(projectiles[i], 0);
+			window.render(projectiles[i], 0, false);
 
-	if (!missile.IsDestroy())
+	if (!missile.IsDestroy() && !once)
 	{
 		missileAngle = atan2(m_Target->y - missile.GetPos().y, m_Target->x - missile.GetPos().x) * 180.0f / 3.14f + 90;
-		window.render(missile, missileAngle);
+		
+		window.render(missile, missileAngle, false);
 	}
+
+	for (int i = 0; i < flares.size(); i++)
+		if (!flares[i].IsDestroy())
+			window.render(flares[i], flares[i].m_Angle, false);
 }

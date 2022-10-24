@@ -13,7 +13,7 @@ public:
 	Enemy() = default;
 	Enemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale);
 	void Update();
-	void Render(RenderWindow window);
+	void Render(RenderWindow& window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
 	void Damage(int value);
 	void RemoveProjectiles();

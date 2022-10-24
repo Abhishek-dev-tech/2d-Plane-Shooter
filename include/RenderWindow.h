@@ -4,6 +4,7 @@
 
 #include "Entity.h"
 
+
 class RenderWindow
 {
 public:
@@ -11,10 +12,11 @@ public:
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void cleanUp();
 	void clear();
-	void render(Entity& p_entity, float angle);
+	void render(Entity& p_entity, float angle, bool animate);
 	void display();
 	SDL_Renderer* GetRenderer();
 private:
 	SDL_Window* window;
 	SDL_Renderer* renderer;
+
 };

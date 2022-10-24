@@ -37,6 +37,8 @@ void Texture::LoadTextures(RenderWindow window)
 	blastEffect = window.loadTexture("res/BlastEffect.png");
 	smokeEffect = window.loadTexture("res/SmokeEffect.png");
 
+	flare = window.loadTexture("res/Flare.png");
+
 	cursorWhite = window.loadTexture("res/Cursor_White.png");
 	cursorRed = window.loadTexture("res/Cursor_Red.png");
 
@@ -60,10 +62,10 @@ void Texture::Update()
 
 void Texture::Render(RenderWindow window)
 {
-	window.render(m_PlayerShip, 0);
+	window.render(m_PlayerShip, 0, false);
 
 	if(isCursorCollideWithEnemy)
-		window.render(m_CursorRed, 0);
+		window.render(m_CursorRed, 0, false);
 	else
-		window.render(m_CursorWhite, 0);
+		window.render(m_CursorWhite, 0, false);
 }

@@ -37,6 +37,8 @@ public:
 	SDL_Texture* blastEffect;
 	SDL_Texture* smokeEffect;
 
+	SDL_Texture* flare;
+
 	bool isCursorCollideWithEnemy;
 
 private:

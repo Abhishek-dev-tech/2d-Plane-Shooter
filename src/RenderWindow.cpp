@@ -39,9 +39,10 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
-void RenderWindow::render(Entity& p_entity, float angle)
+void RenderWindow::render(Entity& p_entity, float angle, bool animate)
 {
 	SDL_Rect src;
+
 	src.x = 0;
 	src.y = 0;
 	src.w = p_entity.getCurrentFrame().w;
@@ -50,11 +51,12 @@ void RenderWindow::render(Entity& p_entity, float angle)
 	SDL_Rect dst;
 	dst.x = p_entity.GetPos().x - src.w / 2 * p_entity.GetScale().x;
 	dst.y = p_entity.GetPos().y - src.h / 2 * p_entity.GetScale().y;
-	dst.w = p_entity.getCurrentFrame().w * p_entity.GetScale().x;
+	dst.w = src.w * p_entity.GetScale().x;
 	dst.h = p_entity.getCurrentFrame().h * p_entity.GetScale().y;
 
 	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, angle, NULL, SDL_FLIP_NONE);
 }
+
 
 void RenderWindow::display()
 {

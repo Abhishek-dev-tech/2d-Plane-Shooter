@@ -64,7 +64,7 @@ Uint32 Timer::GetTicks()
 		}
 	}
 
-	return time * 0.001;
+	return time;
 }
 
 bool Timer::IsStarted()

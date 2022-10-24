@@ -71,9 +71,8 @@ void Game::CheckCollision()
 
 			if (mouseButtonDown && Texture::GetInstance().m_PlayerShip.missileCoolDown && Texture::GetInstance().m_PlayerShip.once)
 			{
-				Texture::GetInstance().m_PlayerShip.once = false;
-
 				Texture::GetInstance().m_PlayerShip.SetPlayerMissileTarget(&allEnemies[j]->GetPos());
+				Texture::GetInstance().m_PlayerShip.once = false;
 
 			}
 
@@ -93,6 +92,18 @@ void Game::CheckCollision()
 			ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().Destroy();
 			ObjectSpawner::GetInstance().SpawnBlastEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 			ObjectSpawner::GetInstance().SpawnSmokEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
+		}
+
+		for (int j = 0; j < Texture::GetInstance().m_PlayerShip.GetFlares().size(); j++)
+		{
+			if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetFlares()[j].GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetDst())
+				&& !ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().IsDestroy())
+			{
+				ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().Destroy();
+				Texture::GetInstance().m_PlayerShip.GetFlares()[j].Destroy();
+				ObjectSpawner::GetInstance().SpawnBlastEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
+				ObjectSpawner::GetInstance().SpawnSmokEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
+			}
 		}
 	}
 

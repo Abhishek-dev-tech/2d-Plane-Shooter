@@ -15,7 +15,7 @@ public:
 	BigEnemy() = default;
 	BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType);
 	void Update();
-	void Render(RenderWindow window);
+	void Render(RenderWindow& window);
 	void Shoot(float p_bulletOffset, int p_bulletPair);
 	void ShootMissiles();
 	Missile& GetMissiles();
@@ -36,8 +36,13 @@ private:
 	ShipType m_shipType;
 
 	bool missileCoolDown;
+	bool flareLocked;
+
+	int flareNum;
 
 	Missile missile;
 
 	Timer m_MissileTimer;
+
+	Entity* m_Target;
 };

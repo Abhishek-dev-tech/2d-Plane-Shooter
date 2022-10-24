@@ -7,6 +7,7 @@ BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_s
 	m_MissileMaxTime = 8;
 
 	missileCoolDown = false;
+	flareLocked = false;
 
 	DefineShipType(p_shipType);
 
@@ -18,13 +19,30 @@ void BigEnemy::Update()
 	for (int i = 0; i < projectiles.size(); i++)
 		projectiles[i].Update(1);
 
-	missile.Update(Texture::GetInstance().m_PlayerShip.GetPos());
+	if (!Texture::GetInstance().m_PlayerShip.GetFlares().empty() && !flareLocked)
+	{
+		for (int i = 0; i < Texture::GetInstance().m_PlayerShip.GetFlares().size(); i++)
+		{
+			if (!Texture::GetInstance().m_PlayerShip.GetFlares()[i].IsDestroy())
+			{
+				m_Target = &Texture::GetInstance().m_PlayerShip.GetFlares()[i];
+				break;
+			}
+		}
+	}
+	else
+		m_Target = &Texture::GetInstance().m_PlayerShip;
+	
+	
+	missile.Update(m_Target->GetPos());
 
+	if(missile.IsDestroy())
+		flareLocked = false;
 
 	if (!m_MissileTimer.IsStarted())
 		m_MissileTimer.Start();
 
-	if (m_MissileTimer.GetTicks() >= m_MissileMaxTime)
+	if (m_MissileTimer.GetTicks() * 0.001 >= m_MissileMaxTime)
 	{
 		missileCoolDown = false;
 		m_MissileTimer.Stop();
@@ -150,14 +168,14 @@ Missile& BigEnemy::GetMissiles()
 	return missile;
 }
 
-void BigEnemy::Render(RenderWindow window) {
+void BigEnemy::Render(RenderWindow& window) {
 
 	Enemy::Render(window);
 
 	if (!missile.IsDestroy())
 	{
-		missileAngle = atan2(Texture::GetInstance().m_PlayerShip.GetPos().y - missile.GetPos().y, Texture::GetInstance().m_PlayerShip.GetPos().x - missile.GetPos().x) * 180.0f / 3.14f + 90;
-		window.render(missile, missileAngle);
+		missileAngle = atan2(m_Target->GetPos().y - missile.GetPos().y, m_Target->GetPos().x - missile.GetPos().x) * 180.0f / 3.14f + 90;
+		window.render(missile, missileAngle, false);
 	}
 		
 	

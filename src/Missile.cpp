@@ -12,20 +12,20 @@ Missile::Missile(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Missile::Update(Vector2f target)
 {
-	if (IsDestroy())
-		return;
-
-	Entity::Update();
-
-	if (GetPos().y > 730)
-		Destroy();
-
-	if (followTarget)
+	if (!IsDestroy())
 	{
-		direction = Vector2f(target.x - GetPos().x, target.y - GetPos().y);
+		Entity::Update();
 
-		direction = Mathf::Normalize(direction);
+		if (GetPos().y > 730 || GetPos().x > 730 || GetPos().x < -10)
+			Destroy();
 
-		SetPos(Vector2f(GetPos().x + direction.x * m_Speed, GetPos().y + direction.y * m_Speed));
+		if (followTarget)
+		{
+			direction = Vector2f(target.x - GetPos().x, target.y - GetPos().y);
+
+			direction = Mathf::Normalize(direction);
+
+			SetPos(Vector2f(GetPos().x + direction.x * m_Speed, GetPos().y + direction.y * m_Speed));
+		}
 	}
 }

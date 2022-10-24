@@ -6,6 +6,7 @@
 #include "Projectile.h"
 #include "Missile.h"
 #include "Timer.h"
+#include "Flare.h"
 
 
 class Player : public Entity
@@ -15,14 +16,16 @@ public:
 	Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale);
 	void Update();
 	void HandleEvent(SDL_Event event);
-	void Render(RenderWindow window);
+	void Render(RenderWindow& window);
 	void Shoot();
 	void ShootMissile();
-	void RemoveProjectiles();
+	void ShootFlares();
+	void RemoveUnwantedStuff();
 	void SetPlayerMissileTarget(Vector2f* p_Target);
 
 	std::vector<Projectile>& GetPlayerProjectiles();
 	Missile& GetMissile();
+	std::vector<Flare>& GetFlares();
 
 	bool once;
 	bool missileCoolDown;
@@ -33,15 +36,21 @@ private:
 	float maxTime; 
 	float previousTime;	
 	float m_MissileMaxTime;
+	float m_FlaresMaxTime;
 	float missileAngle;
 
+	int flareCounter;
+
 	bool shootCoolDown;
+	bool flareCoolDown;
 
 	Vector2f* m_Target;
 
 	std::vector<Projectile> projectiles;
+	std::vector<Flare> flares;
 
 	Missile missile;
 
 	Timer m_MissileTimer;
+	Timer m_FlareTimer;
 };

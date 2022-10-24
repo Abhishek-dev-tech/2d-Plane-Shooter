@@ -109,9 +109,9 @@ std::vector<Projectile>& Enemy::GetProjectiles()
 }
 
 
-void Enemy::Render(RenderWindow window) {
+void Enemy::Render(RenderWindow& window) {
 
 	for (int i = 0; i < projectiles.size(); i++)
 		if(!projectiles[i].IsDestroy())
-			window.render(projectiles[i], 0);
+			window.render(projectiles[i], 0, false);
 }

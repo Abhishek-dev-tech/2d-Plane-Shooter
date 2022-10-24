@@ -70,10 +70,10 @@ void ObjectSpawner::SpawnEnemies()
 		if (rand <= 50)
 			SpawnSmallEnemies(Vector2f(Mathf::Random(50, 650), -10));
 
-		else if (rand <= 93 && rand > 50)
+		else if (rand <= 60 && rand > 50)
 			SpawnMediumEnemies(Vector2f(Mathf::Random(50, 650), -10));
 
-		else if (rand <= 95 && rand > 93)
+		else if (rand <= 95 && rand > 60)
 			SpawnBigEnemies(Vector2f(Mathf::Random(50, 650), -10));
 		else
 			SpawnPartten();
@@ -174,7 +174,7 @@ std::vector<Entity>& ObjectSpawner::GetHitMarkers()
 	return hitMarkers;
 }
 
-void ObjectSpawner::Render(RenderWindow window)
+void ObjectSpawner::Render(RenderWindow& window)
 {
 
 	for (int i = 0; i < smallEnemies.size(); i++)
@@ -182,8 +182,7 @@ void ObjectSpawner::Render(RenderWindow window)
 		smallEnemies[i].Render(window);
 
 		if (!smallEnemies[i].IsDestroy())
-			window.render(smallEnemies[i], 180);
-		
+			window.render(smallEnemies[i], 180, true);
 	}
 
 	for (int i = 0; i < mediumEnemies.size(); i++)
@@ -191,7 +190,7 @@ void ObjectSpawner::Render(RenderWindow window)
 		mediumEnemies[i].Render(window);
 
 		if (!mediumEnemies[i].IsDestroy())
-			window.render(mediumEnemies[i], 180);
+			window.render(mediumEnemies[i], 180, true);
 		
 	}	
 	
@@ -200,16 +199,16 @@ void ObjectSpawner::Render(RenderWindow window)
 		bigEnemies[i].Render(window);
 
 		if (!bigEnemies[i].IsDestroy())
-			window.render(bigEnemies[i], 180);
+			window.render(bigEnemies[i], 180, false);
 		
 	}
 
 	for (int i = 0; i < hitMarkers.size(); i++)
-		window.render(hitMarkers[i], 0);
+		window.render(hitMarkers[i], 0, false);
 
 	for (int i = 0; i < smokeEffect.size(); i++)
-		window.render(smokeEffect[i], 0);
+		window.render(smokeEffect[i], 0, false);
 	
 	for (int i = 0; i < blastEffect.size(); i++)
-		window.render(blastEffect[i], 0);	
+		window.render(blastEffect[i], 0, false);
 }

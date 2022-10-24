@@ -18,7 +18,7 @@ public:
 	static ObjectSpawner& GetInstance();
 
 	void Update();
-	void Render(RenderWindow window);
+	void Render(RenderWindow& window);
 	void SpawnEnemies();
 	void SpawnSmallEnemies(Vector2f p_pos);
 	void SpawnMediumEnemies(Vector2f p_pos);
