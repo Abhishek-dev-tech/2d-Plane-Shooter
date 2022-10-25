@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 
+#include "SDL_ttf.h"
 #include "RenderWindow.h"
 #include "Entity.h"
 #include "Player.h"
@@ -24,7 +25,10 @@ public:
 
 	Entity m_CursorWhite;
 	Entity m_CursorRed;
+
 	Entity m_HealthBar;
+	Entity m_MissileIcon;
+	Entity m_FlareIcon;
 
 	SDL_Texture* projectile01;
 
@@ -39,6 +43,8 @@ public:
 	SDL_Texture* smokeEffect;
 
 	SDL_Texture* flare;
+
+	TTF_Font* font16;
 
 	bool isCursorCollideWithEnemy;
 

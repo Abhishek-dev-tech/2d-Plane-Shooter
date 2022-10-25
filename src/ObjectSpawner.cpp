@@ -182,7 +182,7 @@ void ObjectSpawner::Render(RenderWindow& window)
 		smallEnemies[i].Render(window);
 
 		if (!smallEnemies[i].IsDestroy())
-			window.render(smallEnemies[i], 180, true);
+			window.Render(smallEnemies[i], 180, true);
 	}
 
 	for (int i = 0; i < mediumEnemies.size(); i++)
@@ -190,7 +190,7 @@ void ObjectSpawner::Render(RenderWindow& window)
 		mediumEnemies[i].Render(window);
 
 		if (!mediumEnemies[i].IsDestroy())
-			window.render(mediumEnemies[i], 180, true);
+			window.Render(mediumEnemies[i], 180, true);
 		
 	}	
 	
@@ -199,16 +199,16 @@ void ObjectSpawner::Render(RenderWindow& window)
 		bigEnemies[i].Render(window);
 
 		if (!bigEnemies[i].IsDestroy())
-			window.render(bigEnemies[i], 180, false);
+			window.Render(bigEnemies[i], 180, false);
 		
 	}
 
 	for (int i = 0; i < hitMarkers.size(); i++)
-		window.render(hitMarkers[i], 0, false);
+		window.Render(hitMarkers[i], 0, false);
 
 	for (int i = 0; i < smokeEffect.size(); i++)
-		window.render(smokeEffect[i], 0, false);
+		window.Render(smokeEffect[i], 0, false);
 	
 	for (int i = 0; i < blastEffect.size(); i++)
-		window.render(blastEffect[i], 0, false);
+		window.Render(blastEffect[i], 0, false);
 }

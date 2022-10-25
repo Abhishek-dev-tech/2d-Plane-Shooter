@@ -15,9 +15,13 @@ void Game::Init()
 	else
 		isRunning = false;
 
+	TTF_Init();
+
 	SDL_ShowCursor(SDL_DISABLE);
 
 	Texture::GetInstance().LoadTextures(window);
+
+	UIManager::GetInstance().SetRenderer(window.GetRenderer());
 }
 
 void Game::Update()
@@ -181,6 +185,8 @@ void Game::Render()
 
 void Game::Clean()
 {
+	TTF_CloseFont(Texture::GetInstance().font16);
 	window.cleanUp();
+	TTF_Quit();
 	SDL_Quit();
 }

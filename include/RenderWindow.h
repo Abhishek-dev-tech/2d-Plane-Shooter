@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 
 #include "Entity.h"
 
@@ -12,7 +13,8 @@ public:
 	SDL_Texture* loadTexture(const char* p_filePath);
 	void cleanUp();
 	void clear();
-	void render(Entity& p_entity, float angle, bool animate);
+	void Render(Entity& p_entity, float angle, bool animate);
+	void RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor);
 	void display();
 	SDL_Renderer* GetRenderer();
 private:

@@ -31,7 +31,7 @@ public:
 
 	bool once;
 	bool missileCoolDown;
-
+	bool flareCoolDown;
 
 private:
 	float m_Speed;
@@ -39,13 +39,14 @@ private:
 	float previousTime;	
 	float m_MissileMaxTime;
 	float m_FlaresMaxTime;
+	float m_FlaresCoolDownMaxTime;
 	float missileAngle;
 
 	int flareCounter;
 	int hitPoints;
 
 	bool shootCoolDown;
-	bool flareCoolDown;
+	bool shootFlare;
 
 	Vector2f originalScale;
 	Vector2f* m_Target;
@@ -57,4 +58,5 @@ private:
 
 	Timer m_MissileTimer;
 	Timer m_FlareTimer;
+	Timer m_FlareCoolDownTimer;
 };

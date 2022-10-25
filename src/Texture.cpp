@@ -44,6 +44,8 @@ void Texture::LoadTextures(RenderWindow window)
 
 	healthBar = window.loadTexture("res/UI/Square.png");
 
+	font16 = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 16);
+
 	SetEntity();
 }
 
@@ -55,6 +57,8 @@ void Texture::SetEntity()
 	m_CursorRed = Entity(Vector2f(0, 0), cursorRed, Vector2f(2, 2));	
 
 	m_HealthBar = Entity(Vector2f(0, 0), healthBar, Vector2f(1, 1));	
+	m_MissileIcon = Entity(Vector2f(0, 0), missile, Vector2f(2, 2));
+	m_FlareIcon = Entity(Vector2f(0, 0), flare, Vector2f(2, 2));
 }
 
 void Texture::Update()
@@ -68,10 +72,10 @@ void Texture::Update()
 void Texture::Render(RenderWindow window)
 {
 	if(!m_PlayerShip.IsDestroy())
-		window.render(m_PlayerShip, 0, false);
+		window.Render(m_PlayerShip, 0, false);
 
 	if(isCursorCollideWithEnemy)
-		window.render(m_CursorRed, 0, false);
+		window.Render(m_CursorRed, 0, false);
 	else
-		window.render(m_CursorWhite, 0, false);
+		window.Render(m_CursorWhite, 0, false);
 }

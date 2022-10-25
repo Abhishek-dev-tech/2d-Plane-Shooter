@@ -39,7 +39,7 @@ void RenderWindow::clear()
 	SDL_RenderClear(renderer);
 }
 
-void RenderWindow::render(Entity& p_entity, float angle, bool animate)
+void RenderWindow::Render(Entity& p_entity, float angle, bool animate)
 {
 	SDL_Rect src;
 
@@ -52,10 +52,34 @@ void RenderWindow::render(Entity& p_entity, float angle, bool animate)
 	dst.x = p_entity.GetPos().x - src.w / 2 * p_entity.GetScale().x;
 	dst.y = p_entity.GetPos().y - src.h / 2 * p_entity.GetScale().y;
 	dst.w = src.w * p_entity.GetScale().x;
-	dst.h = p_entity.getCurrentFrame().h * p_entity.GetScale().y;
+	dst.h = src.h * p_entity.GetScale().y;
 
 	SDL_RenderCopyEx(renderer, p_entity.getTex(), &src, &dst, angle, NULL, SDL_FLIP_NONE);
 }
+
+void RenderWindow::RenderText(Vector2f p_pos, std::string p_text, TTF_Font* font, SDL_Color textColor)
+{
+	SDL_Surface* surfaceMessage = TTF_RenderText_Blended(font, p_text.c_str(), textColor);
+	SDL_Texture* message = SDL_CreateTextureFromSurface(renderer, surfaceMessage);
+
+	SDL_Rect src;
+
+	src.x = 0;
+	src.y = 0;
+	src.w = surfaceMessage->w;
+	src.h = surfaceMessage->h;
+
+	SDL_Rect dst;
+	dst.x = p_pos.x - src.w / 2;
+	dst.y = p_pos.y - src.h / 2;
+	dst.w = src.w;
+	dst.h = src.h;
+
+	SDL_RenderCopy(renderer, message, &src, &dst);
+	SDL_FreeSurface(surfaceMessage);
+	SDL_DestroyTexture(message);
+}
+
 
 
 void RenderWindow::display()

@@ -171,7 +171,7 @@ void BigEnemy::Render(RenderWindow& window) {
 	if (!missile.IsDestroy())
 	{
 		missileAngle = atan2(m_Target->y - missile.GetPos().y, m_Target->x - missile.GetPos().x) * 180.0f / 3.14f + 90;
-		window.render(missile, missileAngle, false);
+		window.Render(missile, missileAngle, false);
 	}
 		
 	
