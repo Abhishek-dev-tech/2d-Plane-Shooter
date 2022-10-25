@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Texture.h"
 #include "ObjectSpawner.h"
+#include "UIManager.h"
 
 Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	:Entity(p_pos, p_tex, p_scale)
@@ -19,72 +20,82 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	m_MissileMaxTime = 7;
 	m_FlaresMaxTime = 0.1;
 
+	hitPoints = 50;
+
+	originalScale = Vector2f(2.25, 2.25);
+
 }
 
 void Player::Update()
 {
-	Entity::Update();
-
-	for (int i = 0; i < projectiles.size(); i++)
-		projectiles[i].Update(-1);
-
-	for (int i = 0; i < flares.size(); i++)
-		flares[i].Update();
-
-	if(!missile.IsDestroy() && !once)
-		missile.Update(*m_Target);
-
-
-	if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && shootCoolDown)
+	if (!IsDestroy())
 	{
-		previousTime = SDL_GetTicks() * 0.001;
-		shootCoolDown = false;
+		Entity::Update();
+
+		for (int i = 0; i < projectiles.size(); i++)
+			projectiles[i].Update(-1);
+
+		for (int i = 0; i < flares.size(); i++)
+			flares[i].Update();
+
+		if (!missile.IsDestroy() && !once)
+			missile.Update(*m_Target);
+
+
+		if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && shootCoolDown)
+		{
+			previousTime = SDL_GetTicks() * 0.001;
+			shootCoolDown = false;
+		}
+
+		if (!m_MissileTimer.IsStarted())
+			m_MissileTimer.Start();
+
+		if (m_MissileTimer.GetTicks() * 0.001 >= m_MissileMaxTime)
+		{
+			missileCoolDown = false;
+			m_MissileTimer.Stop();
+		}
+
+		if (missile.IsDestroy())
+			once = true;
+
+		SetScale(Vector2f(Mathf::Lerp(GetScale().x, originalScale.x, 0.1), Mathf::Lerp(GetScale().y, originalScale.y, 0.1)));
+
+
+		ShootFlares();
+
+		RemoveUnwantedStuff();
 	}
-
-	if (!m_MissileTimer.IsStarted())
-		m_MissileTimer.Start();
-
-	if (m_MissileTimer.GetTicks() * 0.001 >= m_MissileMaxTime)
-	{
-		missileCoolDown = false;
-		m_MissileTimer.Stop();
-	}
-
-	if (missile.IsDestroy())
-	{
-		once = true;
-	}
-
-	ShootFlares();
-
-	RemoveUnwantedStuff();
-
 }
 
 void Player::HandleEvent(SDL_Event event)
 {
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	if (!IsDestroy())
+	{
+		const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-	if (currentKeyStates[SDL_SCANCODE_A])
-		SetPos(Vector2f(GetPos().x - m_Speed, GetPos().y));
+		if (currentKeyStates[SDL_SCANCODE_A])
+			SetPos(Vector2f(GetPos().x - m_Speed, GetPos().y));
 
-	else if (currentKeyStates[SDL_SCANCODE_D])
-		SetPos(Vector2f(GetPos().x + m_Speed, GetPos().y));
+		else if (currentKeyStates[SDL_SCANCODE_D])
+			SetPos(Vector2f(GetPos().x + m_Speed, GetPos().y));
 
-	if (currentKeyStates[SDL_SCANCODE_W])
-		SetPos(Vector2f(GetPos().x, GetPos().y - m_Speed));
+		if (currentKeyStates[SDL_SCANCODE_W])
+			SetPos(Vector2f(GetPos().x, GetPos().y - m_Speed));
 
-	else if (currentKeyStates[SDL_SCANCODE_S])
-		SetPos(Vector2f(GetPos().x, GetPos().y + m_Speed));
+		else if (currentKeyStates[SDL_SCANCODE_S])
+			SetPos(Vector2f(GetPos().x, GetPos().y + m_Speed));
 
-	if (currentKeyStates[SDL_SCANCODE_E])
-		flareCoolDown = false;
+		if (currentKeyStates[SDL_SCANCODE_E])
+			flareCoolDown = false;
 
-	if (currentKeyStates[SDL_SCANCODE_SPACE])
-		Shoot();
+		if (currentKeyStates[SDL_SCANCODE_SPACE])
+			Shoot();
 
-	if (event.type == SDL_MOUSEBUTTONDOWN)
-		ShootMissile();
+		if (event.type == SDL_MOUSEBUTTONDOWN)
+			ShootMissile();
+	}
 }
 
 void Player::Shoot()
@@ -130,6 +141,22 @@ void Player::ShootFlares()
 	}
 }
 
+void Player::Damage(int damage)
+{
+	SetScale(Vector2f(originalScale.x + 0.3, originalScale.y + 0.3));
+
+	hitPoints -= damage;
+	UIManager::GetInstance().UpdateHealthBar();
+
+
+	if (hitPoints <= 0)
+	{
+		Destroy();
+		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos(), Vector2f(8, 8));
+		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos(), Vector2f(8, 8));
+	}
+}
+
 void Player::RemoveUnwantedStuff()
 {
 	for (int i = 0; i < projectiles.size(); i++)
@@ -171,6 +198,11 @@ std::vector<Flare>& Player::GetFlares()
 void Player::SetPlayerMissileTarget(Vector2f* p_Target)
 {
 	m_Target = p_Target;
+}
+
+int Player::GetHitPoints()
+{
+	return hitPoints;
 }
 
 void Player::Render(RenderWindow& window) {

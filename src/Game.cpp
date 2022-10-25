@@ -28,6 +28,7 @@ void Game::Update()
 
 	Texture::GetInstance().Update();
 	ObjectSpawner::GetInstance().Update();
+	UIManager::GetInstance().Update();
 
 	CheckCollision();
 
@@ -87,9 +88,11 @@ void Game::CheckCollision()
 	for (int i = 0; i < ObjectSpawner::GetInstance().GetBigEnemies().size(); i++)
 	{
 		if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetDst(), &ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetDst())
-			&& !ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().IsDestroy())
+			&& !ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().IsDestroy()
+			&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
 		{
 			ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().Destroy();
+			Texture::GetInstance().m_PlayerShip.Damage(5);
 			ObjectSpawner::GetInstance().SpawnBlastEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 			ObjectSpawner::GetInstance().SpawnSmokEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 		}
@@ -107,6 +110,21 @@ void Game::CheckCollision()
 		}
 	}
 
+	//Collosion between enemy bullets and player 
+	for (int i = 0; i < allEnemies.size(); i++)
+	{
+		for (int j = 0; j < allEnemies[i]->GetProjectiles().size(); j++)
+		{
+			if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetDst(), &allEnemies[i]->GetProjectiles()[j].GetDst())
+				&& !allEnemies[i]->GetProjectiles()[j].IsDestroy()
+				&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
+			{
+				ObjectSpawner::GetInstance().SpawnHitMarkers(allEnemies[i]->GetProjectiles()[j].GetPos());
+				Texture::GetInstance().m_PlayerShip.Damage(1);
+				allEnemies[i]->GetProjectiles()[j].Destroy();
+			}
+		}
+	}
 
 	//Collosion between enemy and player bullets
 	for (int i = 0; i < Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles().size(); i++)
@@ -152,9 +170,11 @@ void Game::HandleEvent()
 void Game::Render()
 {
 	window.clear();
+
 	Texture::GetInstance().m_PlayerShip.Render(window);
 	ObjectSpawner::GetInstance().Render(window);
 	Texture::GetInstance().Render(window);
+	UIManager::GetInstance().Render(window);
 	window.display();
 }
 

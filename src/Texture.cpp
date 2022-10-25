@@ -42,15 +42,19 @@ void Texture::LoadTextures(RenderWindow window)
 	cursorWhite = window.loadTexture("res/Cursor_White.png");
 	cursorRed = window.loadTexture("res/Cursor_Red.png");
 
+	healthBar = window.loadTexture("res/UI/Square.png");
+
 	SetEntity();
 }
 
 void Texture::SetEntity()
 {
-	m_PlayerShip = Player(Vector2f(360, 650), playerShip, Vector2f(2, 2));
+	m_PlayerShip = Player(Vector2f(360, 650), playerShip, Vector2f(2.25, 2.25));
 
 	m_CursorWhite = Entity(Vector2f(0, 0), cursorWhite, Vector2f(2, 2));	
 	m_CursorRed = Entity(Vector2f(0, 0), cursorRed, Vector2f(2, 2));	
+
+	m_HealthBar = Entity(Vector2f(0, 0), healthBar, Vector2f(1, 1));	
 }
 
 void Texture::Update()
@@ -58,11 +62,13 @@ void Texture::Update()
 	m_PlayerShip.Update();
 	m_CursorWhite.Update();
 	m_CursorRed.Update();
+	m_HealthBar.Update();
 }
 
 void Texture::Render(RenderWindow window)
 {
-	window.render(m_PlayerShip, 0, false);
+	if(!m_PlayerShip.IsDestroy())
+		window.render(m_PlayerShip, 0, false);
 
 	if(isCursorCollideWithEnemy)
 		window.render(m_CursorRed, 0, false);

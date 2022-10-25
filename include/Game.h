@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "RenderWindow.h"
 #include "ObjectSpawner.h"
+#include "UIManager.h"
 
 
 class Game

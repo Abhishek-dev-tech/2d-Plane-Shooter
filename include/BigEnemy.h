@@ -36,13 +36,10 @@ private:
 	ShipType m_shipType;
 
 	bool missileCoolDown;
-	bool flareLocked;
-
-	int flareNum;
 
 	Missile missile;
 
 	Timer m_MissileTimer;
 
-	Entity* m_Target;
+	Vector2f* m_Target;
 };

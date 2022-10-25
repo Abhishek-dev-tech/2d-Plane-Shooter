@@ -24,6 +24,7 @@ public:
 
 	Entity m_CursorWhite;
 	Entity m_CursorRed;
+	Entity m_HealthBar;
 
 	SDL_Texture* projectile01;
 
@@ -45,5 +46,7 @@ private:
 	SDL_Texture* playerShip;
 	SDL_Texture* cursorWhite;
 	SDL_Texture* cursorRed;
+	SDL_Texture* healthBar;
+
 
 };

@@ -70,10 +70,10 @@ void ObjectSpawner::SpawnEnemies()
 		if (rand <= 50)
 			SpawnSmallEnemies(Vector2f(Mathf::Random(50, 650), -10));
 
-		else if (rand <= 60 && rand > 50)
+		else if (rand <= 93 && rand > 50)
 			SpawnMediumEnemies(Vector2f(Mathf::Random(50, 650), -10));
 
-		else if (rand <= 95 && rand > 60)
+		else if (rand <= 95 && rand > 93)
 			SpawnBigEnemies(Vector2f(Mathf::Random(50, 650), -10));
 		else
 			SpawnPartten();
