@@ -3,8 +3,10 @@
 BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType)
 	:Enemy(p_pos, p_tex, p_scale)
 {
+	m_Tag = "BigEnemy";
+
 	missileAngle = 180;
-	m_MissileMaxTime = 8;
+	m_MissileMaxTime = 10;
 
 	missileCoolDown = false;
 

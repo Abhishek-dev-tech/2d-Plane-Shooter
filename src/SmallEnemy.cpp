@@ -3,6 +3,8 @@
 SmallEnemy::SmallEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType)
 	:Enemy(p_pos, p_tex, p_scale)
 {
+	m_Tag = "SmallEnemy";
+
 	DefineShipType(p_shipType);
 
 	m_CurrentFireRate = m_OriginalFireRate;

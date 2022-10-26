@@ -1,6 +1,8 @@
 #include "Enemy.h"
 #include "Mathf.h"
 #include "ObjectSpawner.h"
+#include "UIManager.h"
+
 
 
 Enemy::Enemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
@@ -101,6 +103,16 @@ void Enemy::Damage(int value)
 		Destroy();
 		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos(), Vector2f(8, 8));
 		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos(), Vector2f(8, 8));
+
+		UIManager::GetInstance().SetKills(1);
+
+		if(std::strcmp(m_Tag.c_str(), "BigEnemy") == 0)
+			UIManager::GetInstance().UpdateScore(15);
+		else if(std::strcmp(m_Tag.c_str(), "MediumEnemy") == 0)
+			UIManager::GetInstance().UpdateScore(8);
+		else
+			UIManager::GetInstance().UpdateScore(4);
+
 	}
 }
 

@@ -186,6 +186,7 @@ void Game::Render()
 void Game::Clean()
 {
 	TTF_CloseFont(Texture::GetInstance().font16);
+	TTF_CloseFont(Texture::GetInstance().font28);
 	window.cleanUp();
 	TTF_Quit();
 	SDL_Quit();

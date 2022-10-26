@@ -34,6 +34,8 @@ protected:
 	int m_noOfBullets;
 	int hitPoints;
 
+	std::string m_Tag;
+
 	bool shootCoolDown;
 
 	Vector2f originalScale;

@@ -27,6 +27,7 @@ public:
 	Entity m_CursorRed;
 
 	Entity m_HealthBar;
+	Entity m_ScoreMultiplierBar;
 	Entity m_MissileIcon;
 	Entity m_FlareIcon;
 
@@ -45,6 +46,7 @@ public:
 	SDL_Texture* flare;
 
 	TTF_Font* font16;
+	TTF_Font* font28;
 
 	bool isCursorCollideWithEnemy;
 
@@ -52,7 +54,7 @@ private:
 	SDL_Texture* playerShip;
 	SDL_Texture* cursorWhite;
 	SDL_Texture* cursorRed;
-	SDL_Texture* healthBar;
+	SDL_Texture* square;
 
 
 };
