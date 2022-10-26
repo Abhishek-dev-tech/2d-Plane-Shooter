@@ -27,7 +27,6 @@ public:
 	Entity m_CursorRed;
 
 	Entity m_HealthBar;
-	Entity m_ScoreMultiplierBar;
 	Entity m_MissileIcon;
 	Entity m_FlareIcon;
 
@@ -44,6 +43,9 @@ public:
 	SDL_Texture* smokeEffect;
 
 	SDL_Texture* flare;
+
+	SDL_Texture* firstAid;
+	SDL_Texture* shield;
 
 	TTF_Font* font16;
 	TTF_Font* font28;

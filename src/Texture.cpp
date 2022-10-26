@@ -39,6 +39,9 @@ void Texture::LoadTextures(RenderWindow window)
 
 	flare = window.loadTexture("res/Flare.png");
 
+	firstAid = window.loadTexture("res/FirstAid.png");
+	shield = window.loadTexture("res/Shield.png");
+
 	cursorWhite = window.loadTexture("res/Cursor_White.png");
 	cursorRed = window.loadTexture("res/Cursor_Red.png");
 
@@ -58,7 +61,6 @@ void Texture::SetEntity()
 	m_CursorRed = Entity(Vector2f(0, 0), cursorRed, Vector2f(2, 2));	
 
 	m_HealthBar = Entity(Vector2f(0, 0), square, Vector2f(1, 1));	
-	m_ScoreMultiplierBar = Entity(Vector2f(0, 0), square, Vector2f(1, 1));
 	m_MissileIcon = Entity(Vector2f(0, 0), missile, Vector2f(2, 2));
 	m_FlareIcon = Entity(Vector2f(0, 0), flare, Vector2f(2, 2));
 }
@@ -69,7 +71,6 @@ void Texture::Update()
 	m_CursorWhite.Update();
 	m_CursorRed.Update();
 	m_HealthBar.Update();
-	m_ScoreMultiplierBar.Update();
 }
 
 void Texture::Render(RenderWindow window)

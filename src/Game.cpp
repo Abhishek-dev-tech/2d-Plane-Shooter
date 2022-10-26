@@ -52,7 +52,25 @@ void Game::CheckCollision()
 	for (int i = 0; i < ObjectSpawner::GetInstance().GetBigEnemies().size(); i++)
 		allEnemies.push_back(&ObjectSpawner::GetInstance().GetBigEnemies()[i]);
 	
+	//Collosion between FirstAid and player 
+	if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetDst(), &ObjectSpawner::GetInstance().GetFirstAid().GetDst())
+		&& !ObjectSpawner::GetInstance().GetFirstAid().IsDestroy()
+		&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
+	{
+		Texture::GetInstance().m_PlayerShip.SetHitPoints(50);
+		UIManager::GetInstance().ResetHealthBar();
+		ObjectSpawner::GetInstance().GetFirstAid().Destroy();
+	}
 
+	//Collosion between Shield and player 
+	if (Collision::IsCollide(&Texture::GetInstance().m_PlayerShip.GetDst(), &ObjectSpawner::GetInstance().GetShield().GetDst())
+		&& !ObjectSpawner::GetInstance().GetShield().IsDestroy()
+		&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
+	{
+		ObjectSpawner::GetInstance().GetShield().Destroy();
+	}
+		
+	
 
 	//Collosion between enemy and player missile
 	for (int i = 0; i < allEnemies.size(); i++)

@@ -23,6 +23,7 @@ public:
 	void RemoveUnwantedStuff();
 	void SetPlayerMissileTarget(Vector2f* p_Target);
 	void Damage(int damage);
+	void SetHitPoints(int p_HitPoints);
 
 	std::vector<Projectile>& GetPlayerProjectiles();
 	Missile& GetMissile();

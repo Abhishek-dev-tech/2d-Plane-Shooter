@@ -32,6 +32,9 @@ void ObjectSpawner::Update()
 	for (int i = 0; i < bigEnemies.size(); i++)
 		bigEnemies[i].Update();
 
+	m_FirstAid.Update();
+	m_Shield.Update();
+
 	for (int i = 0; i < hitMarkers.size(); i++)
 	{
 		hitMarkers[i].SetScale(Vector2f(Mathf::Lerp(hitMarkers[i].GetScale().x, -0.05, 0.05), Mathf::Lerp(hitMarkers[i].GetScale().y, -0.05, 0.05)));
@@ -127,6 +130,20 @@ void ObjectSpawner::SpawnSmokEffect(Vector2f p_Pos, Vector2f p_Scale)
 	smokeEffect.push_back(temp);
 }
 
+void ObjectSpawner::SpawnFirstAid(Vector2f p_Pos, Vector2f p_Scale)
+{
+	Entity temp = Entity(p_Pos, Texture::GetInstance().firstAid, p_Scale);
+
+	m_FirstAid = temp;
+}
+
+void ObjectSpawner::SpawnShield(Vector2f p_Pos, Vector2f p_Scale)
+{
+	Entity temp = Entity(p_Pos, Texture::GetInstance().shield, p_Scale);
+
+	m_Shield = temp;
+}
+
 void ObjectSpawner::SpawnPartten()
 {
 	int rand = Mathf::Random(150, 600);
@@ -149,9 +166,17 @@ void ObjectSpawner::RemoveEnemies()
 	
 	for (int i = 0; i < bigEnemies.size(); i++)
 		if (bigEnemies[i].IsDestroy() && bigEnemies[i].GetProjectiles().empty() && bigEnemies[i].GetMissiles().IsDestroy())
-			bigEnemies.erase(bigEnemies.begin() + i);
-		
-	
+			bigEnemies.erase(bigEnemies.begin() + i);	
+}
+
+Entity& ObjectSpawner::GetFirstAid()
+{
+	return m_FirstAid;
+}
+
+Entity& ObjectSpawner::GetShield()
+{
+	return m_Shield;
 }
 
 std::vector<SmallEnemy>& ObjectSpawner::GetSmallEnemies()
@@ -211,4 +236,10 @@ void ObjectSpawner::Render(RenderWindow& window)
 	
 	for (int i = 0; i < blastEffect.size(); i++)
 		window.Render(blastEffect[i], 0, false);
+
+	if (!m_FirstAid.IsDestroy())
+		window.Render(m_FirstAid, 0, false);
+
+	if (!m_Shield.IsDestroy())
+		window.Render(m_Shield, 0, false);
 }

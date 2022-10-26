@@ -28,12 +28,17 @@ public:
 	void SpawnHitMarkers(Vector2f p_Pos);
 	void SpawnBlastEffect(Vector2f p_Pos, Vector2f p_Scale);
 	void SpawnSmokEffect(Vector2f p_Pos, Vector2f p_Scale);
+	void SpawnFirstAid(Vector2f p_Pos, Vector2f p_Scale);
+	void SpawnShield(Vector2f p_Pos, Vector2f p_Scale);
 
 	std::vector<SmallEnemy>& GetSmallEnemies();
 	std::vector<MediumEnemy>& GetMediumEnemies();
 	std::vector<BigEnemy>& GetBigEnemies();
 
 	std::vector<Entity>& GetHitMarkers();
+
+	Entity& GetFirstAid();
+	Entity& GetShield();
 
 private:
 	float maxTime;
@@ -48,5 +53,8 @@ private:
 	std::vector<Entity> hitMarkers;
 	std::vector<Entity> blastEffect;
 	std::vector<Entity> smokeEffect;
+
+	Entity m_FirstAid;
+	Entity m_Shield;
 
 };

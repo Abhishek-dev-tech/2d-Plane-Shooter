@@ -175,6 +175,12 @@ void Player::Damage(int damage)
 	}
 }
 
+void Player::SetHitPoints(int p_HitPoints)
+{
+	hitPoints = p_HitPoints;
+}
+
+
 void Player::RemoveUnwantedStuff()
 {
 	for (int i = 0; i < projectiles.size(); i++)
