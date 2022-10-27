@@ -61,6 +61,7 @@ void Texture::SetEntity()
 	m_CursorRed = Entity(Vector2f(0, 0), cursorRed, Vector2f(2, 2));	
 
 	m_HealthBar = Entity(Vector2f(0, 0), square, Vector2f(1, 1));	
+	m_ShieldBar = Entity(Vector2f(0, 0), square, Vector2f(1, 1));
 	m_MissileIcon = Entity(Vector2f(0, 0), missile, Vector2f(2, 2));
 	m_FlareIcon = Entity(Vector2f(0, 0), flare, Vector2f(2, 2));
 }
@@ -71,6 +72,7 @@ void Texture::Update()
 	m_CursorWhite.Update();
 	m_CursorRed.Update();
 	m_HealthBar.Update();
+	m_ShieldBar.Update();
 }
 
 void Texture::Render(RenderWindow window)

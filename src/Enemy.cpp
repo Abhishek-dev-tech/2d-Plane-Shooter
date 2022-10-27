@@ -112,7 +112,7 @@ void Enemy::Damage(int value)
 
 			if(Mathf::Random(0, 100) > 70 && Mathf::Random(0, 100) < 85)
 				ObjectSpawner::GetInstance().SpawnFirstAid(GetPos(), Vector2f(2, 2));
-			else if(Mathf::Random(0, 100) > 85)
+			else if(Mathf::Random(0, 100) > 20)
 				ObjectSpawner::GetInstance().SpawnShield(GetPos(), Vector2f(2, 2));
 		}
 		else if (std::strcmp(m_Tag.c_str(), "MediumEnemy") == 0)
@@ -121,7 +121,7 @@ void Enemy::Damage(int value)
 
 			if (Mathf::Random(0, 100) > 80 && Mathf::Random(0, 100) < 90)
 				ObjectSpawner::GetInstance().SpawnFirstAid(GetPos(), Vector2f(2, 2));
-			else if (Mathf::Random(0, 100) > 90)
+			else if (Mathf::Random(0, 100) > 20)
 				ObjectSpawner::GetInstance().SpawnShield(GetPos(), Vector2f(2, 2));
 		}
 		else
@@ -130,7 +130,7 @@ void Enemy::Damage(int value)
 
 			if (Mathf::Random(0, 100) > 90 && Mathf::Random(0, 100) < 95)
 				ObjectSpawner::GetInstance().SpawnFirstAid(GetPos(), Vector2f(2, 2));
-			else if (Mathf::Random(0, 100) > 95)
+			else if (Mathf::Random(0, 100) > 20)
 				ObjectSpawner::GetInstance().SpawnShield(GetPos(), Vector2f(2, 2));
 		}
 

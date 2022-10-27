@@ -12,12 +12,14 @@ public:
 	void Update();
 
 	void PositionAndScalingUI();
-	void UpdateHealthBar();
+	void UpdateHealthBar(int damage);
+	void UpdateShieldBar(int damage);
 	void UpdateScore(int p_Score);
 
 	void SetRenderer(SDL_Renderer* renderer);
 	void SetKills(int p_Kills);
 	void ResetHealthBar();
+	void ResetShieldBar();
 
 	void Render(RenderWindow& window);
 
@@ -34,6 +36,9 @@ private:
 
 	Vector2f m_HealthBarOriginalPos;
 	Vector2f m_HealthBarOriginalScale;
+	
+	Vector2f m_ShieldBarOriginalPos;
+	Vector2f m_ShieldBarOriginalScale;
 
 	SDL_Color m_White = { 255, 255, 255 };
 	SDL_Color m_Black = { 0, 0, 0 };

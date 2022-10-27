@@ -27,6 +27,7 @@ public:
 	Entity m_CursorRed;
 
 	Entity m_HealthBar;
+	Entity m_ShieldBar;
 	Entity m_MissileIcon;
 	Entity m_FlareIcon;
 

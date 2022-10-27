@@ -24,11 +24,13 @@ public:
 	void SetPlayerMissileTarget(Vector2f* p_Target);
 	void Damage(int damage);
 	void SetHitPoints(int p_HitPoints);
+	void SetShield(int p_Shield);
 
 	std::vector<Projectile>& GetPlayerProjectiles();
 	Missile& GetMissile();
 	std::vector<Flare>& GetFlares();
 	int GetHitPoints();
+	int GetShield();
 
 	bool once;
 	bool missileCoolDown;
@@ -45,9 +47,11 @@ private:
 
 	int flareCounter;
 	int hitPoints;
+	int shield;
 
 	bool shootCoolDown;
 	bool shootFlare;
+	bool shieldActive;
 
 	Vector2f originalScale;
 	Vector2f* m_Target;

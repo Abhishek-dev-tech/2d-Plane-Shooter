@@ -67,6 +67,8 @@ void Game::CheckCollision()
 		&& !ObjectSpawner::GetInstance().GetShield().IsDestroy()
 		&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
 	{
+		Texture::GetInstance().m_PlayerShip.SetShield(20);
+		UIManager::GetInstance().ResetShieldBar();
 		ObjectSpawner::GetInstance().GetShield().Destroy();
 	}
 		
@@ -197,6 +199,7 @@ void Game::Render()
 	ObjectSpawner::GetInstance().Render(window);
 	Texture::GetInstance().Render(window);
 	UIManager::GetInstance().Render(window);
+
 	window.display();
 }
 

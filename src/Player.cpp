@@ -15,6 +15,7 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	missileCoolDown = false;
 	flareCoolDown = false;
 	shootFlare = false;
+	shieldActive = false;
 
 	once = true;
 
@@ -23,6 +24,7 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	m_FlaresCoolDownMaxTime = 10;
 
 	hitPoints = 50;
+	shield = 0;
 	flareCounter = 0;
 
 	originalScale = Vector2f(2.25, 2.25);
@@ -163,9 +165,19 @@ void Player::Damage(int damage)
 {
 	SetScale(Vector2f(originalScale.x + 0.3, originalScale.y + 0.3));
 
-	hitPoints -= damage;
-	UIManager::GetInstance().UpdateHealthBar();
 
+	if (shield <= 0)
+	{
+		hitPoints -= damage;
+		UIManager::GetInstance().UpdateHealthBar(damage);
+	}
+	else
+	{
+		shield -= damage;
+		UIManager::GetInstance().UpdateShieldBar(damage);
+		std::cout << shield << "\n";
+
+	}
 
 	if (hitPoints <= 0)
 	{
@@ -178,6 +190,11 @@ void Player::Damage(int damage)
 void Player::SetHitPoints(int p_HitPoints)
 {
 	hitPoints = p_HitPoints;
+}
+
+void Player::SetShield(int p_Shield)
+{
+	shield = p_Shield;
 }
 
 
@@ -227,6 +244,11 @@ void Player::SetPlayerMissileTarget(Vector2f* p_Target)
 int Player::GetHitPoints()
 {
 	return hitPoints;
+}
+
+int Player::GetShield()
+{
+	return shield;
 }
 
 void Player::Render(RenderWindow& window) {
