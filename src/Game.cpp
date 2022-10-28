@@ -5,7 +5,6 @@
 Game::Game()
 	:window("GAME v1.0", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 720, 720)
 {
-
 }
 
 void Game::Init()
@@ -31,7 +30,9 @@ void Game::Update()
 	Texture::GetInstance().m_CursorRed.SetPos(Vector2f(mouseX, mouseY));
 
 	Texture::GetInstance().Update();
+
 	ObjectSpawner::GetInstance().Update();
+
 	UIManager::GetInstance().Update();
 
 	CheckCollision();
@@ -188,17 +189,26 @@ void Game::HandleEvent()
 	else if(event.type == SDL_MOUSEBUTTONUP)
 		mouseButtonDown = false;
 
-	Texture::GetInstance().m_PlayerShip.HandleEvent(event);
+	if (UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
+		Texture::GetInstance().m_PlayerShip.HandleEvent(event);
+
+	UIManager::GetInstance().HandleEvent(event);
 }
 
 void Game::Render()
 {
 	window.clear();
 
-	Texture::GetInstance().m_PlayerShip.Render(window);
-	ObjectSpawner::GetInstance().Render(window);
-	Texture::GetInstance().Render(window);
+	if (UIManager::GetInstance().m_gameState != UIManager::GetInstance().Menu)
+	{
+		Texture::GetInstance().m_PlayerShip.Render(window);
+		ObjectSpawner::GetInstance().Render(window);
+	}
+
 	UIManager::GetInstance().Render(window);
+
+	Texture::GetInstance().Render(window);
+
 
 	window.display();
 }

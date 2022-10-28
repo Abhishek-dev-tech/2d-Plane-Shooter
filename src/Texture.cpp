@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "UIManager.h"
 
 Texture::Texture()
 {
@@ -45,6 +46,9 @@ void Texture::LoadTextures(RenderWindow window)
 	cursorWhite = window.loadTexture("res/Cursor_White.png");
 	cursorRed = window.loadTexture("res/Cursor_Red.png");
 
+	button = window.loadTexture("res/UI/Button.png");
+	buttonPressed = window.loadTexture("res/UI/ButtonPressed.png");
+
 	square = window.loadTexture("res/UI/Square.png");
 
 	font16 = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 16);
@@ -64,6 +68,18 @@ void Texture::SetEntity()
 	m_ShieldBar = Entity(Vector2f(0, 0), square, Vector2f(1, 1));
 	m_MissileIcon = Entity(Vector2f(0, 0), missile, Vector2f(2, 2));
 	m_FlareIcon = Entity(Vector2f(0, 0), flare, Vector2f(2, 2));
+
+	m_PlayButton = Entity(Vector2f(0, 0), button, Vector2f(3, 3));
+	m_PlayButtonPressed = Entity(Vector2f(0, 0), buttonPressed, Vector2f(3, 3));
+
+	m_ExitButton = Entity(Vector2f(0, 0), button, Vector2f(3, 3));
+	m_ExitButtonPressed = Entity(Vector2f(0, 0), buttonPressed, Vector2f(3, 3));
+	
+	m_MenuButton = Entity(Vector2f(0, 0), button, Vector2f(3, 3));
+	m_MenuButtonPressed = Entity(Vector2f(0, 0), buttonPressed, Vector2f(3, 3));
+	
+	m_RetryButton = Entity(Vector2f(0, 0), button, Vector2f(3, 3));
+	m_RetryButtonPressed = Entity(Vector2f(0, 0), buttonPressed, Vector2f(3, 3));
 }
 
 void Texture::Update()
@@ -73,15 +89,32 @@ void Texture::Update()
 	m_CursorRed.Update();
 	m_HealthBar.Update();
 	m_ShieldBar.Update();
+
+	m_PlayButton.Update();
+	m_PlayButtonPressed.Update();
+
+	m_ExitButton.Update();
+	m_ExitButtonPressed.Update();
+
+	m_MenuButton.Update();
+	m_MenuButtonPressed.Update();
+
+	m_RetryButton.Update();
+	m_RetryButtonPressed.Update();
 }
 
 void Texture::Render(RenderWindow window)
 {
-	if(!m_PlayerShip.IsDestroy())
-		window.Render(m_PlayerShip, 0, false);
-
-	if(isCursorCollideWithEnemy)
+	if (isCursorCollideWithEnemy)
 		window.Render(m_CursorRed, 0, false);
 	else
 		window.Render(m_CursorWhite, 0, false);
+	
+	if (UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
+	{
+		if (!m_PlayerShip.IsDestroy())
+			window.Render(m_PlayerShip, 0, false);
+	}
+
+	
 }

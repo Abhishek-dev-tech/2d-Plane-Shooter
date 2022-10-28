@@ -1,9 +1,9 @@
 #include"ObjectSpawner.h"
+#include"UIManager.h"
 
 
 ObjectSpawner::ObjectSpawner()
 {
-	previousTime = 0;
 	maxTime = 4;
 
 	StrightSpawnPositions = Vector2f(50, -10);
@@ -18,58 +18,64 @@ ObjectSpawner& ObjectSpawner::GetInstance()
 
 void ObjectSpawner::Update()
 {
-	SpawnEnemies();
-
 	RemoveEnemies();
 
+	if (UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
+		SpawnEnemies();
 
-	for (int i = 0; i < smallEnemies.size(); i++)
-		smallEnemies[i].Update();
 
-	for (int i = 0; i < mediumEnemies.size(); i++)
-		mediumEnemies[i].Update();
-
-	for (int i = 0; i < bigEnemies.size(); i++)
-		bigEnemies[i].Update();
-
-	m_FirstAid.Update();
-	m_Shield.Update();
-
-	for (int i = 0; i < hitMarkers.size(); i++)
+	if (UIManager::GetInstance().m_gameState != UIManager::GetInstance().Menu)
 	{
-		hitMarkers[i].SetScale(Vector2f(Mathf::Lerp(hitMarkers[i].GetScale().x, -0.05, 0.05), Mathf::Lerp(hitMarkers[i].GetScale().y, -0.05, 0.05)));
-		
-		if (hitMarkers[i].GetScale().x <= 0)
-			hitMarkers.erase(hitMarkers.begin() + i);
+
+		for (int i = 0; i < smallEnemies.size(); i++)
+			smallEnemies[i].Update();
+
+		for (int i = 0; i < mediumEnemies.size(); i++)
+			mediumEnemies[i].Update();
+
+		for (int i = 0; i < bigEnemies.size(); i++)
+			bigEnemies[i].Update();
+
+		m_FirstAid.Update();
+		m_Shield.Update();
+
+		for (int i = 0; i < hitMarkers.size(); i++)
+		{
+			hitMarkers[i].SetScale(Vector2f(Mathf::Lerp(hitMarkers[i].GetScale().x, -0.05, 0.05), Mathf::Lerp(hitMarkers[i].GetScale().y, -0.05, 0.05)));
+
+			if (hitMarkers[i].GetScale().x <= 0)
+				hitMarkers.erase(hitMarkers.begin() + i);
+		}
+
+		for (int i = 0; i < blastEffect.size(); i++)
+		{
+			blastEffect[i].SetScale(Vector2f(Mathf::Lerp(blastEffect[i].GetScale().x, -0.05, 0.05), Mathf::Lerp(blastEffect[i].GetScale().y, -0.05, 0.05)));
+
+			if (blastEffect[i].GetScale().x <= 0)
+				blastEffect.erase(blastEffect.begin() + i);
+		}
+
+		for (int i = 0; i < smokeEffect.size(); i++)
+		{
+			smokeEffect[i].SetScale(Vector2f(Mathf::Lerp(smokeEffect[i].GetScale().x, -0.05, 0.0075), Mathf::Lerp(smokeEffect[i].GetScale().y, -0.05, 0.0075)));
+
+			if (smokeEffect[i].GetScale().x <= 0)
+				smokeEffect.erase(smokeEffect.begin() + i);
+		}
 	}
-
-	for (int i = 0; i < blastEffect.size(); i++)
-	{
-		blastEffect[i].SetScale(Vector2f(Mathf::Lerp(blastEffect[i].GetScale().x, -0.05, 0.05), Mathf::Lerp(blastEffect[i].GetScale().y, -0.05, 0.05)));
-
-		if (blastEffect[i].GetScale().x <= 0)
-			blastEffect.erase(blastEffect.begin() + i);
-	}
-
-	for (int i = 0; i < smokeEffect.size(); i++)
-	{
-		smokeEffect[i].SetScale(Vector2f(Mathf::Lerp(smokeEffect[i].GetScale().x, -0.05, 0.0075), Mathf::Lerp(smokeEffect[i].GetScale().y, -0.05, 0.0075)));
-
-		if (smokeEffect[i].GetScale().x <= 0)
-			smokeEffect.erase(smokeEffect.begin() + i);
-	}
-
-
 }
 
 void ObjectSpawner::SpawnEnemies()
 {
-	if (SDL_GetTicks() * 0.001 - previousTime >= maxTime)
-	{
-		previousTime = SDL_GetTicks() * 0.001;
+	if (!m_SpawnEnemyTimer.IsStarted() && UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
+		m_SpawnEnemyTimer.Start();
+	else if(UIManager::GetInstance().m_gameState != UIManager::GetInstance().Playing)
+		m_SpawnEnemyTimer.Stop();
 
+	if (m_SpawnEnemyTimer.GetTicks() * 0.001 > maxTime) 
+	{
 		int rand = Mathf::Random(1, 100);
-		
+
 		if (rand <= 50)
 			SpawnSmallEnemies(Vector2f(Mathf::Random(50, 650), -10));
 
@@ -81,7 +87,8 @@ void ObjectSpawner::SpawnEnemies()
 		else
 			SpawnPartten();
 
-	}
+		m_SpawnEnemyTimer.Stop();
+	}	
 }
 
 void ObjectSpawner::SpawnSmallEnemies(Vector2f p_pos)

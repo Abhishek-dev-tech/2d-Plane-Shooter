@@ -10,11 +10,14 @@ public:
 	static UIManager& GetInstance();
 
 	void Update();
+	void HandleEvent(SDL_Event event);
 
 	void PositionAndScalingUI();
+	void CheckUICollision();
 	void UpdateHealthBar(int damage);
 	void UpdateShieldBar(int damage);
 	void UpdateScore(int p_Score);
+	void Reset();
 
 	void SetRenderer(SDL_Renderer* renderer);
 	void SetKills(int p_Kills);
@@ -22,6 +25,15 @@ public:
 	void ResetShieldBar();
 
 	void Render(RenderWindow& window);
+
+	enum GameState
+	{
+		Menu,
+		Playing,
+		GameOver
+	};
+
+	GameState m_gameState;
 
 
 private:
@@ -33,6 +45,12 @@ private:
 
 	int m_Score;
 	int m_Kills;
+
+	bool m_mouseButtonDown;
+	bool m_mouseCollideWithPlayButton;
+	bool m_mouseCollideWithExitButton;
+	bool m_mouseCollideWithMenuButton;
+	bool m_mouseCollideWithRetryButton;
 
 	Vector2f m_HealthBarOriginalPos;
 	Vector2f m_HealthBarOriginalScale;

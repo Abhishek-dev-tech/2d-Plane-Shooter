@@ -24,6 +24,7 @@ public:
 	void SetScale(Vector2f scale);
 	void Update();
 	void Destroy();
+	void SetDestroyFalse();
 
 	SDL_Texture* getTex();
 	SDL_Rect getCurrentFrame();

@@ -1,4 +1,6 @@
 #include "UIManager.h"
+#include "Collision.h"
+#include "ObjectSpawner.h"
 
 #include <string>
 
@@ -13,6 +15,8 @@ UIManager::UIManager()
 	m_ShieldBarOriginalScale = Vector2f(4, 0.1);
 
 	PositionAndScalingUI();
+
+	m_gameState = Menu;
 
 }
 
@@ -35,6 +39,57 @@ void UIManager::Update()
 	else
 		m_FlareText = "x 0";
 
+	CheckUICollision();
+
+}
+
+void UIManager::HandleEvent(SDL_Event event)
+{
+	if (event.type == SDL_MOUSEBUTTONDOWN)
+		m_mouseButtonDown = true;
+	else if (event.type == SDL_MOUSEBUTTONUP)
+		m_mouseButtonDown = false;
+
+	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithPlayButton && m_gameState == Menu)
+		m_gameState = Playing;
+
+	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithExitButton && m_gameState == Menu)
+		SDL_Quit();
+
+	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithMenuButton && m_gameState == GameOver)
+	{
+		m_gameState = Menu;
+		Reset();
+	}
+
+	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithRetryButton && m_gameState == GameOver)
+	{
+		m_gameState = Playing;
+		Reset();
+	}
+}
+
+void UIManager::CheckUICollision()
+{
+	if (Collision::IsCollide(&Texture::GetInstance().m_PlayButton.GetDst(), &Texture::GetInstance().m_CursorWhite.GetDst()))
+		m_mouseCollideWithPlayButton = true;
+	else
+		m_mouseCollideWithPlayButton = false;
+
+	if (Collision::IsCollide(&Texture::GetInstance().m_ExitButton.GetDst(), &Texture::GetInstance().m_CursorWhite.GetDst()))
+		m_mouseCollideWithExitButton = true;
+	else
+		m_mouseCollideWithExitButton = false;
+
+	if (Collision::IsCollide(&Texture::GetInstance().m_MenuButton.GetDst(), &Texture::GetInstance().m_CursorWhite.GetDst()))
+		m_mouseCollideWithMenuButton = true;
+	else
+		m_mouseCollideWithMenuButton = false;
+
+	if (Collision::IsCollide(&Texture::GetInstance().m_RetryButton.GetDst(), &Texture::GetInstance().m_CursorWhite.GetDst()))
+		m_mouseCollideWithRetryButton = true;
+	else
+		m_mouseCollideWithRetryButton = false;
 }
 
 void UIManager::PositionAndScalingUI()
@@ -48,6 +103,18 @@ void UIManager::PositionAndScalingUI()
 	Texture::GetInstance().m_MissileIcon.SetPos(Vector2f(40, 669));
 
 	Texture::GetInstance().m_FlareIcon.SetPos(Vector2f(40, 634));
+
+	Texture::GetInstance().m_PlayButton.SetPos(Vector2f(350, 320));
+	Texture::GetInstance().m_PlayButtonPressed.SetPos(Vector2f(350, 320));
+
+	Texture::GetInstance().m_ExitButton.SetPos(Vector2f(350, 390));
+	Texture::GetInstance().m_ExitButtonPressed.SetPos(Vector2f(350, 390));
+
+	Texture::GetInstance().m_MenuButton.SetPos(Vector2f(350, 320));
+	Texture::GetInstance().m_MenuButtonPressed.SetPos(Vector2f(350, 320));
+
+	Texture::GetInstance().m_RetryButton.SetPos(Vector2f(350, 390));
+	Texture::GetInstance().m_RetryButtonPressed.SetPos(Vector2f(350, 390));
 
 }
 
@@ -100,17 +167,97 @@ void UIManager::ResetShieldBar()
 	Texture::GetInstance().m_ShieldBar.SetScale(m_ShieldBarOriginalScale);
 }
 
+void UIManager::Reset()
+{
+	Texture::GetInstance().m_PlayerShip.SetDestroyFalse();
+	Texture::GetInstance().m_PlayerShip.SetHitPoints(50);
+	Texture::GetInstance().m_PlayerShip.SetShield(0);
+
+	ResetHealthBar();
+
+	Texture::GetInstance().m_ShieldBar.SetPos(m_ShieldBarOriginalPos);
+	Texture::GetInstance().m_ShieldBar.SetScale(Vector2f(0, 0.1));
+
+	Texture::GetInstance().m_PlayerShip.SetPos(Vector2f(360, 650));
+
+	for (int i = 0; i < ObjectSpawner::GetInstance().GetSmallEnemies().size(); i++)
+		ObjectSpawner::GetInstance().GetSmallEnemies().erase(ObjectSpawner::GetInstance().GetSmallEnemies().begin() + i);
+
+	for (int i = 0; i < ObjectSpawner::GetInstance().GetMediumEnemies().size(); i++)
+		ObjectSpawner::GetInstance().GetMediumEnemies().erase(ObjectSpawner::GetInstance().GetMediumEnemies().begin() + i);
+
+	for (int i = 0; i < ObjectSpawner::GetInstance().GetBigEnemies().size(); i++)
+		ObjectSpawner::GetInstance().GetBigEnemies().erase(ObjectSpawner::GetInstance().GetBigEnemies().begin() + i);
+
+	ObjectSpawner::GetInstance().GetFirstAid().SetPos(Vector2f(-10, -10));
+	ObjectSpawner::GetInstance().GetShield().SetPos(Vector2f(-10, -10));
+
+
+}
+
 void UIManager::Render(RenderWindow& window)
 {
-	window.Render(Texture::GetInstance().m_HealthBar, 0, false);
+	if (m_gameState == Menu)
+	{
+		if (m_mouseButtonDown && m_mouseCollideWithPlayButton)
+		{
+			window.Render(Texture::GetInstance().m_PlayButtonPressed, 0, false);
+			window.RenderText(Vector2f(350, 323), "Play", Texture::GetInstance().font28, m_White);
+		}
+		else
+		{
+			window.Render(Texture::GetInstance().m_PlayButton, 0, false);
+			window.RenderText(Vector2f(350, 316), "Play", Texture::GetInstance().font28, m_White);
+		}
 
-	window.Render(Texture::GetInstance().m_ShieldBar, 0, false);
+		if (m_mouseButtonDown && m_mouseCollideWithExitButton)
+		{
+			window.Render(Texture::GetInstance().m_ExitButtonPressed, 0, false);
+			window.RenderText(Vector2f(350, 393), "Exit", Texture::GetInstance().font28, m_White);
+		}
+		else
+		{
+			window.Render(Texture::GetInstance().m_ExitButton, 0, false);
+			window.RenderText(Vector2f(350, 388), "Exit", Texture::GetInstance().font28, m_White);
+		}
+	}
+	else if (m_gameState == Playing)
+	{
+		window.Render(Texture::GetInstance().m_HealthBar, 0, false);
 
-	window.Render(Texture::GetInstance().m_MissileIcon, 0, false);
-	window.Render(Texture::GetInstance().m_FlareIcon, 0, false);
+		window.Render(Texture::GetInstance().m_ShieldBar, 0, false);
 
-	//Texts
-	window.RenderText(Vector2f(67, 669), m_MissileText, Texture::GetInstance().font16, m_White);
-	window.RenderText(Vector2f(67, 634), m_FlareText, Texture::GetInstance().font16, m_White);
-	window.RenderText(Vector2f(630, 680), m_ScoreText, Texture::GetInstance().font28, m_White);
+		window.Render(Texture::GetInstance().m_MissileIcon, 0, false);
+		window.Render(Texture::GetInstance().m_FlareIcon, 0, false);
+
+		//Texts
+		window.RenderText(Vector2f(67, 669), m_MissileText, Texture::GetInstance().font16, m_White);
+		window.RenderText(Vector2f(67, 634), m_FlareText, Texture::GetInstance().font16, m_White);
+		window.RenderText(Vector2f(630, 680), m_ScoreText, Texture::GetInstance().font28, m_White);
+	}
+	else
+	{
+		if (m_mouseButtonDown && m_mouseCollideWithMenuButton)
+		{
+			window.Render(Texture::GetInstance().m_MenuButtonPressed, 0, false);
+			window.RenderText(Vector2f(350, 323), "Menu", Texture::GetInstance().font28, m_White);
+		}
+		else
+		{
+			window.Render(Texture::GetInstance().m_MenuButton, 0, false);
+			window.RenderText(Vector2f(350, 316), "Menu", Texture::GetInstance().font28, m_White);
+		}
+
+		if (m_mouseButtonDown && m_mouseCollideWithRetryButton)
+		{
+			window.Render(Texture::GetInstance().m_RetryButtonPressed, 0, false);
+			window.RenderText(Vector2f(350, 393), "Retry", Texture::GetInstance().font28, m_White);
+		}
+		else
+		{
+			window.Render(Texture::GetInstance().m_RetryButton, 0, false);
+			window.RenderText(Vector2f(350, 388), "Retry", Texture::GetInstance().font28, m_White);
+		}
+	}
+	
 }

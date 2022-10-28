@@ -8,6 +8,7 @@
 #include "MediumEnemy.h"
 #include "BigEnemy.h"
 #include "Texture.h"
+#include "Timer.h"
 
 
 class ObjectSpawner
@@ -42,7 +43,6 @@ public:
 
 private:
 	float maxTime;
-	float previousTime;
 
 	Vector2f StrightSpawnPositions;
 
@@ -56,5 +56,7 @@ private:
 
 	Entity m_FirstAid;
 	Entity m_Shield;
+
+	Timer m_SpawnEnemyTimer;
 
 };

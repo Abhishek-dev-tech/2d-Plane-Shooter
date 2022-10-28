@@ -31,6 +31,18 @@ public:
 	Entity m_MissileIcon;
 	Entity m_FlareIcon;
 
+	Entity m_PlayButton;
+	Entity m_PlayButtonPressed;
+
+	Entity m_ExitButton;
+	Entity m_ExitButtonPressed;
+
+	Entity m_MenuButton;
+	Entity m_MenuButtonPressed;
+
+	Entity m_RetryButton;
+	Entity m_RetryButtonPressed;
+
 	SDL_Texture* projectile01;
 
 	SDL_Texture* smallEnemyShips[3];
@@ -58,6 +70,8 @@ private:
 	SDL_Texture* cursorWhite;
 	SDL_Texture* cursorRed;
 	SDL_Texture* square;
+	SDL_Texture* button;
+	SDL_Texture* buttonPressed;
 
 
 };

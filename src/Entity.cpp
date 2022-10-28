@@ -37,6 +37,11 @@ void Entity::Destroy()
 	destroy = true;
 }
 
+void Entity::SetDestroyFalse()
+{
+	destroy = false;
+}
+
 SDL_Texture* Entity::getTex()
 {
 	return tex;

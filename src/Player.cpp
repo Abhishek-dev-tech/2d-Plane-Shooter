@@ -184,6 +184,8 @@ void Player::Damage(int damage)
 		Destroy();
 		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos(), Vector2f(8, 8));
 		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos(), Vector2f(8, 8));
+
+		UIManager::GetInstance().m_gameState = UIManager::GetInstance().GameOver;
 	}
 }
 
