@@ -175,8 +175,6 @@ void Player::Damage(int damage)
 	{
 		shield -= damage;
 		UIManager::GetInstance().UpdateShieldBar(damage);
-		std::cout << shield << "\n";
-
 	}
 
 	if (hitPoints <= 0)

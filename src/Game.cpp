@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "RenderWindow.h"
 #include "Collision.h"
+#include "AudioManager.h"
 
 Game::Game()
 	:window("GAME v1.0", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 720, 720)
@@ -19,7 +20,7 @@ void Game::Init()
 	SDL_ShowCursor(SDL_DISABLE);
 
 	Texture::GetInstance().LoadTextures(window);
-
+	AudioManager::GetInstance().Init();
 	UIManager::GetInstance().SetRenderer(window.GetRenderer());
 }
 

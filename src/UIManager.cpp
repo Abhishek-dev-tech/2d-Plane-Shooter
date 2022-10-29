@@ -1,6 +1,7 @@
 #include "UIManager.h"
 #include "Collision.h"
 #include "ObjectSpawner.h"
+#include "AudioManager.h"
 
 #include <string>
 
@@ -53,19 +54,27 @@ void UIManager::HandleEvent(SDL_Event event)
 		m_mouseButtonDown = false;
 
 	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithPlayButton && m_gameState == Menu)
+	{
+		AudioManager::GetInstance().PlaySoundEffect(*AudioManager::GetInstance().m_Button);
 		m_gameState = Playing;
+	}
 
 	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithExitButton && m_gameState == Menu)
+	{
+		AudioManager::GetInstance().PlaySoundEffect(*AudioManager::GetInstance().m_Button);
 		m_Exit = true;
+	}
 
 	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithMenuButton && m_gameState == GameOver)
 	{
+		AudioManager::GetInstance().PlaySoundEffect(*AudioManager::GetInstance().m_Button);
 		m_gameState = Menu;
 		Reset();
 	}
 
 	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithRetryButton && m_gameState == GameOver)
 	{
+		AudioManager::GetInstance().PlaySoundEffect(*AudioManager::GetInstance().m_Button);
 		m_gameState = Playing;
 		Reset();
 	}
