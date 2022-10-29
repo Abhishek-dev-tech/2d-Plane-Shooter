@@ -25,6 +25,11 @@ void Game::Init()
 
 void Game::Update()
 {
+	if (!UIManager::GetInstance().m_Exit)
+		isRunning = true;
+	else
+		isRunning = false;
+
 	SDL_GetMouseState(&mouseX, &mouseY);
 	Texture::GetInstance().m_CursorWhite.SetPos(Vector2f(mouseX, mouseY));
 	Texture::GetInstance().m_CursorRed.SetPos(Vector2f(mouseX, mouseY));

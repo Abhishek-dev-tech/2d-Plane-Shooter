@@ -62,6 +62,10 @@ public:
 
 	TTF_Font* font16;
 	TTF_Font* font28;
+	TTF_Font* font40;
+	TTF_Font* font40_Outline;
+	TTF_Font* font50;
+	TTF_Font* font50_Outline;
 
 	bool isCursorCollideWithEnemy;
 

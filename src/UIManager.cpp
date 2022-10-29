@@ -18,6 +18,8 @@ UIManager::UIManager()
 
 	m_gameState = Menu;
 
+	m_Exit = false;
+
 }
 
 UIManager& UIManager::GetInstance()
@@ -54,7 +56,7 @@ void UIManager::HandleEvent(SDL_Event event)
 		m_gameState = Playing;
 
 	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithExitButton && m_gameState == Menu)
-		SDL_Quit();
+		m_Exit = true;
 
 	if (event.type == SDL_MOUSEBUTTONUP && m_mouseCollideWithMenuButton && m_gameState == GameOver)
 	{
@@ -172,6 +174,7 @@ void UIManager::Reset()
 	Texture::GetInstance().m_PlayerShip.SetDestroyFalse();
 	Texture::GetInstance().m_PlayerShip.SetHitPoints(50);
 	Texture::GetInstance().m_PlayerShip.SetShield(0);
+	Texture::GetInstance().m_PlayerShip.GetFlares().clear();
 
 	ResetHealthBar();
 
@@ -180,25 +183,26 @@ void UIManager::Reset()
 
 	Texture::GetInstance().m_PlayerShip.SetPos(Vector2f(360, 650));
 
-	for (int i = 0; i < ObjectSpawner::GetInstance().GetSmallEnemies().size(); i++)
-		ObjectSpawner::GetInstance().GetSmallEnemies().erase(ObjectSpawner::GetInstance().GetSmallEnemies().begin() + i);
+	ObjectSpawner::GetInstance().GetSmallEnemies().clear();
 
-	for (int i = 0; i < ObjectSpawner::GetInstance().GetMediumEnemies().size(); i++)
-		ObjectSpawner::GetInstance().GetMediumEnemies().erase(ObjectSpawner::GetInstance().GetMediumEnemies().begin() + i);
+	ObjectSpawner::GetInstance().GetMediumEnemies().clear();
 
-	for (int i = 0; i < ObjectSpawner::GetInstance().GetBigEnemies().size(); i++)
-		ObjectSpawner::GetInstance().GetBigEnemies().erase(ObjectSpawner::GetInstance().GetBigEnemies().begin() + i);
+	ObjectSpawner::GetInstance().GetBigEnemies().clear();
 
 	ObjectSpawner::GetInstance().GetFirstAid().SetPos(Vector2f(-10, -10));
 	ObjectSpawner::GetInstance().GetShield().SetPos(Vector2f(-10, -10));
 
-
+	m_Score = 0;
+	m_ScoreText = "Score: 0";
 }
 
 void UIManager::Render(RenderWindow& window)
 {
 	if (m_gameState == Menu)
 	{
+		window.RenderText(Vector2f(350, 147), "Plane Shooter", Texture::GetInstance().font50_Outline, m_Black);
+		window.RenderText(Vector2f(350, 150), "Plane Shooter", Texture::GetInstance().font50, m_White);
+
 		if (m_mouseButtonDown && m_mouseCollideWithPlayButton)
 		{
 			window.Render(Texture::GetInstance().m_PlayButtonPressed, 0, false);
@@ -258,6 +262,13 @@ void UIManager::Render(RenderWindow& window)
 			window.Render(Texture::GetInstance().m_RetryButton, 0, false);
 			window.RenderText(Vector2f(350, 388), "Retry", Texture::GetInstance().font28, m_White);
 		}
+
+		window.RenderText(Vector2f(350, 147), "Game Over", Texture::GetInstance().font50_Outline, m_Black);
+		window.RenderText(Vector2f(350, 150), "Game Over", Texture::GetInstance().font50, m_White);
+		window.RenderText(Vector2f(350, 222), m_ScoreText, Texture::GetInstance().font40_Outline, m_Black);
+		window.RenderText(Vector2f(350, 225), m_ScoreText, Texture::GetInstance().font40, m_White);
+
+
 	}
 	
 }

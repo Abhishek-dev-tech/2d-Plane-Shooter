@@ -53,6 +53,12 @@ void Texture::LoadTextures(RenderWindow window)
 
 	font16 = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 16);
 	font28 = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 26);
+	font40 = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 40);
+	font40_Outline = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 40);
+	font50 = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 50);
+	font50_Outline = TTF_OpenFont("res/Fonts/RifficFree-Bold.ttf", 50);
+	TTF_SetFontOutline(font50_Outline, 3);
+	TTF_SetFontOutline(font40_Outline, 3);
 
 	SetEntity();
 }

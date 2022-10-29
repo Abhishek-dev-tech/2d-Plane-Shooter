@@ -35,6 +35,8 @@ public:
 
 	GameState m_gameState;
 
+	bool m_Exit;
+
 
 private:
 

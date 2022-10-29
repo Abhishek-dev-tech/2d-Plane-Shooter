@@ -1,4 +1,5 @@
 #include "BigEnemy.h"
+#include "UIManager.h"
 
 BigEnemy::BigEnemy(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale, int p_shipType)
 	:Enemy(p_pos, p_tex, p_scale)
@@ -80,7 +81,9 @@ void BigEnemy::Update()
 		Destroy();
 
 	Shoot(m_BulletOffset, m_bulletPair);
-	ShootMissiles();
+
+	if(UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
+		ShootMissiles();
 
 
 	SetPos(Vector2f(GetPos().x, GetPos().y + m_Speed));

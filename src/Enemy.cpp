@@ -119,18 +119,18 @@ void Enemy::Damage(int value)
 		{
 			UIManager::GetInstance().UpdateScore(8);
 
-			if (Mathf::Random(0, 100) > 80)
+			if (Mathf::Random(0, 100) > 90)
 				ObjectSpawner::GetInstance().SpawnFirstAid(GetPos(), Vector2f(2, 2));
-			else if (Mathf::Random(0, 100) > 80)
+			else if (Mathf::Random(0, 100) > 90)
 				ObjectSpawner::GetInstance().SpawnShield(GetPos(), Vector2f(2, 2));
 		}
 		else
 		{
 			UIManager::GetInstance().UpdateScore(4);
 
-			if (Mathf::Random(0, 100) > 90)
+			if (Mathf::Random(0, 100) > 95)
 				ObjectSpawner::GetInstance().SpawnFirstAid(GetPos(), Vector2f(2, 2));
-			else if (Mathf::Random(0, 100) > 90)
+			else if (Mathf::Random(0, 100) > 95)
 				ObjectSpawner::GetInstance().SpawnShield(GetPos(), Vector2f(2, 2));
 		}
 

@@ -33,18 +33,18 @@ Player::Player(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 
 void Player::Update()
 {
+	for (int i = 0; i < projectiles.size(); i++)
+		projectiles[i].Update(-1);
+
+	for (int i = 0; i < flares.size(); i++)
+		flares[i].Update();
+
+	if (!missile.IsDestroy() && !once)
+		missile.Update(*m_Target);
+
 	if (!IsDestroy())
 	{
 		Entity::Update();
-
-		for (int i = 0; i < projectiles.size(); i++)
-			projectiles[i].Update(-1);
-
-		for (int i = 0; i < flares.size(); i++)
-			flares[i].Update();
-
-		if (!missile.IsDestroy() && !once)
-			missile.Update(*m_Target);
 
 
 		if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && shootCoolDown)

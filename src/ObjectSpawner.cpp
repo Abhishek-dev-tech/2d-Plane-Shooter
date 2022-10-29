@@ -20,6 +20,11 @@ void ObjectSpawner::Update()
 {
 	RemoveEnemies();
 
+	if (!m_SpawnEnemyTimer.IsStarted() && UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
+		m_SpawnEnemyTimer.Start();
+	else if (UIManager::GetInstance().m_gameState != UIManager::GetInstance().Playing)
+		m_SpawnEnemyTimer.Stop();
+
 	if (UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
 		SpawnEnemies();
 
@@ -67,10 +72,6 @@ void ObjectSpawner::Update()
 
 void ObjectSpawner::SpawnEnemies()
 {
-	if (!m_SpawnEnemyTimer.IsStarted() && UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
-		m_SpawnEnemyTimer.Start();
-	else if(UIManager::GetInstance().m_gameState != UIManager::GetInstance().Playing)
-		m_SpawnEnemyTimer.Stop();
 
 	if (m_SpawnEnemyTimer.GetTicks() * 0.001 > maxTime) 
 	{
