@@ -58,6 +58,7 @@ void Player::Update()
 
 		if (m_MissileTimer.GetTicks() * 0.001 >= m_MissileMaxTime)
 		{
+			AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_MissileReady);
 			missileCoolDown = false;
 			m_MissileTimer.Stop();
 		}
@@ -67,6 +68,7 @@ void Player::Update()
 
 		if (m_FlareCoolDownTimer.GetTicks() * 0.001 >= m_FlaresCoolDownMaxTime)
 		{
+			AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_FlaresReady);
 			flareCoolDown = false;
 			m_FlareCoolDownTimer.Stop();
 		}
@@ -120,9 +122,12 @@ void Player::Shoot()
 	{
 		shootCoolDown = true;
 
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shoot);
+
 		Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().projectile01, Vector2f(1, 1));
 
 		projectiles.push_back(temp);
+
 	}
 }
 
@@ -180,6 +185,9 @@ void Player::Damage(int damage)
 	if (hitPoints <= 0)
 	{
 		Destroy();
+
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Explosion);
+
 		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos(), Vector2f(8, 8));
 		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos(), Vector2f(8, 8));
 

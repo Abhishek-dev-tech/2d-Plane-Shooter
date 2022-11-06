@@ -74,6 +74,8 @@ void Enemy::Shoot(float p_bulletOffset, int p_bulletPair)
 
 	for (int i = 0; i < p_bulletPair; i++)
 	{
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shoot);
+
 		Projectile temp = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 
 		projectiles.push_back(temp);
@@ -103,6 +105,8 @@ void Enemy::Damage(int value)
 		Destroy();
 		ObjectSpawner::GetInstance().SpawnBlastEffect(GetPos(), Vector2f(8, 8));
 		ObjectSpawner::GetInstance().SpawnSmokEffect(GetPos(), Vector2f(8, 8));
+
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Explosion);
 
 		UIManager::GetInstance().SetKills(1);
 

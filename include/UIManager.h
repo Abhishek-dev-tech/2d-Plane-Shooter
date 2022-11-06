@@ -1,6 +1,8 @@
 #pragma once
 #include "Texture.h"
 #include "Timer.h"
+#include "AudioManager.h"
+
 
 class UIManager
 {

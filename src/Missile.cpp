@@ -1,4 +1,5 @@
 #include "Missile.h"
+#include "AudioManager.h"
 
 Missile::Missile(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	:Entity(p_pos, p_tex, p_scale)
@@ -8,6 +9,8 @@ Missile::Missile(Vector2f p_pos, SDL_Texture* p_tex, Vector2f p_scale)
 	maxTime = 5;
 
 	followTarget = true;
+
+	AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Missile);
 }
 
 void Missile::Update(Vector2f target)

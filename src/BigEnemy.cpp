@@ -100,6 +100,8 @@ void BigEnemy::Shoot(float p_bulletOffset, int p_bulletPair)
 
 	for (int i = 0; i < p_bulletPair; i++)
 	{
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shoot);
+
 		Projectile temp1 = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 		Projectile temp2 = Projectile(Vector2f(temp1.GetPos().x + 8 * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 

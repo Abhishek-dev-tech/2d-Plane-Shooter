@@ -64,6 +64,7 @@ void Game::CheckCollision()
 		&& !ObjectSpawner::GetInstance().GetFirstAid().IsDestroy()
 		&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
 	{
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_FirstAid);
 		Texture::GetInstance().m_PlayerShip.SetHitPoints(50);
 		UIManager::GetInstance().ResetHealthBar();
 		ObjectSpawner::GetInstance().GetFirstAid().Destroy();
@@ -74,6 +75,7 @@ void Game::CheckCollision()
 		&& !ObjectSpawner::GetInstance().GetShield().IsDestroy()
 		&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
 	{
+		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shield);
 		Texture::GetInstance().m_PlayerShip.SetShield(20);
 		UIManager::GetInstance().ResetShieldBar();
 		ObjectSpawner::GetInstance().GetShield().Destroy();
@@ -124,6 +126,7 @@ void Game::CheckCollision()
 		{
 			ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().Destroy();
 			Texture::GetInstance().m_PlayerShip.Damage(5);
+			AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Explosion);
 			ObjectSpawner::GetInstance().SpawnBlastEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 			ObjectSpawner::GetInstance().SpawnSmokEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 		}
@@ -135,6 +138,7 @@ void Game::CheckCollision()
 			{
 				ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().Destroy();
 				Texture::GetInstance().m_PlayerShip.GetFlares()[j].Destroy();
+				AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Explosion);
 				ObjectSpawner::GetInstance().SpawnBlastEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 				ObjectSpawner::GetInstance().SpawnSmokEffect(ObjectSpawner::GetInstance().GetBigEnemies()[i].GetMissiles().GetPos(), Vector2f(5, 5));
 			}
@@ -150,6 +154,7 @@ void Game::CheckCollision()
 				&& !allEnemies[i]->GetProjectiles()[j].IsDestroy()
 				&& !Texture::GetInstance().m_PlayerShip.IsDestroy())
 			{
+				AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_BulletCollision);
 				ObjectSpawner::GetInstance().SpawnHitMarkers(allEnemies[i]->GetProjectiles()[j].GetPos());
 				Texture::GetInstance().m_PlayerShip.Damage(1);
 				allEnemies[i]->GetProjectiles()[j].Destroy();
@@ -166,6 +171,7 @@ void Game::CheckCollision()
 				&& !Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].IsDestroy()
 				&& !allEnemies[j]->IsDestroy())
 			{
+				AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_BulletCollision);
 				ObjectSpawner::GetInstance().SpawnHitMarkers(Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].GetPos());
 				allEnemies[j]->Damage(1);
 				Texture::GetInstance().m_PlayerShip.GetPlayerProjectiles()[i].Destroy();
@@ -225,6 +231,7 @@ void Game::Clean()
 	TTF_CloseFont(Texture::GetInstance().font16);
 	TTF_CloseFont(Texture::GetInstance().font28);
 	window.cleanUp();
+	Mix_Quit();
 	TTF_Quit();
 	SDL_Quit();
 }
