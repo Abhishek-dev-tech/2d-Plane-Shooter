@@ -4,7 +4,7 @@
 
 ObjectSpawner::ObjectSpawner()
 {
-	maxTime = 4;
+	maxTime = 3;
 
 	StrightSpawnPositions = Vector2f(50, -10);
 }

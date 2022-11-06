@@ -111,16 +111,10 @@ void Texture::Update()
 
 void Texture::Render(RenderWindow window)
 {
-	if (isCursorCollideWithEnemy)
-		window.Render(m_CursorRed, 0, false);
-	else
-		window.Render(m_CursorWhite, 0, false);
-	
 	if (UIManager::GetInstance().m_gameState == UIManager::GetInstance().Playing)
 	{
 		if (!m_PlayerShip.IsDestroy())
 			window.Render(m_PlayerShip, 0, false);
 	}
-
 	
 }

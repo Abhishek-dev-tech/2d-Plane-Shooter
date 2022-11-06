@@ -46,6 +46,16 @@ void Player::Update()
 	{
 		Entity::Update();
 
+		if (GetPos().y >= 690)
+			SetPos(Vector2f(GetPos().x, 690));
+		else if (GetPos().y <= 30)
+			SetPos(Vector2f(GetPos().x, 30));
+
+		if (GetPos().x >= 690)
+			SetPos(Vector2f(690, GetPos().y));
+		else if (GetPos().x <= 30)
+			SetPos(Vector2f(30, GetPos().y));
+
 
 		if (SDL_GetTicks() * 0.001 - previousTime >= maxTime && shootCoolDown)
 		{

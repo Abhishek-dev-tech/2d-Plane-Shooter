@@ -217,9 +217,13 @@ void Game::Render()
 		ObjectSpawner::GetInstance().Render(window);
 	}
 
+	Texture::GetInstance().Render(window);
 	UIManager::GetInstance().Render(window);
 
-	Texture::GetInstance().Render(window);
+	if (Texture::GetInstance().isCursorCollideWithEnemy)
+		window.Render(Texture::GetInstance().m_CursorRed, 0, false);
+	else
+		window.Render(Texture::GetInstance().m_CursorWhite, 0, false);
 
 
 	window.display();
