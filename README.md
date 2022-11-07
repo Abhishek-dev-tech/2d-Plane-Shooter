@@ -3,7 +3,7 @@
 An 2D Plane Shooter game created using C++ and [SDL2](https://www.libsdl.org/)
 
 ## Demo
-![](https://i.imgur.com/8V2YMhB.gif)
+![](https://i.imgur.com/sNGBSOc.gif)
 
 ## Build Instructions
 
@@ -21,7 +21,7 @@ An 2D Plane Shooter game created using C++ and [SDL2](https://www.libsdl.org/)
     # Go to project root
     $ cd 2d-Plane-Shooter
 
-    # Pull SDL and SDL_image as submodule (if you cloned without --recursive flag)
+    # Pull SDL, SDL_image, SDL_ttf and SDL_mixer as submodule (if you cloned without --recursive flag)
     $ git submodule update --init
 
     # Create a folder for build
