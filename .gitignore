@@ -3,4 +3,4 @@
 **.vcxproj.user
 bin/
 bin-int/
-external/
+vendor/

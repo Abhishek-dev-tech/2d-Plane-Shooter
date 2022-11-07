@@ -19,7 +19,7 @@ UIManager::UIManager()
 	m_gameState = Menu;
 
 	m_Exit = false;
-
+	m_mouseButtonDown = false;
 }
 
 UIManager& UIManager::GetInstance()
@@ -208,7 +208,7 @@ void UIManager::Render(RenderWindow& window)
 {
 	if (m_gameState == Menu)
 	{
-		window.RenderText(Vector2f(350, 147), "Plane Shooter", Texture::GetInstance().font50_Outline, m_Black);
+		window.RenderText(Vector2f(350, 150), "Plane Shooter", Texture::GetInstance().font50_Outline, m_Black);
 		window.RenderText(Vector2f(350, 150), "Plane Shooter", Texture::GetInstance().font50, m_White);
 
 		if (m_mouseButtonDown && m_mouseCollideWithPlayButton)
@@ -271,12 +271,10 @@ void UIManager::Render(RenderWindow& window)
 			window.RenderText(Vector2f(350, 388), "Retry", Texture::GetInstance().font28, m_White);
 		}
 
-		window.RenderText(Vector2f(350, 147), "Game Over", Texture::GetInstance().font50_Outline, m_Black);
+		window.RenderText(Vector2f(350, 150), "Game Over", Texture::GetInstance().font50_Outline, m_Black);
 		window.RenderText(Vector2f(350, 150), "Game Over", Texture::GetInstance().font50, m_White);
-		window.RenderText(Vector2f(350, 222), m_ScoreText, Texture::GetInstance().font40_Outline, m_Black);
+		window.RenderText(Vector2f(350, 225), m_ScoreText, Texture::GetInstance().font40_Outline, m_Black);
 		window.RenderText(Vector2f(350, 225), m_ScoreText, Texture::GetInstance().font40, m_White);
-
-
 	}
 	
 }
