@@ -3,7 +3,7 @@
 An 2D Plane Shooter game created using C++ and [SDL2](https://www.libsdl.org/)
 
 ## Demo
-![](https://i.imgur.com/m63qjnz.gif)
+![](https://i.imgur.com/8V2YMhB.gif)
 
 ## Build Instructions
 
@@ -16,7 +16,7 @@ An 2D Plane Shooter game created using C++ and [SDL2](https://www.libsdl.org/)
 
     ```cmd
     # Clone this project along with submodules
-    $ git clone --recursive https://github.com/AbhayJoshi-Dev/Space-Invaders
+    $ git clone --recursive https://github.com/Abhishek-dev-tech/2d-Plane-Shooter
 
     # Go to project root
     $ cd Space-Invaders
