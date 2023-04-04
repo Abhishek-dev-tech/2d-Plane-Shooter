@@ -102,8 +102,8 @@ void BigEnemy::Shoot(float p_bulletOffset, int p_bulletPair)
 	{
 		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shoot);
 
-		Projectile temp1 = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
-		Projectile temp2 = Projectile(Vector2f(temp1.GetPos().x + 8 * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
+		Projectile temp1(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
+		Projectile temp2(Vector2f(temp1.GetPos().x + 8 * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 
 		projectiles.push_back(temp1);
 		projectiles.push_back(temp2);
@@ -118,7 +118,7 @@ void BigEnemy::ShootMissiles()
 	{
 		missileCoolDown = true;
 
-		Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
+		Missile temp(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
 
 		missile = temp;
 	}

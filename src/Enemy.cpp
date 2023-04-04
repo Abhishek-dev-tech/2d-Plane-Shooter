@@ -76,7 +76,7 @@ void Enemy::Shoot(float p_bulletOffset, int p_bulletPair)
 	{
 		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shoot);
 
-		Projectile temp = Projectile(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
+		Projectile temp(Vector2f(GetPos().x + m_BulletOffset * (i % 2 == 0 ? 1 : -1), GetPos().y), Texture::GetInstance().projectile01, Vector2f(0.9, 0.9));
 
 		projectiles.push_back(temp);
 	}

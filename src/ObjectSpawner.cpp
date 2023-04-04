@@ -95,7 +95,7 @@ void ObjectSpawner::SpawnEnemies()
 void ObjectSpawner::SpawnSmallEnemies(Vector2f p_pos)
 {
 	int rand = Mathf::Random(1, 3);
-	SmallEnemy temp = SmallEnemy(p_pos, Texture::GetInstance().smallEnemyShips[rand - 1], Vector2f(1.75, 1.75), rand);
+	SmallEnemy temp(p_pos, Texture::GetInstance().smallEnemyShips[rand - 1], Vector2f(1.75, 1.75), rand);
 
 	smallEnemies.push_back(temp);
 }
@@ -103,7 +103,7 @@ void ObjectSpawner::SpawnSmallEnemies(Vector2f p_pos)
 void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
 {
 	int rand = Mathf::Random(1, 3);
-	MediumEnemy temp = MediumEnemy(p_pos, Texture::GetInstance().mediumEnemyShips[rand - 1], Vector2f(1.9, 1.9), rand);
+	MediumEnemy temp(p_pos, Texture::GetInstance().mediumEnemyShips[rand - 1], Vector2f(1.9, 1.9), rand);
 
 	mediumEnemies.push_back(temp);
 
@@ -112,42 +112,42 @@ void ObjectSpawner::SpawnMediumEnemies(Vector2f p_pos)
 void ObjectSpawner::SpawnBigEnemies(Vector2f p_pos)
 {
 	int rand = Mathf::Random(1, 3);
-	BigEnemy temp = BigEnemy(p_pos, Texture::GetInstance().bigEnemyShips[rand - 1], Vector2f(2.2, 2.2), rand);
+	BigEnemy temp(p_pos, Texture::GetInstance().bigEnemyShips[rand - 1], Vector2f(2.2, 2.2), rand);
 
 	bigEnemies.push_back(temp);
 }
 
 void ObjectSpawner::SpawnHitMarkers(Vector2f p_Pos)
 {
-	Entity temp = Entity(p_Pos, Texture::GetInstance().hitMark[Mathf::Random(0, 2)], Vector2f(2, 2));
+	Entity temp(p_Pos, Texture::GetInstance().hitMark[Mathf::Random(0, 2)], Vector2f(2, 2));
 
 	hitMarkers.push_back(temp);
 }
 
 void ObjectSpawner::SpawnBlastEffect(Vector2f p_Pos, Vector2f p_Scale)
 {
-	Entity temp = Entity(p_Pos, Texture::GetInstance().blastEffect, p_Scale);
+	Entity temp(p_Pos, Texture::GetInstance().blastEffect, p_Scale);
 
 	blastEffect.push_back(temp);
 }
 
 void ObjectSpawner::SpawnSmokEffect(Vector2f p_Pos, Vector2f p_Scale)
 {
-	Entity temp = Entity(p_Pos, Texture::GetInstance().smokeEffect, p_Scale);
+	Entity temp(p_Pos, Texture::GetInstance().smokeEffect, p_Scale);
 
 	smokeEffect.push_back(temp);
 }
 
 void ObjectSpawner::SpawnFirstAid(Vector2f p_Pos, Vector2f p_Scale)
 {
-	Entity temp = Entity(p_Pos, Texture::GetInstance().firstAid, p_Scale);
+	Entity temp(p_Pos, Texture::GetInstance().firstAid, p_Scale);
 
 	m_FirstAid = temp;
 }
 
 void ObjectSpawner::SpawnShield(Vector2f p_Pos, Vector2f p_Scale)
 {
-	Entity temp = Entity(p_Pos, Texture::GetInstance().shield, p_Scale);
+	Entity temp(p_Pos, Texture::GetInstance().shield, p_Scale);
 
 	m_Shield = temp;
 }

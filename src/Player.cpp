@@ -134,7 +134,7 @@ void Player::Shoot()
 
 		AudioManager::GetInstance().PlaySoundEffect(AudioManager::GetInstance().m_Shoot);
 
-		Projectile temp = Projectile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().projectile01, Vector2f(1, 1));
+		Projectile temp(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().projectile01, Vector2f(1, 1));
 
 		projectiles.push_back(temp);
 
@@ -146,7 +146,7 @@ void Player::ShootMissile()
 	if (!missileCoolDown && Texture::GetInstance().isCursorCollideWithEnemy)
 	{
 		missileCoolDown = true;
-		Missile temp = Missile(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
+		Missile temp(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().missile, Vector2f(2, 2));
 
 		missile = temp;
 	}
@@ -161,7 +161,7 @@ void Player::ShootFlares()
 	{
 		flareCounter++;
 
-		Flare temp = Flare(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().flare, Vector2f(1.75, 1.75), flareCounter % 2 == 0 ? 1 : -1, flareCounter % 2 == 0 ? 100 : -100);
+		Flare temp(Vector2f(GetPos().x, GetPos().y), Texture::GetInstance().flare, Vector2f(1.75, 1.75), flareCounter % 2 == 0 ? 1 : -1, flareCounter % 2 == 0 ? 100 : -100);
 		ObjectSpawner::GetInstance().SpawnSmokEffect(Vector2f(GetPos().x, GetPos().y), Vector2f(5, 5));
 
 		flares.push_back(temp);
